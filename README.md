@@ -22,3 +22,13 @@ Professor: Vanilson Buregio
 ## [Notion do projeto](https://mini-earl-2a4.notion.site/Arena-Sports-Club-5d5da3434433402196b96a4496d698fa?pvs=4)
 
 > ## **Instalação**
+
+# NativeBase TypeScript Expo Template
+
+The official NativeBase TypeScript template for [Expo](https://docs.expo.io/)
+
+## Usage
+
+```sh
+expo init my-app --template @native-base/expo-template-typescript
+```
