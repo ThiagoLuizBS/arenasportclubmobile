@@ -19,14 +19,14 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function Footer() {
   const { navigate } = useNavigation();
-  const [selected, setSelected] = React.useState(1);
+  const [selected, setSelected] = React.useState(0);
 
   const handleSelected = (i: number) => {
     setSelected(i);
     if (i === 0) navigate("Home");
-    else if (i === 1) navigate("Campeonatos");
-    else if (i === 2) navigate("Home");
-    else if (i === 3) navigate("Campeonatos");
+    else if (i === 1) navigate("Favorites");
+    else if (i === 2) navigate("Championship");
+    else if (i === 3) navigate("Match");
   };
 
   return (

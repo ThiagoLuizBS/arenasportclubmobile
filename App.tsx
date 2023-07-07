@@ -8,6 +8,7 @@ import {
   extendTheme,
 } from "native-base";
 import { Routes } from "./src/routes";
+import { AuthProvider } from "./src/contexts/AuthProvider";
 
 // Define the config
 const config = {
@@ -25,7 +26,9 @@ declare module "native-base" {
 export default function App() {
   return (
     <NativeBaseProvider>
-      <Routes />
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </NativeBaseProvider>
   );
 }
