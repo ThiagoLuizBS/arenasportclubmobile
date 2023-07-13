@@ -12,33 +12,39 @@ export default function Header() {
         paddingLeft={2}
         paddingBottom={2}
         width="100%"
-        backgroundColor="emerald.100"
+        _dark={{ bg: "blueGray.900" }}
+        _light={{ bg: "emerald.100" }}
         flexDirection="row"
       >
         <VStack
           space={5}
           w="85%"
           h={12}
-          backgroundColor="emerald.600"
+          _dark={{ bg: "blueGray.600" }}
+          _light={{ bg: "emerald.600" }}
           borderRadius={16}
           justifyContent="center"
         >
           <VStack w="100%" space={5} alignSelf="center">
             <Input
               placeholder="Encontre equipes e campeonatos"
-              placeholderTextColor="orange.100"
               width="100%"
               borderWidth="0"
               py="3"
               px="1"
               fontSize="14"
-              color="orange.100"
+              _dark={{ color: "orange.50", placeholderTextColor: "orange.50" }}
+              _light={{
+                color: "orange.100",
+                placeholderTextColor: "orange.100",
+              }}
               InputLeftElement={
                 <Icon
                   m="2"
                   ml="3"
                   size="6"
-                  color="orange.100"
+                  _dark={{ color: "orange.50" }}
+                  _light={{ color: "orange.100" }}
                   as={<MaterialIcons name="search" />}
                 />
               }
@@ -47,7 +53,8 @@ export default function Header() {
                   m="2"
                   mr="3"
                   size="6"
-                  color="orange.100"
+                  _dark={{ color: "orange.50" }}
+                  _light={{ color: "orange.100" }}
                   as={<MaterialIcons name="mic" />}
                 />
               }
@@ -55,8 +62,18 @@ export default function Header() {
           </VStack>
         </VStack>
         <VStack w="15%" alignSelf="center">
-          <Avatar backgroundColor="emerald.600" size={10} alignSelf="center">
-            <AntDesign name="user" size={32} color="#ffedd5" />
+          <Avatar
+            _dark={{ bg: "blueGray.600" }}
+            _light={{ bg: "emerald.600" }}
+            size={10}
+            alignSelf="center"
+          >
+            <Icon
+              size="6"
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
+              as={<AntDesign name="user" />}
+            />
           </Avatar>
         </VStack>
       </Flex>

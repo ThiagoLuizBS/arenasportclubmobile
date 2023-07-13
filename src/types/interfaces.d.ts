@@ -12,5 +12,34 @@ export declare global {
     name: string;
   }
 
-  declare module "*.jpg";
+  export interface championship {
+    _id: {
+      championship: string;
+    };
+    matchs: match[];
+  }
+
+  export interface match {
+    status: string;
+    time: string;
+    schedule: string;
+    scoreHome: string;
+    scoreAway: string;
+    teams: {
+      homeId: string;
+      homeName: string;
+      homeImg: string;
+      teamHomeHref: string;
+      awayId: string;
+      awayName: string;
+      awayImg: string;
+      teamAwayHref: string;
+    };
+    events: {
+      time: string;
+      type: string;
+    }[];
+  }
+
+  declare module "*.png";
 }

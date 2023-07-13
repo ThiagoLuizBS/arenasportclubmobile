@@ -1,25 +1,22 @@
-import React from "react";
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
-import {
-  VStack,
-  Input,
-  Icon,
-  Flex,
-  Box,
-  Center,
-  HStack,
-  Pressable,
-  Text,
-} from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Icon, Box, Center, HStack, Pressable, Text } from "native-base";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 
 export default function Footer() {
+  const [selected, setSelected] = useState(0);
   const { navigate } = useNavigation();
-  const [selected, setSelected] = React.useState(0);
+  const navigationState = useNavigationState((state) => state);
+  const rotaAtual = navigationState?.routes[navigationState.index];
+  const nomeRotaAtual = rotaAtual?.name;
+
+  useEffect(() => {
+    if (nomeRotaAtual === "Home") setSelected(0);
+    else if (nomeRotaAtual === "Favorites") setSelected(1);
+    else if (nomeRotaAtual === "Championship") setSelected(2);
+    else if (nomeRotaAtual === "Match") setSelected(3);
+    else if (nomeRotaAtual !== undefined) setSelected(-1);
+  }, [nomeRotaAtual]);
 
   const handleSelected = (i: number) => {
     setSelected(i);
@@ -30,9 +27,15 @@ export default function Footer() {
   };
 
   return (
-    <Box bg="emerald.100" width="100%" alignSelf="center">
+    <Box
+      _dark={{ bg: "blueGray.900" }}
+      _light={{ bg: "emerald.100" }}
+      width="100%"
+      alignSelf="center"
+    >
       <HStack
-        bg="emerald.600"
+        _dark={{ bg: "blueGray.600" }}
+        _light={{ bg: "emerald.600" }}
         alignItems="center"
         shadow={6}
         paddingRight={2}
@@ -54,10 +57,15 @@ export default function Footer() {
                   }
                 />
               }
-              color="orange.100"
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
               size="md"
             />
-            <Text color="orange.100" fontSize="14">
+            <Text
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
+              fontSize="16"
+            >
               Resultados
             </Text>
           </Center>
@@ -76,10 +84,15 @@ export default function Footer() {
                   name={selected === 1 ? "ios-star" : "ios-star-outline"}
                 />
               }
-              color="orange.100"
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
               size="md"
             />
-            <Text color="orange.100" fontSize="14">
+            <Text
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
+              fontSize="16"
+            >
               Favoritos
             </Text>
           </Center>
@@ -98,10 +111,15 @@ export default function Footer() {
                   name={selected === 2 ? "robot" : "robot-outline"}
                 />
               }
-              color="orange.100"
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
               size="md"
             />
-            <Text color="orange.100" fontSize="14">
+            <Text
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
+              fontSize="16"
+            >
               Descubra
             </Text>
           </Center>
@@ -120,10 +138,15 @@ export default function Footer() {
                   name={selected === 3 ? "newspaper" : "newspaper-outline"}
                 />
               }
-              color="orange.100"
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
               size="md"
             />
-            <Text color="orange.100" fontSize="14">
+            <Text
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
+              fontSize="16"
+            >
               Notícias
             </Text>
           </Center>

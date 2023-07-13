@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Button, Center, Flex, View } from "native-base";
 import ChampionshipService from "../services/championship";
 
@@ -9,7 +9,6 @@ export default function Championship() {
 
   useEffect(() => {
     ChampionshipService.getChampionshipsPriority().then((response) => {
-      console.debug(response.data);
       setChampionshipList(response.data);
     });
   }, []);
