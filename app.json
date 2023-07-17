@@ -13,15 +13,25 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Allow $(PRODUCT_NAME) to use Face ID."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ],
+      "package": "com.thiagoluizbs.arenaSportClub"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +43,11 @@
           "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "51be4942-ffe1-4a78-9ec6-7ffc1f996371"
+      }
+    }
   }
 }

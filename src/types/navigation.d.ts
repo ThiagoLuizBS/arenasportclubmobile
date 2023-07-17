@@ -3,7 +3,7 @@ export declare global {
     interface RootParamList {
       Championship: undefined;
       Home: undefined;
-      Match: undefined;
+      Match: { itemId: number };
       Favorites: undefined;
     }
   }

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Text,
-  HStack,
-  Switch,
-  useColorMode,
-  NativeBaseProvider,
-  extendTheme,
-} from "native-base";
+import { NativeBaseProvider, extendTheme } from "native-base";
 import { Routes } from "./src/routes";
 import { AuthProvider } from "./src/contexts/AuthProvider";
 

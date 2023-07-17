@@ -23,23 +23,22 @@ export default function Footer() {
     if (i === 0) navigate("Home");
     else if (i === 1) navigate("Favorites");
     else if (i === 2) navigate("Championship");
-    else if (i === 3) navigate("Match");
+    else if (i === 3) navigate("Match", { itemId: 22 });
   };
 
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
-      _light={{ bg: "emerald.100" }}
+      _light={{ bg: "emerald.800" }}
       width="100%"
       alignSelf="center"
     >
       <HStack
-        _dark={{ bg: "blueGray.600" }}
-        _light={{ bg: "emerald.600" }}
+        _dark={{ bg: "blueGray.900" }}
+        _light={{ bg: "emerald.800" }}
         alignItems="center"
         shadow={6}
-        paddingRight={2}
-        paddingLeft={2}
+        px={2}
       >
         <Pressable
           opacity={selected === 0 ? 1 : 0.5}

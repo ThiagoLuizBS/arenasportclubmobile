@@ -16,7 +16,11 @@ export default function Championship() {
   return (
     <Center bg="emerald.100" px={4} flex={1}>
       Championship
-      <Button p={4} borderRadius={16} onPress={() => navigate("Match")}>
+      <Button
+        p={4}
+        borderRadius={16}
+        onPress={() => navigate("Match", { itemId: 32 })}
+      >
         Match
       </Button>
     </Center>

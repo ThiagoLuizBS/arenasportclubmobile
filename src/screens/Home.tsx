@@ -23,6 +23,8 @@ import { useNavigation } from "@react-navigation/native";
 import MatchService from "../services/match";
 import logo from "../assets/logo1.png";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
+import SkeletonHome from "../components/home/SkeletonHome";
+import SelectHome from "../components/home/SelectHome";
 
 type expandChampionship = {
   i: number;
@@ -49,18 +51,16 @@ export default function Home() {
   };
 
   const { navigate } = useNavigation();
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
   const [loading, setLoading] = useState(true);
   const [matchsData, setMatchsData] = useState([]);
   const [dateFilter, setDateFilter] = useState(getTodayDate(0));
-  const [buttonExpand, setButtonExpand] = useState<expandChampionship[]>([]);
   const [filterSelected, setFilterSelected] = useState("");
   const [buttonChange, setButtonChange] = useState("all");
 
   useEffect(() => {
     MatchService.getMatchsByDate(dateFilter, []).then((response) => {
       setMatchsData(response.data);
-      setExpand(response.data.length);
       setLoading(false);
     });
   }, [dateFilter]);
@@ -75,11 +75,13 @@ export default function Home() {
   });
 
   const changeDate = (dateChange: string) => {
-    setLoading(true);
-    setDateFilter(dateChange);
-    if (dateChange !== getTodayDate(0)) {
-      setButtonChange("all");
-      setFilterSelected("");
+    if (dateFilter !== dateChange) {
+      setLoading(true);
+      setDateFilter(dateChange);
+      if (dateChange !== getTodayDate(0)) {
+        setButtonChange("all");
+        setFilterSelected("");
+      }
     }
   };
 
@@ -89,27 +91,6 @@ export default function Home() {
     else if (buttonName === "live") setFilterSelected("AO VIVO");
     else if (buttonName === "finished") setFilterSelected("ENCERRADO");
     else setFilterSelected("A REALIZAR");
-  };
-
-  const setExpand = (length: number) => {
-    const array: expandChampionship[] = [];
-    for (let index = 0; index < length; index++) {
-      array.push({ i: index, value: true });
-    }
-    setButtonExpand(array);
-  };
-
-  const changeExpand = (key: number) => {
-    setButtonExpand(
-      buttonExpand.map((item) => {
-        if (item.i === key && item.value === true)
-          return { i: key, value: false };
-        else if (item.i === key && item.value === false)
-          return { i: key, value: true };
-
-        return item;
-      })
-    );
   };
 
   const haveChampionships = (data: championship[]) => {
@@ -179,477 +160,206 @@ export default function Home() {
   };
 
   return (
-    <>
-      <Center
-        _dark={{ bg: "blueGray.900" }}
-        _light={{ bg: "emerald.100" }}
-        pb={2}
-      >
-        <HStack space={5}>
-          <Select
-            selectedValue={buttonChange}
-            defaultValue="all"
-            accessibilityLabel="Escolha o tipo"
-            placeholder="Escolha o tipo"
-            fontSize={16}
-            minWidth={140}
-            borderRadius={16}
-            borderWidth={0}
-            my={1}
-            _dark={{ bg: "blueGray.600", color: "orange.50" }}
-            _light={{ bg: "emerald.600", color: "orange.100" }}
-            dropdownIcon={
-              <Icon
-                name="down"
-                size="4"
-                mr={2}
-                _dark={{ color: "orange.50" }}
-                _light={{ color: "orange.100" }}
-                as={<AntDesign name="down" />}
-              />
-            }
-            _selectedItem={
-              colorMode === "light"
-                ? {
-                    bg: "emerald.100",
-                    color: "orange.100",
-                  }
-                : {
-                    bg: "blueGray.600",
-                    color: "orange.50",
-                  }
-            }
-            onValueChange={(itemValue) => changeSelected(itemValue)}
-          >
-            <Select.Item label="Todos" value="all" />
-            <Select.Item
-              label="Ao vivo"
-              value="live"
-              isDisabled={getTodayDate(0) !== dateFilter}
-            />
-            <Select.Item
-              label="Encerrados"
-              value="finished"
-              isDisabled={getTodayDate(0) !== dateFilter}
-            />
-            <Select.Item
-              label="Próximos"
-              value="next"
-              isDisabled={getTodayDate(0) !== dateFilter}
-            />
-          </Select>
-          <Select
-            selectedValue={dateFilter}
-            defaultValue="Hoje"
-            accessibilityLabel="Escolha a data"
-            placeholder="Escolha a data"
-            minWidth={140}
-            fontSize={16}
-            borderRadius={16}
-            borderWidth={0}
-            my={1}
-            _dark={{ bg: "blueGray.600", color: "orange.50" }}
-            _light={{ bg: "emerald.600", color: "orange.100" }}
-            dropdownIcon={
-              <Icon
-                name="down"
-                size="4"
-                mr={2}
-                _dark={{ color: "orange.50" }}
-                _light={{ color: "orange.100" }}
-                as={<AntDesign name="down" />}
-              />
-            }
-            _selectedItem={
-              colorMode === "light"
-                ? {
-                    bg: "emerald.100",
-                    color: "orange.100",
-                  }
-                : {
-                    bg: "blueGray.600",
-                    color: "orange.50",
-                  }
-            }
-            onValueChange={(itemValue) => changeDate(itemValue)}
-          >
-            <Select.Item label={getFilterSelect(-2)} value={getTodayDate(-2)} />
-            <Select.Item label={getFilterSelect(-1)} value={getTodayDate(-1)} />
-            <Select.Item label="Hoje" value={getTodayDate(0)} />
-            <Select.Item label={getFilterSelect(1)} value={getTodayDate(1)} />
-            <Select.Item label={getFilterSelect(2)} value={getTodayDate(2)} />
-          </Select>
-        </HStack>
-      </Center>
+    <Box
+      _dark={{ bg: "blueGray.900" }}
+      _light={{ bg: "emerald.100" }}
+      flex={1}
+      w="100%"
+    >
+      <SelectHome
+        buttonChange={buttonChange}
+        colorMode={colorMode}
+        changeSelected={changeSelected}
+        getTodayDate={getTodayDate}
+        dateFilter={dateFilter}
+        changeDate={changeDate}
+        getFilterSelect={getFilterSelect}
+      />
       {loading ? (
-        <Center
-          w="100%"
-          flex={1}
-          _dark={{ bg: "blueGray.900" }}
-          _light={{ bg: "emerald.100" }}
-        >
-          <VStack
-            w="90%"
-            maxW={400}
-            space={2}
-            rounded="md"
-            alignItems="center"
-            justifyContent="center"
-            _dark={{ bg: "blueGray.900" }}
-            _light={{ bg: "emerald.100" }}
-          >
-            <HStack>
-              <Skeleton
-                h="10"
-                w="90%"
-                _dark={{ endColor: "blueGray.600" }}
-                _light={{ endColor: "emerald.600" }}
-              />
-            </HStack>
-            <HStack space="2" alignItems="center" justifyContent="center">
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="10"
-                rounded="full"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                rounded="2xl"
-                h="4"
-                maxW="200"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="5"
-                rounded="full"
-              />
-            </HStack>
-            <HStack space="2" alignItems="center" justifyContent="center">
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="10"
-                rounded="full"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                rounded="2xl"
-                h="4"
-                maxW="200"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="5"
-                rounded="full"
-              />
-            </HStack>
-            <HStack>
-              <Skeleton
-                h="10"
-                w="90%"
-                _dark={{ endColor: "blueGray.600" }}
-                _light={{ endColor: "emerald.600" }}
-              />
-            </HStack>
-            <HStack space="2" alignItems="center" justifyContent="center">
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="10"
-                rounded="full"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                rounded="2xl"
-                h="4"
-                maxW="200"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="5"
-                rounded="full"
-              />
-            </HStack>
-            <HStack space="2" alignItems="center" justifyContent="center">
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="10"
-                rounded="full"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                rounded="2xl"
-                h="4"
-                maxW="200"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="5"
-                rounded="full"
-              />
-            </HStack>
-            <HStack>
-              <Skeleton
-                h="10"
-                w="90%"
-                _dark={{ endColor: "blueGray.600" }}
-                _light={{ endColor: "emerald.600" }}
-              />
-            </HStack>
-            <HStack space="2" alignItems="center" justifyContent="center">
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="10"
-                rounded="full"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                rounded="2xl"
-                h="4"
-                maxW="200"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="5"
-                rounded="full"
-              />
-            </HStack>
-            <HStack space="2" alignItems="center" justifyContent="center">
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="10"
-                rounded="full"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                rounded="2xl"
-                h="4"
-                maxW="200"
-              />
-              <Skeleton
-                _dark={{ endColor: "blueGray.500" }}
-                _light={{ endColor: "emerald.200" }}
-                size="5"
-                rounded="full"
-              />
-            </HStack>
-          </VStack>
-        </Center>
+        <SkeletonHome />
       ) : matchsData?.length === 0 ? (
-        <Center>NENHUMA PARTIDA ENCONTRADA PARA O DIA {dateFilter}</Center>
+        <Center px={2}>
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            NENHUMA PARTIDA ENCONTRADA
+          </Text>
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            PARA O DIA {dateFilter.replaceAll("-", "/")}
+          </Text>
+        </Center>
       ) : haveChampionships(matchsData) ? (
         <ScrollView>
           {matchsData?.map((championship: championship, i) =>
             haveMatchs(championship) ? (
               <Fragment key={i}>
                 <Flex
+                  _dark={{ bg: "blueGray.700", color: "orange.50" }}
+                  _light={{ bg: "emerald.700", color: "orange.100" }}
                   alignSelf="center"
                   justifyContent="center"
                   px={2}
                   py={1}
                   width="100%"
-                  _dark={{ bg: "blueGray.600", color: "orange.50" }}
-                  _light={{ bg: "emerald.600", color: "orange.100" }}
+                  h={10}
                   flexDirection="row"
                 >
-                  <VStack w="10%">
-                    <Button variant="ghost" onPress={() => changeExpand(i)}>
-                      {buttonExpand[i]?.value ? (
-                        <Icon
-                          name="down"
-                          size="4"
-                          _dark={{ color: "orange.50" }}
-                          _light={{ color: "orange.100" }}
-                          as={<AntDesign name="up" />}
-                        />
-                      ) : (
-                        <Icon
-                          name="down"
-                          size="4"
-                          _dark={{ color: "orange.50" }}
-                          _light={{ color: "orange.100" }}
-                          as={<AntDesign name="down" />}
-                        />
-                      )}
-                    </Button>
-                  </VStack>
-                  <VStack
-                    w="80%"
+                  <HStack
+                    w="100%"
                     alignSelf="center"
                     justifyContent="center"
                     alignItems="center"
                   >
                     <Text
+                      _dark={{ color: "orange.50" }}
+                      _light={{ color: "orange.100" }}
                       overflow="hidden"
                       numberOfLines={1}
                       ellipsizeMode="tail"
-                      _dark={{ color: "orange.50" }}
-                      _light={{ color: "orange.100" }}
+                      fontSize={16}
+                      fontWeight="bold"
                     >
                       {championship._id.championship}
                     </Text>
-                  </VStack>
-                  <VStack w="10%"></VStack>
+                  </HStack>
                 </Flex>
-                <>
-                  {buttonExpand[i]?.value ? (
-                    championship?.matchs.map((match, i) =>
-                      filterSelected === "" ||
-                      match.status === filterSelected ? (
-                        <Fragment key={i}>
-                          <HStack
-                            w="100%"
-                            h={24}
-                            _dark={{ bg: "blueGray.500" }}
-                            _light={{ bg: "emerald.200" }}
-                            px={2}
-                            py={1}
-                          >
-                            <VStack w="80%">
-                              <HStack h="50%">
-                                <VStack h="100%" w="20%">
-                                  <Image
-                                    source={{ uri: match.teams?.homeImg }}
-                                    alt={`${match.teams?.homeName}`}
-                                    size={35}
-                                    m="auto"
-                                  />
-                                </VStack>
-                                <VStack
-                                  h="100%"
-                                  w="80%"
-                                  justifyContent="center"
-                                >
-                                  <Text
-                                    _dark={{ color: "white" }}
-                                    _light={{ color: "black" }}
-                                    fontSize="16"
-                                  >
-                                    {match.teams?.homeName}
-                                  </Text>
-                                </VStack>
-                              </HStack>
-                              <HStack h="50%">
-                                <VStack h="100%" w="20%">
-                                  <Image
-                                    source={{ uri: match.teams?.awayImg }}
-                                    alt={`${match.teams?.awayName}`}
-                                    size={35}
-                                    m="auto"
-                                  />
-                                </VStack>
-                                <VStack
-                                  h="100%"
-                                  w="80%"
-                                  justifyContent="center"
-                                >
-                                  <Text
-                                    _dark={{ color: "white" }}
-                                    _light={{ color: "black" }}
-                                    fontSize="16"
-                                  >
-                                    {match.teams?.awayName}
-                                  </Text>
-                                </VStack>
-                              </HStack>
+                {championship?.matchs.map((match, i) =>
+                  filterSelected === "" || match.status === filterSelected ? (
+                    <Fragment key={i}>
+                      <HStack
+                        w="100%"
+                        h={24}
+                        _dark={{ bg: "blueGray.500" }}
+                        _light={{ bg: "emerald.200" }}
+                        px={2}
+                        py={1}
+                      >
+                        <VStack w="80%">
+                          <HStack h="50%">
+                            <VStack h="100%" w="20%">
+                              <Image
+                                source={{ uri: match.teams?.homeImg }}
+                                alt={`${match.teams?.homeName}`}
+                                size="30"
+                                m="auto"
+                              />
                             </VStack>
-                            <VStack w="5%">
-                              <Center>
-                                <HStack
-                                  h="50%"
-                                  justifyContent="center"
-                                  alignItems="center"
-                                >
-                                  <Text
-                                    _dark={{ color: "white" }}
-                                    _light={{ color: "black" }}
-                                    fontSize="18"
-                                    fontWeight="bold"
-                                  >
-                                    {match.scoreHome}
-                                  </Text>
-                                </HStack>
-                              </Center>
-                              <HStack
-                                h="50%"
-                                justifyContent="center"
-                                alignItems="center"
+                            <VStack h="100%" w="80%" justifyContent="center">
+                              <Text
+                                _dark={{ color: "white" }}
+                                _light={{ color: "black" }}
+                                fontSize={16}
                               >
-                                <Text
-                                  _dark={{ color: "white" }}
-                                  _light={{ color: "black" }}
-                                  fontSize="18"
-                                  fontWeight="bold"
-                                >
-                                  {match.scoreAway}
-                                </Text>
-                              </HStack>
-                            </VStack>
-                            <VStack
-                              w="15%"
-                              justifyContent="center"
-                              alignItems="center"
-                              _dark={{ color: "white" }}
-                              _light={{ color: "black" }}
-                            >
-                              {match?.status === "AO VIVO" ? (
-                                <Text fontSize="18" fontWeight="bold">
-                                  {changeMinMatch(match)}
-                                </Text>
-                              ) : match?.status === "ENCERRADO" ? (
-                                <Text fontSize="18" fontWeight="bold">
-                                  FIM
-                                </Text>
-                              ) : (
-                                <Text fontSize="18" fontWeight="bold">
-                                  {match.schedule}
-                                </Text>
-                              )}
-                              {match.status === "AO VIVO" &&
-                                checkLastEvent(match) !== "" && (
-                                  <Icon
-                                    size={6}
-                                    _dark={{ color: "blueGray.600" }}
-                                    _light={{ color: "emerald.600" }}
-                                    as={<Ionicons name={"ios-football"} />}
-                                  />
-                                )}
+                                {match.teams?.homeName}
+                              </Text>
                             </VStack>
                           </HStack>
-                          {i !== championship?.matchs.length - 1 && (
-                            <Divider
-                              _dark={{
-                                bg: "blueGray.800",
-                              }}
-                              _light={{
-                                bg: "emerald.600",
-                              }}
-                            />
+                          <HStack h="50%">
+                            <VStack h="100%" w="20%">
+                              <Image
+                                source={{ uri: match.teams?.awayImg }}
+                                alt={`${match.teams?.awayName}`}
+                                size="30"
+                                m="auto"
+                              />
+                            </VStack>
+                            <VStack h="100%" w="80%" justifyContent="center">
+                              <Text
+                                _dark={{ color: "white" }}
+                                _light={{ color: "black" }}
+                                fontSize={16}
+                              >
+                                {match.teams?.awayName}
+                              </Text>
+                            </VStack>
+                          </HStack>
+                        </VStack>
+                        <VStack w="5%">
+                          <Center>
+                            <HStack
+                              h="50%"
+                              justifyContent="center"
+                              alignItems="center"
+                            >
+                              <Text
+                                _dark={{ color: "white" }}
+                                _light={{ color: "black" }}
+                                fontSize={18}
+                                fontWeight="bold"
+                              >
+                                {match.scoreHome}
+                              </Text>
+                            </HStack>
+                          </Center>
+                          <HStack
+                            h="50%"
+                            justifyContent="center"
+                            alignItems="center"
+                          >
+                            <Text
+                              _dark={{ color: "white" }}
+                              _light={{ color: "black" }}
+                              fontSize={18}
+                              fontWeight="bold"
+                            >
+                              {match.scoreAway}
+                            </Text>
+                          </HStack>
+                        </VStack>
+                        <VStack
+                          w="15%"
+                          justifyContent="center"
+                          alignItems="center"
+                          _dark={{ color: "white" }}
+                          _light={{ color: "black" }}
+                        >
+                          {match?.status === "AO VIVO" ? (
+                            <Text fontSize={18} fontWeight="bold">
+                              {changeMinMatch(match)}
+                            </Text>
+                          ) : match?.status === "ENCERRADO" ? (
+                            <Text fontSize={18} fontWeight="bold">
+                              FIM
+                            </Text>
+                          ) : (
+                            <Text fontSize={18} fontWeight="bold">
+                              {match.schedule}
+                            </Text>
                           )}
-                        </Fragment>
-                      ) : (
-                        <Fragment key={i}></Fragment>
-                      )
-                    )
+                          {match.status === "AO VIVO" &&
+                            checkLastEvent(match) !== "" && (
+                              <Icon
+                                size={6}
+                                _dark={{ color: "blueGray.500" }}
+                                _light={{ color: "emerald.800" }}
+                                as={<Ionicons name={"ios-football"} />}
+                              />
+                            )}
+                        </VStack>
+                      </HStack>
+                      {i !== championship?.matchs.length - 1 && (
+                        <Divider
+                          _dark={{
+                            bg: "blueGray.900",
+                          }}
+                          _light={{
+                            bg: "emerald.800",
+                          }}
+                        />
+                      )}
+                    </Fragment>
                   ) : (
-                    <></>
-                  )}
-                </>
+                    <Fragment key={i}></Fragment>
+                  )
+                )}
               </Fragment>
             ) : (
               <Fragment key={i}></Fragment>
@@ -664,30 +374,55 @@ export default function Home() {
           >
             <VStack space={5} alignItems="center">
               <Image source={logo} alt="Alternate Text" size="xl" />
-              <Heading size="lg">Arena Sport Club</Heading>
-              <HStack space={2} alignItems="center">
-                <Text>Dark</Text>
-                <Switch
-                  isChecked={colorMode === "light"}
-                  onToggle={toggleColorMode}
-                  aria-label={
-                    colorMode === "light"
-                      ? "switch to dark mode"
-                      : "switch to light mode"
-                  }
-                />
-                <Text>Light</Text>
-              </HStack>
+              <Heading
+                size="lg"
+                _dark={{ color: "white" }}
+                _light={{ color: "black" }}
+              >
+                Arena Sport Club
+              </Heading>
             </VStack>
           </Center>
         </ScrollView>
       ) : filterSelected === "ENCERRADO" ? (
-        <Center>NENHUMA PARTIDA ENCERRADA PARA O DIA {dateFilter}</Center>
+        <Center px={2}>
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            NENHUMA PARTIDA ENCERRADA
+          </Text>
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            PARA O DIA {dateFilter.replaceAll("-", "/")}
+          </Text>
+        </Center>
       ) : (
-        <Center>
-          NENHUMA PARTIDA {filterSelected} PARA O DIA {dateFilter}
+        <Center px={2}>
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            NENHUMA PARTIDA {filterSelected}
+          </Text>
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            PARA O DIA {dateFilter.replaceAll("-", "/")}
+          </Text>
         </Center>
       )}
-    </>
+    </Box>
   );
 }
