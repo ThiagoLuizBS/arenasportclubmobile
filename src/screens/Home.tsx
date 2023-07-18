@@ -199,7 +199,7 @@ export default function Home() {
       ) : haveChampionships(matchsData) ? (
         <ScrollView>
           {matchsData?.map((championship: championship, i) =>
-            haveMatchs(championship) ? (
+            haveMatchs(championship) && i < 3 ? (
               <Fragment key={i}>
                 <Flex
                   _dark={{ bg: "blueGray.700", color: "orange.50" }}
