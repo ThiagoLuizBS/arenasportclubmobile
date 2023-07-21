@@ -31,7 +31,7 @@ export default function ModalHeader({
           <Modal.Body>
             <Pressable
               onPress={() => {
-                navigate("Favorites");
+                navigate("SignUp");
                 setOpen(false);
               }}
               rounded="8"

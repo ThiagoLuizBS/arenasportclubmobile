@@ -5,6 +5,7 @@ export declare global {
       Home: undefined;
       Match: { itemId: number };
       Favorites: undefined;
+      SignUp: undefined;
     }
   }
 }
