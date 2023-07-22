@@ -14,7 +14,7 @@ export default function Footer() {
     if (nomeRotaAtual === "Home") setSelected(0);
     else if (nomeRotaAtual === "Favorites") setSelected(1);
     else if (nomeRotaAtual === "Championship") setSelected(2);
-    else if (nomeRotaAtual === "Match") setSelected(3);
+    else if (nomeRotaAtual === "News") setSelected(3);
     else if (nomeRotaAtual !== undefined) setSelected(-1);
   }, [nomeRotaAtual]);
 
@@ -23,7 +23,7 @@ export default function Footer() {
     if (i === 0) navigate("Home");
     else if (i === 1) navigate("Favorites");
     else if (i === 2) navigate("Championship");
-    else if (i === 3) navigate("Match");
+    else if (i === 3) navigate("News");
   };
 
   return (

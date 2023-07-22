@@ -5,6 +5,7 @@ export declare global {
       Home: undefined;
       Match: undefined;
       Favorites: undefined;
+      News: undefined;
     }
   }
 }
