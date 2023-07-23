@@ -33,8 +33,8 @@ export default function SelectHome({
         borderRadius={16}
         borderWidth={0}
         my={1}
-        _dark={{ bg: "blueGray.500", color: "orange.50" }}
-        _light={{ bg: "emerald.800", color: "orange.100" }}
+        _dark={{ bg: "blueGray.700", color: "orange.50" }}
+        _light={{ bg: "emerald.700", color: "orange.100" }}
         dropdownIcon={
           <Icon
             name="down"
@@ -48,11 +48,11 @@ export default function SelectHome({
         _selectedItem={
           colorMode === "light"
             ? {
-                bg: "emerald.200",
+                bg: "emerald.300",
                 color: "orange.100",
               }
             : {
-                bg: "blueGray.500",
+                bg: "blueGray.700",
                 color: "orange.50",
               }
         }
@@ -86,8 +86,8 @@ export default function SelectHome({
         borderRadius={16}
         borderWidth={0}
         my={1}
-        _dark={{ bg: "blueGray.500", color: "orange.50" }}
-        _light={{ bg: "emerald.800", color: "orange.100" }}
+        _dark={{ bg: "blueGray.700", color: "orange.50" }}
+        _light={{ bg: "emerald.700", color: "orange.100" }}
         dropdownIcon={
           <Icon
             name="down"
@@ -101,11 +101,11 @@ export default function SelectHome({
         _selectedItem={
           colorMode === "light"
             ? {
-                bg: "emerald.200",
+                bg: "emerald.300",
                 color: "orange.100",
               }
             : {
-                bg: "blueGray.500",
+                bg: "blueGray.700",
                 color: "orange.50",
               }
         }

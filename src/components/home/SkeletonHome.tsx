@@ -10,14 +10,14 @@ export default function SkeletonFunction() {
         alignItems="center"
         justifyContent="center"
         _dark={{ bg: "blueGray.900" }}
-        _light={{ bg: "emerald.100" }}
+        _light={{ bg: "success.100" }}
       >
         <HStack>
           <Skeleton
             h="10"
             w="100%"
-            _dark={{ endColor: "blueGray.500" }}
-            _light={{ endColor: "emerald.800" }}
+            _dark={{ endColor: "blueGray.700" }}
+            _light={{ endColor: "emerald.700" }}
           />
         </HStack>
         <HStack space="2" alignItems="center" justifyContent="center">
@@ -66,8 +66,8 @@ export default function SkeletonFunction() {
           <Skeleton
             h="10"
             w="100%"
-            _dark={{ endColor: "blueGray.500" }}
-            _light={{ endColor: "emerald.800" }}
+            _dark={{ endColor: "blueGray.700" }}
+            _light={{ endColor: "emerald.700" }}
           />
         </HStack>
         <HStack space="2" alignItems="center" justifyContent="center">
@@ -116,8 +116,8 @@ export default function SkeletonFunction() {
           <Skeleton
             h="10"
             w="100%"
-            _dark={{ endColor: "blueGray.500" }}
-            _light={{ endColor: "emerald.800" }}
+            _dark={{ endColor: "blueGray.700" }}
+            _light={{ endColor: "emerald.700" }}
           />
         </HStack>
         <HStack space="2" alignItems="center" justifyContent="center">

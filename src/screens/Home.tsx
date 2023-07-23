@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   Text,
   Center,
@@ -19,12 +25,17 @@ import {
   Icon,
   Divider,
 } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import MatchService from "../services/match";
 import logo from "../assets/logo1.png";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import SkeletonHome from "../components/home/SkeletonHome";
 import SelectHome from "../components/home/SelectHome";
+import { RouteContext } from "../contexts/RouteProvider";
 
 type expandChampionship = {
   i: number;
@@ -57,6 +68,14 @@ export default function Home() {
   const [dateFilter, setDateFilter] = useState(getTodayDate(0));
   const [filterSelected, setFilterSelected] = useState("");
   const [buttonChange, setButtonChange] = useState("all");
+  const context = useContext(RouteContext);
+  const route = useRoute();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (context) context.handleRoute(route.name);
+    }, [])
+  );
 
   useEffect(() => {
     MatchService.getMatchsByDate(dateFilter, []).then((response) => {
@@ -162,7 +181,7 @@ export default function Home() {
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
-      _light={{ bg: "emerald.100" }}
+      _light={{ bg: "success.100" }}
       flex={1}
       w="100%"
     >
@@ -237,8 +256,8 @@ export default function Home() {
                       <HStack
                         w="100%"
                         h={24}
-                        _dark={{ bg: "blueGray.500" }}
-                        _light={{ bg: "emerald.200" }}
+                        _dark={{ bg: "blueGray.900" }}
+                        _light={{ bg: "success.100" }}
                         px={2}
                         py={1}
                       >
@@ -338,8 +357,8 @@ export default function Home() {
                             checkLastEvent(match) !== "" && (
                               <Icon
                                 size={6}
-                                _dark={{ color: "blueGray.500" }}
-                                _light={{ color: "emerald.800" }}
+                                _dark={{ color: "blueGray.700" }}
+                                _light={{ color: "emerald.700" }}
                                 as={<Ionicons name={"ios-football"} />}
                               />
                             )}
@@ -351,7 +370,7 @@ export default function Home() {
                             bg: "blueGray.900",
                           }}
                           _light={{
-                            bg: "emerald.800",
+                            bg: "emerald.700",
                           }}
                         />
                       )}
@@ -367,13 +386,13 @@ export default function Home() {
           )}
           <Center
             _dark={{ bg: "blueGray.900" }}
-            _light={{ bg: "emerald.100" }}
+            _light={{ bg: "success.100" }}
             px={4}
             py={4}
             flex={1}
           >
             <VStack space={5} alignItems="center">
-              <Image source={logo} alt="Alternate Text" size="xl" />
+              <Image source={logo} alt="ArenaSportClub" size="xl" />
               <Heading
                 size="lg"
                 _dark={{ color: "white" }}
@@ -410,6 +429,7 @@ export default function Home() {
             _light={{ color: "black" }}
             fontSize={20}
             fontWeight="bold"
+            onPress={() => navigate("Settings")}
           >
             NENHUMA PARTIDA {filterSelected}
           </Text>

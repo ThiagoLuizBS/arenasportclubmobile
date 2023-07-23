@@ -8,7 +8,7 @@ type AuthProviderType = {
   handleLogout: () => void;
 };
 
-const Context = createContext<null | AuthProviderType>(null);
+const AuthContext = createContext<null | AuthProviderType>(null);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
@@ -43,10 +43,16 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <Context.Provider value={{ authenticated, handleLogin, handleLogout }}>
+    <AuthContext.Provider
+      value={{
+        authenticated,
+        handleLogin,
+        handleLogout,
+      }}
+    >
       {children}
-    </Context.Provider>
+    </AuthContext.Provider>
   );
 }
 
-export { Context, AuthProvider };
+export { AuthContext, AuthProvider };
