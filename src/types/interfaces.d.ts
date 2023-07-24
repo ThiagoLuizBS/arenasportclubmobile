@@ -41,5 +41,20 @@ export declare global {
     }[];
   }
 
+  export interface news {
+    _id: {
+      category: string;
+      priority: string;
+    };
+    news: [
+      {
+        href: string;
+        title: string;
+        subtitle: string;
+        img: string;
+      }
+    ];
+  }
+
   declare module "*.png";
 }

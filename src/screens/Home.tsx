@@ -5,20 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import {
-  Text,
-  Center,
-  VStack,
-  HStack,
-  Box,
-  Image,
-  useColorMode,
-  Flex,
-  ScrollView,
-  Icon,
-  Divider,
-} from "native-base";
-import { Ionicons } from "@expo/vector-icons";
+import { Text, HStack, Box, useColorMode, Flex, ScrollView } from "native-base";
 import {
   useFocusEffect,
   useNavigation,
@@ -35,11 +22,6 @@ import {
   NoMatchsToday,
 } from "../components/results/NoMatchs";
 import Match from "../components/results/Match";
-
-type expandChampionship = {
-  i: number;
-  value: boolean;
-};
 
 export default function Home() {
   const getTodayDate = (x: number) => {

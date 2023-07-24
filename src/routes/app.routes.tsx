@@ -3,6 +3,7 @@ import Home from "../screens/Home";
 import Match from "../screens/Match";
 import Championship from "../screens/Championship";
 import Favorites from "../screens/Favorites";
+import News from "../screens/News";
 import Settings from "../screens/Settings";
 
 export function AppRoutes() {
@@ -19,6 +20,7 @@ export function AppRoutes() {
       <Screen name="Match" component={Match} />
       <Screen name="Favorites" component={Favorites} />
       <Screen name="Settings" component={Settings} />
+      <Screen name="News" component={News} />
     </Navigator>
   );
 }
