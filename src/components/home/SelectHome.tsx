@@ -1,5 +1,5 @@
-import { AntDesign } from "@expo/vector-icons";
 import { HStack, Select, Icon, ColorMode } from "native-base";
+import { AntDesign } from "@expo/vector-icons";
 
 type SelectHomeProps = {
   buttonChange: string;

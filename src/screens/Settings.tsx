@@ -15,15 +15,12 @@ import {
   VStack,
   useColorMode,
   Image,
-  Menu,
-  HamburgerIcon,
   Select,
   Icon,
   Divider,
-  Button,
 } from "native-base";
 import logo from "../assets/logo1.png";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
 
 export default function Settings() {

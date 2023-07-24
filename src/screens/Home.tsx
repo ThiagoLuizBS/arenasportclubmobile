@@ -9,33 +9,32 @@ import {
   Text,
   Center,
   VStack,
-  Heading,
   HStack,
   Box,
-  Link,
-  Button,
   Image,
   useColorMode,
-  Switch,
-  Skeleton,
   Flex,
   ScrollView,
-  Select,
-  CheckIcon,
   Icon,
   Divider,
 } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
 import MatchService from "../services/match";
-import logo from "../assets/logo1.png";
-import { Ionicons } from "@expo/vector-icons";
+import { RouteContext } from "../contexts/RouteProvider";
 import SkeletonHome from "../components/home/SkeletonHome";
 import SelectHome from "../components/home/SelectHome";
-import { RouteContext } from "../contexts/RouteProvider";
+import Branding from "../components/app/Branding";
+import {
+  NoMatchsEnded,
+  NoMatchsFilteredToday,
+  NoMatchsToday,
+} from "../components/results/NoMatchs";
+import Match from "../components/results/Match";
 
 type expandChampionship = {
   i: number;
@@ -140,44 +139,6 @@ export default function Home() {
     if (count === 0) return false;
   };
 
-  const checkLastEvent = (match: match) => {
-    let event = "";
-    if (match.events?.length > 0) {
-      let timeLastEvent = parseInt(
-        match.events[match.events?.length - 1].time.replace("'", "")
-      );
-      let timeMatch = parseInt(match.time.replace("MIN", ""));
-
-      if (
-        match.events[match.events.length - 1].type === "GOAL" &&
-        timeMatch <= timeLastEvent + 2
-      ) {
-        event = "GOL";
-      }
-    }
-
-    return event;
-  };
-
-  const changeMinMatch = (match: match) => {
-    let time;
-    if (match?.time === "INTERVALO")
-      time = match?.time?.replace("INTERVALO", "INT");
-    else if (match?.time === "SUSPENSO")
-      time = match?.time?.replace("SUSPENSO", "SUSP");
-    else if (match?.time === "ADIADO")
-      time = match?.time?.replace("ADIADO", "CANC");
-    else if (match?.time === "ATRASADO")
-      time = match?.time?.replace("ATRASADO", "ATRA");
-    else if (match?.time === "INTERROMPIDO")
-      time = match?.time?.replace("INTERROMPIDO", "SUSP");
-    else if (match?.time === "PÊNALTIS")
-      time = match?.time?.replace("PÊNALTIS", "PEN");
-    else time = match?.time?.replace(" MIN", "'");
-
-    return time;
-  };
-
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
@@ -197,249 +158,65 @@ export default function Home() {
       {loading ? (
         <SkeletonHome />
       ) : matchsData?.length === 0 ? (
-        <Center px={2}>
-          <Text
-            _dark={{ color: "white" }}
-            _light={{ color: "black" }}
-            fontSize={20}
-            fontWeight="bold"
-          >
-            NENHUMA PARTIDA ENCONTRADA
-          </Text>
-          <Text
-            _dark={{ color: "white" }}
-            _light={{ color: "black" }}
-            fontSize={20}
-            fontWeight="bold"
-          >
-            PARA O DIA {dateFilter.replaceAll("-", "/")}
-          </Text>
-        </Center>
+        <NoMatchsToday dateFilter={dateFilter} />
       ) : haveChampionships(matchsData) ? (
         <ScrollView>
-          {matchsData?.map((championship: championship, i) =>
-            haveMatchs(championship) && i < 3 ? (
-              <Fragment key={i}>
-                <Flex
-                  _dark={{ bg: "blueGray.700", color: "orange.50" }}
-                  _light={{ bg: "emerald.700", color: "orange.100" }}
-                  alignSelf="center"
-                  justifyContent="center"
-                  px={2}
-                  py={1}
-                  width="100%"
-                  h={10}
-                  flexDirection="row"
-                >
-                  <HStack
-                    w="100%"
+          {matchsData?.map(
+            (championship: championship, i) =>
+              haveMatchs(championship) &&
+              i < 3 && (
+                <Fragment key={i}>
+                  <Flex
+                    _dark={{ bg: "blueGray.700", color: "orange.50" }}
+                    _light={{ bg: "emerald.700", color: "orange.100" }}
+                    px={2}
+                    py={1}
+                    width="100%"
+                    h={10}
+                    flexDirection="row"
                     alignSelf="center"
                     justifyContent="center"
-                    alignItems="center"
                   >
-                    <Text
-                      _dark={{ color: "orange.50" }}
-                      _light={{ color: "orange.100" }}
-                      overflow="hidden"
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                      fontSize={16}
-                      fontWeight="bold"
+                    <HStack
+                      w="100%"
+                      alignSelf="center"
+                      justifyContent="center"
+                      alignItems="center"
                     >
-                      {championship._id.championship}
-                    </Text>
-                  </HStack>
-                </Flex>
-                {championship?.matchs.map((match, i) =>
-                  filterSelected === "" || match.status === filterSelected ? (
-                    <Fragment key={i}>
-                      <HStack
-                        w="100%"
-                        h={24}
-                        _dark={{ bg: "blueGray.900" }}
-                        _light={{ bg: "success.100" }}
-                        px={2}
-                        py={1}
+                      <Text
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        overflow="hidden"
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                        fontSize={16}
+                        fontWeight="bold"
                       >
-                        <VStack w="80%">
-                          <HStack h="50%">
-                            <VStack h="100%" w="20%">
-                              <Image
-                                source={{ uri: match.teams?.homeImg }}
-                                alt={`${match.teams?.homeName}`}
-                                size="30"
-                                m="auto"
-                              />
-                            </VStack>
-                            <VStack h="100%" w="80%" justifyContent="center">
-                              <Text
-                                _dark={{ color: "white" }}
-                                _light={{ color: "black" }}
-                                fontSize={16}
-                              >
-                                {match.teams?.homeName}
-                              </Text>
-                            </VStack>
-                          </HStack>
-                          <HStack h="50%">
-                            <VStack h="100%" w="20%">
-                              <Image
-                                source={{ uri: match.teams?.awayImg }}
-                                alt={`${match.teams?.awayName}`}
-                                size="30"
-                                m="auto"
-                              />
-                            </VStack>
-                            <VStack h="100%" w="80%" justifyContent="center">
-                              <Text
-                                _dark={{ color: "white" }}
-                                _light={{ color: "black" }}
-                                fontSize={16}
-                              >
-                                {match.teams?.awayName}
-                              </Text>
-                            </VStack>
-                          </HStack>
-                        </VStack>
-                        <VStack w="5%">
-                          <Center>
-                            <HStack
-                              h="50%"
-                              justifyContent="center"
-                              alignItems="center"
-                            >
-                              <Text
-                                _dark={{ color: "white" }}
-                                _light={{ color: "black" }}
-                                fontSize={18}
-                                fontWeight="bold"
-                              >
-                                {match.scoreHome}
-                              </Text>
-                            </HStack>
-                          </Center>
-                          <HStack
-                            h="50%"
-                            justifyContent="center"
-                            alignItems="center"
-                          >
-                            <Text
-                              _dark={{ color: "white" }}
-                              _light={{ color: "black" }}
-                              fontSize={18}
-                              fontWeight="bold"
-                            >
-                              {match.scoreAway}
-                            </Text>
-                          </HStack>
-                        </VStack>
-                        <VStack
-                          w="15%"
-                          justifyContent="center"
-                          alignItems="center"
-                          _dark={{ color: "white" }}
-                          _light={{ color: "black" }}
-                        >
-                          {match?.status === "AO VIVO" ? (
-                            <Text fontSize={18} fontWeight="bold">
-                              {changeMinMatch(match)}
-                            </Text>
-                          ) : match?.status === "ENCERRADO" ? (
-                            <Text fontSize={18} fontWeight="bold">
-                              FIM
-                            </Text>
-                          ) : (
-                            <Text fontSize={18} fontWeight="bold">
-                              {match.schedule}
-                            </Text>
-                          )}
-                          {match.status === "AO VIVO" &&
-                            checkLastEvent(match) !== "" && (
-                              <Icon
-                                size={6}
-                                _dark={{ color: "blueGray.700" }}
-                                _light={{ color: "emerald.700" }}
-                                as={<Ionicons name={"ios-football"} />}
-                              />
-                            )}
-                        </VStack>
-                      </HStack>
-                      <Divider
-                        _dark={{
-                          bg: "blueGray.700",
-                        }}
-                        _light={{
-                          bg: "emerald.700",
-                        }}
-                      />
-                    </Fragment>
-                  ) : (
-                    <Fragment key={i}></Fragment>
-                  )
-                )}
-              </Fragment>
-            ) : (
-              <Fragment key={i}></Fragment>
-            )
+                        {championship._id.championship}
+                      </Text>
+                    </HStack>
+                  </Flex>
+                  {championship?.matchs.map((match, i) =>
+                    filterSelected === "" || match.status === filterSelected ? (
+                      <Fragment key={i}>
+                        <Match match={match} />
+                      </Fragment>
+                    ) : (
+                      <Fragment key={i}></Fragment>
+                    )
+                  )}
+                </Fragment>
+              )
           )}
-          <Center
-            _dark={{ bg: "blueGray.900" }}
-            _light={{ bg: "success.100" }}
-            px={4}
-            py={4}
-            flex={1}
-          >
-            <VStack space={5} alignItems="center">
-              <Image source={logo} alt="ArenaSportClub" size="xl" />
-              <Heading
-                size="lg"
-                _dark={{ color: "white" }}
-                _light={{ color: "black" }}
-              >
-                Arena Sport Club
-              </Heading>
-            </VStack>
-          </Center>
+          <Branding />
         </ScrollView>
       ) : filterSelected === "ENCERRADO" ? (
-        <Center px={2}>
-          <Text
-            _dark={{ color: "white" }}
-            _light={{ color: "black" }}
-            fontSize={20}
-            fontWeight="bold"
-          >
-            NENHUMA PARTIDA ENCERRADA
-          </Text>
-          <Text
-            _dark={{ color: "white" }}
-            _light={{ color: "black" }}
-            fontSize={20}
-            fontWeight="bold"
-          >
-            PARA O DIA {dateFilter.replaceAll("-", "/")}
-          </Text>
-        </Center>
+        <NoMatchsEnded dateFilter={dateFilter} />
       ) : (
-        <Center px={2}>
-          <Text
-            _dark={{ color: "white" }}
-            _light={{ color: "black" }}
-            fontSize={20}
-            fontWeight="bold"
-            onPress={() => navigate("Settings")}
-          >
-            NENHUMA PARTIDA {filterSelected}
-          </Text>
-          <Text
-            _dark={{ color: "white" }}
-            _light={{ color: "black" }}
-            fontSize={20}
-            fontWeight="bold"
-          >
-            PARA O DIA {dateFilter.replaceAll("-", "/")}
-          </Text>
-        </Center>
+        <NoMatchsFilteredToday
+          filterSelected={filterSelected}
+          dateFilter={dateFilter}
+        />
       )}
     </Box>
   );

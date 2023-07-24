@@ -1,15 +1,7 @@
-import React, { useState } from "react";
-import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
-import {
-  VStack,
-  Input,
-  Icon,
-  Flex,
-  StatusBar,
-  useColorMode,
-  Image,
-} from "native-base";
-import logo from "../assets/logo1.png";
+import React from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+import { VStack, Input, Icon, Flex, Image } from "native-base";
+import logo from "../../assets/logo1.png";
 
 export default function Header() {
   return (

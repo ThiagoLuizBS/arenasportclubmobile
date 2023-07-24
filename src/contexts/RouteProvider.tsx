@@ -1,6 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import UserService from "../services/user";
+import React, { createContext, useState } from "react";
 
 type RouteProviderType = {
   screensHidden: string[];
