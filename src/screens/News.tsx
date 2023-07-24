@@ -10,15 +10,31 @@ import {
   VStack,
   Box,
   ScrollView,
+  Flex,
+  Skeleton,
 } from "native-base";
-import { useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect } from "react";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import NewsService from "../services/news";
+import { RouteContext } from "../contexts/RouteProvider";
+import SkeletonNews from "../components/news/SkeletonNews";
 
 export default function News() {
   const { navigate } = useNavigation();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const context = useContext(RouteContext);
+  const route = useRoute();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (context) context.handleRoute(route.name);
+    }, [])
+  );
 
   useEffect(() => {
     NewsService.getAllNews().then((response) => {
@@ -44,12 +60,7 @@ export default function News() {
       w="100%"
     >
       {loading ? (
-        <HStack space={2} justifyContent="center">
-          <Spinner accessibilityLabel="Loading news" />
-          <Heading color="primary.500" fontSize="md">
-            Loading
-          </Heading>
-        </HStack>
+        <SkeletonNews />
       ) : (
         <ScrollView>
           {news.map((category: news, i) => (
@@ -57,35 +68,49 @@ export default function News() {
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                fontSize={24}
+                fontSize={28}
                 fontWeight="bold"
                 numberOfLines={5}
               >
                 {category?._id.category}
               </Text>
-              {category.news.map((news, i) => (
-                <Link key={i} href={news?.href} isExternal w="100%">
-                  <VStack w="100%">
-                    <Image
-                      source={{ uri: news?.img }}
-                      alt={news?.title}
-                      size="56"
-                      rounded="md"
-                      m="auto"
-                    />
-
-                    <Text
-                      my={2}
-                      _dark={{ color: "white" }}
-                      _light={{ color: "black" }}
-                      fontSize={16}
-                      numberOfLines={5}
-                    >
-                      {news?.title}
-                    </Text>
-                  </VStack>
-                </Link>
-              ))}
+              <Flex flexDirection="row" alignItems="flex-start" flexWrap="wrap">
+                {category.news.map((news, i) => (
+                  <Link
+                    key={i}
+                    href={news?.href}
+                    isExternal
+                    w={
+                      category.news.length % 2 === 1 && i === 0 ? "100%" : "50%"
+                    }
+                  >
+                    <VStack w="100%">
+                      <Image
+                        source={{ uri: news?.img }}
+                        alt={news?.title}
+                        size={
+                          category.news.length % 2 === 1 && i === 0
+                            ? "56"
+                            : "40"
+                        }
+                        rounded="md"
+                        m="auto"
+                      />
+                      <Text
+                        my={4}
+                        px={4}
+                        _dark={{ color: "white" }}
+                        _light={{ color: "black" }}
+                        fontWeight="bold"
+                        fontSize={16}
+                        numberOfLines={5}
+                      >
+                        {news?.title}
+                      </Text>
+                    </VStack>
+                  </Link>
+                ))}
+              </Flex>
             </VStack>
           ))}
         </ScrollView>

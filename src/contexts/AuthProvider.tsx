@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserService from "../services/user";
 
 type AuthProviderType = {
@@ -7,42 +8,51 @@ type AuthProviderType = {
   handleLogout: () => void;
 };
 
-const Context = createContext<null | AuthProviderType>(null);
+const AuthContext = createContext<null | AuthProviderType>(null);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    // const token = localStorage.getItem("token");
-    // const id = localStorage.getItem("idUser");
-    // if (token && id) {
-    //   UserService.haveFavorites(JSON.parse(id))
-    //     .then((response) => {
-    //       if (response.status === 200) setAuthenticated(true);
-    //     })
-    //     .catch((response) => {
-    //       if (response.response.status === 401) handleLogout();
-    //     });
-    // }
+    const verifyToken = async () => {
+      const token = await AsyncStorage.getItem("@arena:token");
+      const id = await AsyncStorage.getItem("@arena:idUser");
+      if (token && id) {
+        UserService.haveFavorites(JSON.parse(id))
+          .then((response) => {
+            if (response.status === 200) setAuthenticated(true);
+          })
+          .catch((response) => {
+            if (response.response.status === 401) handleLogout();
+          });
+      }
+    };
+    verifyToken();
   }, []);
 
   async function handleLogin(token: string, id: string) {
-    // localStorage.setItem("idUser", JSON.stringify(id));
-    // localStorage.setItem("token", JSON.stringify(token));
+    await AsyncStorage.setItem("@arena:token", JSON.stringify(token));
+    await AsyncStorage.setItem("@arena:idUser", JSON.stringify(id));
     setAuthenticated(true);
   }
 
-  function handleLogout() {
+  async function handleLogout() {
     setAuthenticated(false);
-    // localStorage.removeItem("idUser");
-    // localStorage.removeItem("token");
+    await AsyncStorage.removeItem("@arena:token");
+    await AsyncStorage.removeItem("@arena:idUser");
   }
 
   return (
-    <Context.Provider value={{ authenticated, handleLogin, handleLogout }}>
+    <AuthContext.Provider
+      value={{
+        authenticated,
+        handleLogin,
+        handleLogout,
+      }}
+    >
       {children}
-    </Context.Provider>
+    </AuthContext.Provider>
   );
 }
 
-export { Context, AuthProvider };
+export { AuthContext, AuthProvider };
