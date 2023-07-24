@@ -364,16 +364,14 @@ export default function Home() {
                             )}
                         </VStack>
                       </HStack>
-                      {i !== championship?.matchs.length - 1 && (
-                        <Divider
-                          _dark={{
-                            bg: "blueGray.900",
-                          }}
-                          _light={{
-                            bg: "emerald.700",
-                          }}
-                        />
-                      )}
+                      <Divider
+                        _dark={{
+                          bg: "blueGray.700",
+                        }}
+                        _light={{
+                          bg: "emerald.700",
+                        }}
+                      />
                     </Fragment>
                   ) : (
                     <Fragment key={i}></Fragment>
