@@ -6,6 +6,7 @@ export declare global {
       Match: { itemId: number };
       Favorites: undefined;
       SignUp: undefined;
+      SignIn: undefined;
     }
   }
 }

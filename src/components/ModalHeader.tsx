@@ -54,7 +54,7 @@ export default function ModalHeader({
             </Pressable>
             <Pressable
               onPress={() => {
-                navigate("Favorites");
+                navigate("SignIn");
                 setOpen(false);
               }}
               rounded="8"

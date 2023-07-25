@@ -3,7 +3,6 @@ import {
   Center,
   VStack,
   Text,
-  Image,
   Heading,
   ScrollView,
   HStack,
@@ -15,47 +14,47 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import userService from "../services/user";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
 type FormDataProps = {
-  name: string;
   email: string;
   password: string;
-  password_confirm: string;
 };
 
-const signUpSchema = yup.object({
-  name: yup
-    .string()
-    .required("Informe o nome")
-    .min(4, "Tem que ter pelo menos 4 dígitos"),
-  email: yup.string().required("Informe o e-mail").email("E-mail inválido"),
+const signInSchema = yup.object({
+  email: yup.string().required("Informe o e-mail").email("E-mail incorreto"),
   password: yup
     .string()
     .required("Informe a senha")
     .min(8, "A senha deve conter pelo menos 8 dígitos"),
-  password_confirm: yup
-    .string()
-    .required("Informe a confirmação de senha")
-    .oneOf([yup.ref("password"), ""], "A confirmação de senha não é igual"),
 });
 
-export default function SignUp() {
+export default function SignIn() {
   const { navigate } = useNavigation();
+
+  const [serverErrorMessage, setServerErrorMessage] = useState<string | null>(
+    null
+  );
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormDataProps>({ resolver: yupResolver(signUpSchema) });
+  } = useForm<FormDataProps>({ resolver: yupResolver(signInSchema) });
 
-  function handleSignUp(data: FormDataProps) {
+  function handleSignIn(data: FormDataProps) {
+    setServerErrorMessage(null);
     userService
-      .getPost(data.name, data.email, data.password)
+      .getUser(data.email, data.password)
       .then((response) => {
+        console.log(response.data);
         navigate("Home");
       })
-      .catch((response) => {
-        console.log(response.response.data.error);
+      .catch((error) => {
+        if (error.response) {
+          setServerErrorMessage("Email ou senha incorretos.");
+          console.log(error.response.data.error);
+        }
       });
   }
 
@@ -76,27 +75,15 @@ export default function SignUp() {
               fontSize={30}
               fontWeight="bold"
             >
-              Criar Conta
+              Seja Bem-Vindo!
             </Heading>
-
-            <Controller
-              control={control}
-              name="name"
-              render={({ field: { onChange } }) => (
-                <Input
-                  placeholder="Nome"
-                  marginTop={10}
-                  onChangeText={onChange}
-                  errorMessage={errors.name?.message}
-                />
-              )}
-            />
 
             <Controller
               control={control}
               name="email"
               render={({ field: { onChange } }) => (
                 <Input
+                  marginTop={16}
                   placeholder="Email"
                   onChangeText={onChange}
                   errorMessage={errors.email?.message}
@@ -112,27 +99,27 @@ export default function SignUp() {
                   placeholder="Senha"
                   secureTextEntry
                   onChangeText={onChange}
-                  errorMessage={errors.password?.message}
+                  errorMessage={errors.password?.message || serverErrorMessage}
                 />
               )}
             />
-
-            <Controller
-              control={control}
-              name="password_confirm"
-              render={({ field: { onChange } }) => (
-                <Input
-                  placeholder="Confirme Senha"
-                  secureTextEntry
-                  onChangeText={onChange}
-                  errorMessage={errors.password_confirm?.message}
-                />
-              )}
+            <Button
+              title="Entrar"
+              marginTop={10}
+              onPress={handleSubmit(handleSignIn)}
             />
-            <Button title="Criar" onPress={handleSubmit(handleSignUp)} />
             <HStack>
-              <Text marginTop={3} fontWeight="bold">Já tem uma conta? </Text>
-              <Text marginTop={3} color={"green.900"} fontWeight="bold" onPress={() => navigate("SignIn")}>Entre aqui.</Text>
+              <Text marginTop={3} fontWeight="bold">
+                Não possui conta?{" "}
+              </Text>
+              <Text
+                marginTop={3}
+                color={"green.900"}
+                fontWeight="bold"
+                onPress={() => navigate("SignUp")}
+              >
+                Registre-se aqui.
+              </Text>
             </HStack>
           </Center>
         </VStack>

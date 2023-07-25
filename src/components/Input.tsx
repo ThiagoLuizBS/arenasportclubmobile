@@ -26,12 +26,14 @@ export function Input({ errorMessage = null, isInvalid, ...rest }: Props) {
           borderWidth: 2,
         }}
         _invalid={{
-            borderWidth:2,
-            borderColor:"red.500"
+          borderWidth: 2,
+          borderColor: "red.500",
         }}
         {...rest}
       />
-      <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
+      {errorMessage && (
+        <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
+      )}
     </FormControl>
   );
 }
