@@ -12,7 +12,7 @@ export default function Footer() {
 
   useEffect(() => {
     if (nomeRotaAtual === "Home") setSelected(0);
-    else if (nomeRotaAtual === "Favorites") setSelected(1);
+    else if (nomeRotaAtual === "Team") setSelected(1);
     else if (nomeRotaAtual === "Championship") setSelected(2);
     else if (nomeRotaAtual === "Match") setSelected(3);
     else if (nomeRotaAtual !== undefined) setSelected(-1);
@@ -21,8 +21,8 @@ export default function Footer() {
   const handleSelected = (i: number) => {
     setSelected(i);
     if (i === 0) navigate("Home");
-    else if (i === 1) navigate("Favorites");
-    else if (i === 2) navigate("Championship");
+    else if (i === 1) navigate("Team");
+    else if (i === 2) navigate("Favorites");
     else if (i === 3) navigate("Match");
   };
 

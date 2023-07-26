@@ -19,6 +19,15 @@ export declare global {
     matchs: match[];
   }
 
+  export interface team {
+    img: string;
+    name: string;
+    url: string;
+    idTeam: string;
+    infos: [{ title: string; description: string }];
+    titles: [{ year: string; name: string; logo: string }];
+  }
+
   export interface match {
     status: string;
     time: string;
