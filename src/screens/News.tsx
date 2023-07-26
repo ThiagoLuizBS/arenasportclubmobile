@@ -1,26 +1,12 @@
-import {
-  Center,
-  Button,
-  HStack,
-  Heading,
-  Spinner,
-  Text,
-  Link,
-  Image,
-  VStack,
-  Box,
-  ScrollView,
-  Flex,
-  Skeleton,
-} from "native-base";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import { Text, Link, Image, VStack, Box, ScrollView, Flex } from "native-base";
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import React, { useState, useEffect, useContext, useCallback } from "react";
-import NewsService from "../services/news";
 import { RouteContext } from "../contexts/RouteProvider";
+import NewsService from "../services/news";
 import SkeletonNews from "../components/news/SkeletonNews";
 
 export default function News() {
