@@ -37,7 +37,7 @@ export default function Settings() {
   useEffect(() => {
     const updateNameUser = async () => {
       const name = await AsyncStorage.getItem("@arena:nameUser");
-      setNameUser(JSON.parse(name ?? "") ?? "");
+      if (name) setNameUser(JSON.parse(name));
     };
     updateNameUser();
   }, [authContext?.authenticated]);
