@@ -4,7 +4,7 @@ import UserService from "../services/user";
 
 type AuthProviderType = {
   authenticated: boolean;
-  handleLogin: (token: string, id: string) => Promise<void>;
+  handleLogin: (token: string, id: string, nameUser: string) => Promise<void>;
   handleLogout: () => void;
 };
 
@@ -30,9 +30,10 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     verifyToken();
   }, []);
 
-  async function handleLogin(token: string, id: string) {
+  async function handleLogin(token: string, id: string, nameUser: string) {
     await AsyncStorage.setItem("@arena:token", JSON.stringify(token));
     await AsyncStorage.setItem("@arena:idUser", JSON.stringify(id));
+    await AsyncStorage.setItem("@arena:nameUser", JSON.stringify(nameUser));
     setAuthenticated(true);
   }
 
@@ -40,6 +41,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     setAuthenticated(false);
     await AsyncStorage.removeItem("@arena:token");
     await AsyncStorage.removeItem("@arena:idUser");
+    await AsyncStorage.removeItem("@arena:nameUser");
   }
 
   return (

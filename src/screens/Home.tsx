@@ -22,6 +22,7 @@ import {
   NoMatchsToday,
 } from "../components/results/NoMatchs";
 import Match from "../components/results/Match";
+import { AuthContext, AuthProvider } from "../contexts/AuthProvider";
 
 export default function Home() {
   const getTodayDate = (x: number) => {
@@ -50,7 +51,10 @@ export default function Home() {
   const [filterSelected, setFilterSelected] = useState("");
   const [buttonChange, setButtonChange] = useState("all");
   const context = useContext(RouteContext);
+  const authContext = useContext(AuthContext);
   const route = useRoute();
+
+  console.log(authContext?.authenticated);
 
   useFocusEffect(
     useCallback(() => {

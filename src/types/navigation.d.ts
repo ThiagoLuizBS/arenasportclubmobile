@@ -7,6 +7,8 @@ export declare global {
       Favorites: undefined;
       Settings: undefined;
       News: undefined;
+      SignUp: undefined;
+      SignIn: undefined;
     }
   }
 }

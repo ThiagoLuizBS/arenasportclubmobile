@@ -9,7 +9,7 @@ type RouteProviderType = {
 const RouteContext = createContext<null | RouteProviderType>(null);
 
 function RouteProvider({ children }: { children: React.ReactNode }) {
-  const screensHidden = [""];
+  const screensHidden = ["SignIn", "SignUp"];
   const [hideHeaderFooter, setHideHeaderFooter] = useState(false);
 
   async function handleRoute(route: string) {

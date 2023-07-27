@@ -3,7 +3,7 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import {
   Box,
   Center,
@@ -22,13 +22,25 @@ import {
 import logo from "../assets/logo1.png";
 import { AntDesign } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
+import { AuthContext } from "../contexts/AuthProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Settings() {
-  const { navigate, goBack } = useNavigation();
+  const { navigate } = useNavigation();
   const { colorMode, toggleColorMode } = useColorMode();
   const [language, setLanguage] = useState("Português");
+  const [nameUser, setNameUser] = useState("");
   const context = useContext(RouteContext);
+  const authContext = useContext(AuthContext);
   const route = useRoute();
+
+  useEffect(() => {
+    const updateNameUser = async () => {
+      const name = await AsyncStorage.getItem("@arena:nameUser");
+      if (name) setNameUser(JSON.parse(name));
+    };
+    updateNameUser();
+  }, [authContext?.authenticated]);
 
   useFocusEffect(
     useCallback(() => {
@@ -46,59 +58,94 @@ export default function Settings() {
       alignItems="center"
       w="100%"
     >
-      {/* <HStack w="100%" alignItems="flex-start">
-        <Pressable onPress={() => goBack()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
-        </Pressable>
-      </HStack> */}
-      <Pressable
-        onPress={() => {
-          navigate("Favorites");
-        }}
-        rounded="lg"
-        w="80%"
-        _dark={{ bg: "blueGray.700" }}
-        _light={{ bg: "emerald.700" }}
-        shadow={1}
-        p="4"
-        mt={4}
-        mb={2}
-      >
-        <Center>
-          <Text
-            _dark={{ color: "orange.50" }}
-            _light={{ color: "orange.100" }}
-            fontSize={20}
-            fontWeight="bold"
+      {authContext?.authenticated ? (
+        <>
+          <VStack space={5} alignItems="center">
+            <Heading
+              size="lg"
+              _dark={{ color: "white" }}
+              _light={{ color: "black" }}
+            >
+              Olá, {nameUser}!
+            </Heading>
+          </VStack>
+          <Pressable
+            onPress={() => {
+              authContext.handleLogout();
+            }}
+            rounded="lg"
+            w="80%"
+            _dark={{ bg: "blueGray.700" }}
+            _light={{ bg: "emerald.700" }}
+            shadow={1}
+            p="4"
+            mt={4}
+            mb={2}
           >
-            Cadastrar
-          </Text>
-        </Center>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigate("Favorites");
-        }}
-        rounded="lg"
-        w="80%"
-        _dark={{ bg: "blueGray.700" }}
-        _light={{ bg: "emerald.700" }}
-        shadow={1}
-        p="4"
-        mt={2}
-        mb={4}
-      >
-        <Center>
-          <Text
-            _dark={{ color: "orange.50" }}
-            _light={{ color: "orange.100" }}
-            fontSize={20}
-            fontWeight="bold"
+            <Center>
+              <Text
+                _dark={{ color: "red.500" }}
+                _light={{ color: "red.500" }}
+                fontSize={20}
+                fontWeight="bold"
+              >
+                Sair
+              </Text>
+            </Center>
+          </Pressable>
+        </>
+      ) : (
+        <>
+          <Pressable
+            onPress={() => {
+              navigate("SignUp");
+            }}
+            rounded="lg"
+            w="80%"
+            _dark={{ bg: "blueGray.700" }}
+            _light={{ bg: "emerald.700" }}
+            shadow={1}
+            p="4"
+            mt={4}
+            mb={2}
           >
-            Entrar
-          </Text>
-        </Center>
-      </Pressable>
+            <Center>
+              <Text
+                _dark={{ color: "orange.50" }}
+                _light={{ color: "orange.100" }}
+                fontSize={20}
+                fontWeight="bold"
+              >
+                Cadastrar
+              </Text>
+            </Center>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              navigate("SignIn");
+            }}
+            rounded="lg"
+            w="80%"
+            _dark={{ bg: "blueGray.700" }}
+            _light={{ bg: "emerald.700" }}
+            shadow={1}
+            p="4"
+            mt={2}
+            mb={4}
+          >
+            <Center>
+              <Text
+                _dark={{ color: "orange.50" }}
+                _light={{ color: "orange.100" }}
+                fontSize={20}
+                fontWeight="bold"
+              >
+                Entrar
+              </Text>
+            </Center>
+          </Pressable>
+        </>
+      )}
       <HStack w="80%" mb={2} alignItems="center" justifyContent="space-between">
         <Text
           w="40%"
