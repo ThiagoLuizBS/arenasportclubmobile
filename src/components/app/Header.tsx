@@ -1,20 +1,9 @@
-import React, { useState } from "react";
-import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
-import {
-  VStack,
-  Input,
-  Icon,
-  Avatar,
-  Flex,
-  StatusBar,
-  useColorMode,
-} from "native-base";
-import ModalHeader from "./ModalHeader";
+import React from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+import { VStack, Input, Icon, Flex, Image } from "native-base";
+import logo from "../../assets/logo1.png";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
-  const { colorMode } = useColorMode();
-
   return (
     <Flex
       alignSelf="center"
@@ -23,20 +12,15 @@ export default function Header() {
       paddingBottom={2}
       width="100%"
       _dark={{ bg: "blueGray.900" }}
-      _light={{ bg: "emerald.100" }}
+      _light={{ bg: "success.100" }}
       flexDirection="row"
     >
-      <StatusBar
-        barStyle={colorMode === "light" ? "dark-content" : "light-content"}
-        backgroundColor={colorMode === "light" ? "#d1fae5" : "#0f172a"}
-      />
-      <ModalHeader open={open} setOpen={setOpen} />
       <VStack
         space={5}
         w="85%"
         h={12}
-        _dark={{ bg: "blueGray.500" }}
-        _light={{ bg: "emerald.800" }}
+        _dark={{ bg: "blueGray.700" }}
+        _light={{ bg: "emerald.700" }}
         borderRadius={16}
         justifyContent="center"
       >
@@ -77,21 +61,7 @@ export default function Header() {
         </VStack>
       </VStack>
       <VStack w="15%" alignSelf="center">
-        <Avatar
-          _dark={{ bg: "blueGray.500" }}
-          _light={{ bg: "emerald.800" }}
-          size={12}
-          alignSelf="center"
-        >
-          <Icon
-            _dark={{ color: "orange.50" }}
-            _light={{ color: "orange.100" }}
-            onPress={() => setOpen(true)}
-            size="8"
-            m="auto"
-            as={<FontAwesome5 name="user-cog" />}
-          />
-        </Avatar>
+        <Image source={logo} alt="ArenaSportClub" size="xs" m="auto" />
       </VStack>
     </Flex>
   );

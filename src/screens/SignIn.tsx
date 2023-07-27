@@ -6,6 +6,9 @@ import {
   Heading,
   ScrollView,
   HStack,
+  Pressable,
+  useColorMode,
+  useToast,
 } from "native-base";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,8 +16,16 @@ import * as yup from "yup";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import userService from "../services/user";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { useCallback, useContext, useState } from "react";
+import { RouteContext } from "../contexts/RouteProvider";
+import { Ionicons } from "@expo/vector-icons";
+import { AuthContext } from "../contexts/AuthProvider";
+import ToastLogin from "../components/app/ToastLogin";
 
 type FormDataProps = {
   email: string;
@@ -30,10 +41,20 @@ const signInSchema = yup.object({
 });
 
 export default function SignIn() {
-  const { navigate } = useNavigation();
-
+  const { navigate, goBack } = useNavigation();
+  const toast = useToast();
+  const { colorMode } = useColorMode();
+  const context = useContext(RouteContext);
+  const authContext = useContext(AuthContext);
+  const route = useRoute();
   const [serverErrorMessage, setServerErrorMessage] = useState<string | null>(
     null
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (context) context.handleRoute(route.name);
+    }, [])
   );
 
   const {
@@ -47,13 +68,23 @@ export default function SignIn() {
     userService
       .getUser(data.email, data.password)
       .then((response) => {
-        console.log(response.data);
+        authContext?.handleLogin(
+          response.data.token,
+          response.data.idUser,
+          response.data.nameUser
+        );
+        toast.show({
+          render: () => {
+            return (
+              <ToastLogin nameUser={response.data.nameUser} type="Login" />
+            );
+          },
+        });
         navigate("Home");
       })
       .catch((error) => {
         if (error.response) {
           setServerErrorMessage("Email ou senha incorretos.");
-          console.log(error.response.data.error);
         }
       });
   }
@@ -63,67 +94,75 @@ export default function SignIn() {
       _dark={{ bg: "blueGray.900" }}
       _light={{ bg: "success.100" }}
       flex={1}
+      justifyContent="center"
       w="100%"
     >
-      <ScrollView>
-        <VStack px={10}>
-          <Center>
-            <Heading
-              _dark={{ color: "white" }}
-              _light={{ color: "black" }}
-              marginY={3}
-              fontSize={30}
+      <HStack w="100%" alignItems="flex-start" px={10}>
+        <Pressable onPress={() => navigate("Settings")}>
+          <Ionicons
+            name="arrow-back"
+            color={colorMode === "light" ? "black" : "white"}
+            size={24}
+          />
+        </Pressable>
+      </HStack>
+      <VStack px={10}>
+        <Center>
+          <Heading
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            marginY={3}
+            fontSize={30}
+            fontWeight="bold"
+          >
+            Seja Bem-Vindo!
+          </Heading>
+
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange } }) => (
+              <Input
+                marginTop={16}
+                placeholder="Email"
+                onChangeText={onChange}
+                errorMessage={errors.email?.message}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange } }) => (
+              <Input
+                placeholder="Senha"
+                secureTextEntry
+                onChangeText={onChange}
+                errorMessage={errors.password?.message || serverErrorMessage}
+              />
+            )}
+          />
+          <Button
+            title="Entrar"
+            marginTop={10}
+            onPress={handleSubmit(handleSignIn)}
+          />
+          <HStack>
+            <Text marginTop={3} fontWeight="bold">
+              Não possui conta?{" "}
+            </Text>
+            <Text
+              marginTop={3}
+              color={"emerald.700"}
               fontWeight="bold"
+              onPress={() => navigate("SignUp")}
             >
-              Seja Bem-Vindo!
-            </Heading>
-
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { onChange } }) => (
-                <Input
-                  marginTop={16}
-                  placeholder="Email"
-                  onChangeText={onChange}
-                  errorMessage={errors.email?.message}
-                />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { onChange } }) => (
-                <Input
-                  placeholder="Senha"
-                  secureTextEntry
-                  onChangeText={onChange}
-                  errorMessage={errors.password?.message || serverErrorMessage}
-                />
-              )}
-            />
-            <Button
-              title="Entrar"
-              marginTop={10}
-              onPress={handleSubmit(handleSignIn)}
-            />
-            <HStack>
-              <Text marginTop={3} fontWeight="bold">
-                Não possui conta?{" "}
-              </Text>
-              <Text
-                marginTop={3}
-                color={"green.900"}
-                fontWeight="bold"
-                onPress={() => navigate("SignUp")}
-              >
-                Registre-se aqui.
-              </Text>
-            </HStack>
-          </Center>
-        </VStack>
-      </ScrollView>
+              Registre-se aqui.
+            </Text>
+          </HStack>
+        </Center>
+      </VStack>
     </Box>
   );
 }

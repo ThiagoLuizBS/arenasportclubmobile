@@ -1,0 +1,169 @@
+import { Ionicons } from "@expo/vector-icons";
+import {
+  HStack,
+  VStack,
+  Text,
+  Image,
+  Center,
+  Divider,
+  Icon,
+} from "native-base";
+
+type MatchProps = {
+  match: match;
+};
+
+export default function Match({ match }: MatchProps) {
+  const checkLastEvent = (match: match) => {
+    let event = "";
+    if (match.events?.length > 0) {
+      let timeLastEvent = parseInt(
+        match.events[match.events?.length - 1].time.replace("'", "")
+      );
+      let timeMatch = parseInt(match.time.replace("MIN", ""));
+
+      if (
+        match.events[match.events.length - 1].type === "GOAL" &&
+        timeMatch <= timeLastEvent + 2
+      ) {
+        event = "GOL";
+      }
+    }
+
+    return event;
+  };
+
+  const changeMinMatch = (match: match) => {
+    let time;
+    if (match?.time === "INTERVALO")
+      time = match?.time?.replace("INTERVALO", "INT");
+    else if (match?.time === "SUSPENSO")
+      time = match?.time?.replace("SUSPENSO", "SUSP");
+    else if (match?.time === "ADIADO")
+      time = match?.time?.replace("ADIADO", "CANC");
+    else if (match?.time === "ATRASADO")
+      time = match?.time?.replace("ATRASADO", "ATRA");
+    else if (match?.time === "INTERROMPIDO")
+      time = match?.time?.replace("INTERROMPIDO", "SUSP");
+    else if (match?.time === "PÊNALTIS")
+      time = match?.time?.replace("PÊNALTIS", "PEN");
+    else time = match?.time?.replace(" MIN", "'");
+
+    return time;
+  };
+
+  return (
+    <>
+      <HStack
+        w="100%"
+        h={24}
+        _dark={{ bg: "blueGray.900" }}
+        _light={{ bg: "success.100" }}
+        px={2}
+        py={1}
+      >
+        <VStack w="80%">
+          <HStack h="50%">
+            <VStack h="100%" w="20%">
+              <Image
+                source={{ uri: match.teams?.homeImg }}
+                alt={`${match.teams?.homeName}`}
+                size="30"
+                m="auto"
+              />
+            </VStack>
+            <VStack h="100%" w="80%" justifyContent="center">
+              <Text
+                _dark={{ color: "white" }}
+                _light={{ color: "black" }}
+                fontSize={16}
+              >
+                {match.teams?.homeName}
+              </Text>
+            </VStack>
+          </HStack>
+          <HStack h="50%">
+            <VStack h="100%" w="20%">
+              <Image
+                source={{ uri: match.teams?.awayImg }}
+                alt={`${match.teams?.awayName}`}
+                size="30"
+                m="auto"
+              />
+            </VStack>
+            <VStack h="100%" w="80%" justifyContent="center">
+              <Text
+                _dark={{ color: "white" }}
+                _light={{ color: "black" }}
+                fontSize={16}
+              >
+                {match.teams?.awayName}
+              </Text>
+            </VStack>
+          </HStack>
+        </VStack>
+        <VStack w="5%">
+          <Center>
+            <HStack h="50%" justifyContent="center" alignItems="center">
+              <Text
+                _dark={{ color: "white" }}
+                _light={{ color: "black" }}
+                fontSize={18}
+                fontWeight="bold"
+              >
+                {match.scoreHome}
+              </Text>
+            </HStack>
+          </Center>
+          <HStack h="50%" justifyContent="center" alignItems="center">
+            <Text
+              _dark={{ color: "white" }}
+              _light={{ color: "black" }}
+              fontSize={18}
+              fontWeight="bold"
+            >
+              {match.scoreAway}
+            </Text>
+          </HStack>
+        </VStack>
+        <VStack
+          w="15%"
+          justifyContent="center"
+          alignItems="center"
+          _dark={{ color: "white" }}
+          _light={{ color: "black" }}
+        >
+          {match?.status === "AO VIVO" ? (
+            <Text fontSize={18} fontWeight="bold">
+              {changeMinMatch(match)}
+            </Text>
+          ) : match?.status === "ENCERRADO" ? (
+            <Text fontSize={18} fontWeight="bold">
+              FIM
+            </Text>
+          ) : (
+            <Text fontSize={18} fontWeight="bold">
+              {match.schedule}
+            </Text>
+          )}
+          {match.status === "AO VIVO" && checkLastEvent(match) !== "" && (
+            <Icon
+              size={6}
+              _dark={{ color: "blueGray.700" }}
+              _light={{ color: "emerald.700" }}
+              as={<Ionicons name={"ios-football"} />}
+            />
+          )}
+        </VStack>
+      </HStack>
+      <Divider
+        _dark={{
+          bg: "blueGray.700",
+        }}
+        _light={{
+          bg: "emerald.700",
+        }}
+      />
+    </>
+  );
+}
