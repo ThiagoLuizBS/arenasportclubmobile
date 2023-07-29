@@ -9,6 +9,7 @@ export declare global {
       News: undefined;
       SignUp: undefined;
       SignIn: undefined;
+      Team: undefined;
     }
   }
 }

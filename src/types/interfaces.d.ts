@@ -16,7 +16,33 @@ export declare global {
     _id: {
       championship: string;
     };
+    name: string;
+    img: string;
+    imgChampionship: string;
+    idChampionship: string;
     matchs: match[];
+  }
+
+  export interface championshipFavorite {
+    name: string;
+    img: string;
+    imgChampionship: string;
+    idChampionship: string;
+  }
+
+  export interface team {
+    img: string;
+    name: string;
+    url: string;
+    idTeam: string;
+    infos: [{ title: string; description: string }];
+    titles: [{ year: string; name: string; logo: string }];
+  }
+
+  export interface teamFavorite {
+    img: string;
+    name: string;
+    idTeam: string;
   }
 
   export interface match {
