@@ -5,7 +5,15 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Text, HStack, Box, useColorMode, Flex, ScrollView } from "native-base";
+import {
+  Box,
+  useColorMode,
+  ScrollView,
+  Button,
+  Pressable,
+  Center,
+  Text,
+} from "native-base";
 import {
   useFocusEffect,
   useNavigation,
@@ -22,7 +30,7 @@ import {
   NoMatchsToday,
 } from "../components/results/NoMatchs";
 import Match from "../components/results/Match";
-import { AuthContext, AuthProvider } from "../contexts/AuthProvider";
+import MatchTitle from "../components/results/MatchTitle";
 
 export default function Home() {
   const getTodayDate = (x: number) => {
@@ -45,16 +53,16 @@ export default function Home() {
 
   const { navigate } = useNavigation();
   const { colorMode } = useColorMode();
+  const context = useContext(RouteContext);
+  const route = useRoute();
+
   const [loading, setLoading] = useState(true);
   const [matchsData, setMatchsData] = useState([]);
   const [dateFilter, setDateFilter] = useState(getTodayDate(0));
   const [filterSelected, setFilterSelected] = useState("");
   const [buttonChange, setButtonChange] = useState("all");
-  const context = useContext(RouteContext);
-  const authContext = useContext(AuthContext);
-  const route = useRoute();
-
-  console.log(authContext?.authenticated);
+  const [currentItems, setCurrentItems] = useState(6);
+  const itemsPerPage = 6;
 
   useFocusEffect(
     useCallback(() => {
@@ -64,6 +72,7 @@ export default function Home() {
 
   useEffect(() => {
     MatchService.getMatchsByDate(dateFilter, []).then((response) => {
+      setCurrentItems(itemsPerPage);
       setMatchsData(response.data);
       setLoading(false);
     });
@@ -114,10 +123,10 @@ export default function Home() {
 
   const haveMatchs = (championship: championship) => {
     let count = 0;
-    for (let index = 0; index < championship.matchs.length; index++) {
+    for (let i = 0; i < championship.matchs.length; i++) {
       if (
         filterSelected === "" ||
-        championship.matchs[index].status === filterSelected
+        championship.matchs[i].status === filterSelected
       )
         return true;
     }
@@ -150,50 +159,44 @@ export default function Home() {
           {matchsData?.map(
             (championship: championship, i) =>
               haveMatchs(championship) &&
-              i < 3 && (
+              i < currentItems && (
                 <Fragment key={i}>
-                  <Flex
-                    _dark={{ bg: "blueGray.700", color: "orange.50" }}
-                    _light={{ bg: "emerald.700", color: "orange.100" }}
-                    px={2}
-                    py={1}
-                    width="100%"
-                    h={10}
-                    flexDirection="row"
-                    alignSelf="center"
-                    justifyContent="center"
-                  >
-                    <HStack
-                      w="100%"
-                      alignSelf="center"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <Text
-                        _dark={{ color: "orange.50" }}
-                        _light={{ color: "orange.100" }}
-                        overflow="hidden"
-                        numberOfLines={1}
-                        ellipsizeMode="tail"
-                        fontSize={16}
-                        fontWeight="bold"
-                      >
-                        {championship._id.championship}
-                      </Text>
-                    </HStack>
-                  </Flex>
-                  {championship?.matchs.map((match, i) =>
-                    filterSelected === "" || match.status === filterSelected ? (
-                      <Fragment key={i}>
-                        <Match match={match} />
-                      </Fragment>
-                    ) : (
-                      <Fragment key={i}></Fragment>
-                    )
+                  <MatchTitle title={championship._id.championship} />
+                  {championship?.matchs.map(
+                    (match, i) =>
+                      (filterSelected === "" ||
+                        match.status === filterSelected) && (
+                        <Match match={match} key={i} />
+                      )
                   )}
                 </Fragment>
               )
           )}
+          <Center>
+            <Pressable
+              onPress={() => setCurrentItems(currentItems + itemsPerPage)}
+              disabled={currentItems >= matchsData.length}
+              _disabled={{ opacity: "0" }}
+              rounded="lg"
+              w="80%"
+              _dark={{ bg: "blueGray.700" }}
+              _light={{ bg: "emerald.700" }}
+              shadow={1}
+              p="4"
+              mt={4}
+            >
+              <Center>
+                <Text
+                  _dark={{ color: "orange.50" }}
+                  _light={{ color: "orange.100" }}
+                  fontSize={20}
+                  fontWeight="bold"
+                >
+                  Visualizar mais campeonatos
+                </Text>
+              </Center>
+            </Pressable>
+          </Center>
           <Branding />
         </ScrollView>
       ) : filterSelected === "ENCERRADO" ? (
