@@ -12,34 +12,35 @@ export default function Footer() {
 
   useEffect(() => {
     if (nomeRotaAtual === "Home") setSelected(0);
-    else if (nomeRotaAtual === "Team") setSelected(1);
-    else if (nomeRotaAtual === "Championship") setSelected(2);
-    else if (nomeRotaAtual === "Match") setSelected(3);
+    else if (nomeRotaAtual === "Favorites") setSelected(1);
+    else if (nomeRotaAtual === "Team") setSelected(2);
+    else if (nomeRotaAtual === "News") setSelected(3);
+    else if (nomeRotaAtual === "Settings") setSelected(4);
     else if (nomeRotaAtual !== undefined) setSelected(-1);
   }, [nomeRotaAtual]);
 
   const handleSelected = (i: number) => {
     setSelected(i);
     if (i === 0) navigate("Home");
-    else if (i === 1) navigate("Team");
-    else if (i === 2) navigate("Favorites");
-    else if (i === 3) navigate("Match");
+    else if (i === 1) navigate("Favorites");
+    else if (i === 2) navigate("Team");
+    else if (i === 3) navigate("News");
+    else if (i === 4) navigate("Settings");
   };
 
   return (
     <Box
-      _dark={{ bg: "blueGray.900" }}
-      _light={{ bg: "emerald.100" }}
+      _dark={{ bg: "blueGray.700" }}
+      _light={{ bg: "emerald.700" }}
       width="100%"
       alignSelf="center"
     >
       <HStack
-        _dark={{ bg: "blueGray.600" }}
-        _light={{ bg: "emerald.600" }}
+        _dark={{ bg: "blueGray.700" }}
+        _light={{ bg: "emerald.700" }}
         alignItems="center"
         shadow={6}
-        paddingRight={2}
-        paddingLeft={2}
+        px={2}
       >
         <Pressable
           opacity={selected === 0 ? 1 : 0.5}
@@ -64,7 +65,7 @@ export default function Footer() {
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="16"
+              fontSize="14"
             >
               Resultados
             </Text>
@@ -91,7 +92,7 @@ export default function Footer() {
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="16"
+              fontSize="14"
             >
               Favoritos
             </Text>
@@ -118,7 +119,7 @@ export default function Footer() {
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="16"
+              fontSize="14"
             >
               Descubra
             </Text>
@@ -145,9 +146,36 @@ export default function Footer() {
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="16"
+              fontSize="14"
             >
               Notícias
+            </Text>
+          </Center>
+        </Pressable>
+        <Pressable
+          opacity={selected === 4 ? 1 : 0.5}
+          py="2"
+          flex={1}
+          onPress={() => handleSelected(4)}
+        >
+          <Center>
+            <Icon
+              mb="1"
+              as={
+                <Ionicons
+                  name={selected === 4 ? "settings" : "settings-outline"}
+                />
+              }
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
+              size="md"
+            />
+            <Text
+              _dark={{ color: "orange.50" }}
+              _light={{ color: "orange.100" }}
+              fontSize="14"
+            >
+              Opções
             </Text>
           </Center>
         </Pressable>

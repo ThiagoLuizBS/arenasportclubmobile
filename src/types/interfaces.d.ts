@@ -23,6 +23,13 @@ export declare global {
     matchs: match[];
   }
 
+  export interface championshipFavorite {
+    name: string;
+    img: string;
+    imgChampionship: string;
+    idChampionship: string;
+  }
+
   export interface team {
     img: string;
     name: string;
@@ -30,6 +37,12 @@ export declare global {
     idTeam: string;
     infos: [{ title: string; description: string }];
     titles: [{ year: string; name: string; logo: string }];
+  }
+
+  export interface teamFavorite {
+    img: string;
+    name: string;
+    idTeam: string;
   }
 
   export interface match {
@@ -52,6 +65,21 @@ export declare global {
       time: string;
       type: string;
     }[];
+  }
+
+  export interface news {
+    _id: {
+      category: string;
+      priority: string;
+    };
+    news: [
+      {
+        href: string;
+        title: string;
+        subtitle: string;
+        img: string;
+      }
+    ];
   }
 
   declare module "*.png";

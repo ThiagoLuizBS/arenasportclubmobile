@@ -2,24 +2,13 @@ import React, { Fragment, useEffect, useState } from "react";
 import {
   Text,
   Center,
-  VStack,
-  Heading,
   HStack,
   Box,
-  Link,
-  Button,
   Image,
   useColorMode,
-  Switch,
-  Skeleton,
-  Flex,
   ScrollView,
   Select,
-  CheckIcon,
   Icon,
-  Divider,
-  View,
-  IconButton,
 } from "native-base";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -42,7 +31,6 @@ export default function Team() {
   useEffect(() => {
     TeamService.getTeamById(id).then((response) => {
       setTeam(response.data[0]);
-      console.log(team);
       setLoading(false);
     });
   }, [id]);
@@ -122,11 +110,18 @@ export default function Team() {
   };
 
   return (
-    <ScrollView bg="success.100" px={4} flex={1}>
+    <Box
+      _dark={{ bg: "blueGray.900" }}
+      _light={{ bg: "success.100" }}
+      flex={1}
+      px={2}
+      w="100%"
+    >
       <Box
         my={4}
         width="100%"
-        bg="#008264"
+        _dark={{ bg: "blueGray.600" }}
+        _light={{ bg: "emerald.600" }}
         p="5"
         shadow={2}
         _text={{
@@ -138,9 +133,8 @@ export default function Team() {
         <HStack justifyContent="space-between" alignItems="center" space={8}>
           <Image
             source={{ uri: team?.img }}
-            alt={team?.name}
+            alt={`${team?.name}`}
             size="16"
-            marginRight="1"
             borderRadius="xl"
             maxHeight="lg"
           />
@@ -211,34 +205,46 @@ export default function Team() {
           <Select.Item label="Calendário" value="Calendário" />
         </Select>
       </HStack>
-
-      <Center
-        alignItems="flex-start"
-        paddingBottom="10"
-        justifyContent="center"
-        backgroundColor="#a9e9c9"
-        marginRight="2"
-        marginLeft="2"
-      >
-        <ScrollView>
+      <ScrollView>
+        <Center
+          alignItems="flex-start"
+          paddingBottom="10"
+          justifyContent="center"
+          _dark={{ bg: "blueGray.700" }}
+          _light={{ bg: "emerald.600" }}
+          marginRight="2"
+          marginLeft="2"
+          mb={4}
+        >
           {team?.infos.map((info, i) => (
-            <View
+            <Box
               alignItems="flex-start"
               paddingBottom="13"
               justifyContent="center"
-              backgroundColor="#a9e9c9"
               marginRight="5"
               marginLeft="5"
               paddingTop="8"
             >
-              <Text flexDirection="row" fontWeight="bold" fontSize="24">
+              <Text
+                flexDirection="row"
+                _dark={{ color: "orange.50" }}
+                _light={{ color: "orange.100" }}
+                fontWeight="bold"
+                fontSize="24"
+              >
                 {info.title}
               </Text>
-              <Text fontSize="18">{info.description}</Text>
-            </View>
+              <Text
+                fontSize="18"
+                _dark={{ color: "orange.50" }}
+                _light={{ color: "orange.100" }}
+              >
+                {info.description}
+              </Text>
+            </Box>
           ))}
-        </ScrollView>
-      </Center>
-    </ScrollView>
+        </Center>
+      </ScrollView>
+    </Box>
   );
 }
