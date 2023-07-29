@@ -16,6 +16,10 @@ export declare global {
     _id: {
       championship: string;
     };
+    name: string;
+    img: string;
+    imgChampionship: string;
+    idChampionship: string;
     matchs: match[];
   }
 
