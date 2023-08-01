@@ -44,7 +44,7 @@ expo init my-app --template @native-base/expo-template-typescript
 - Wellington Cunha
 
 ## **Tecnologias utilizadas:**
-- Trello (Sprints)
+- Metodologia Ágil Scrum - Utilizando Trello (Sprints)
 - Figma (Protótipo)
 
 Professor: Marcelo Marinho
