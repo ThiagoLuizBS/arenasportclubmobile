@@ -1,0 +1,212 @@
+import React, {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import {
+  Box,
+  useColorMode,
+  ScrollView,
+  Button,
+  Pressable,
+  Center,
+  Text,
+} from "native-base";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import MatchService from "../services/match";
+import { RouteContext } from "../contexts/RouteProvider";
+import SkeletonHome from "../components/home/SkeletonHome";
+import SelectHome from "../components/home/SelectHome";
+import Branding from "../components/app/Branding";
+import {
+  NoMatchsEnded,
+  NoMatchsFilteredToday,
+  NoMatchsToday,
+} from "../components/results/NoMatchs";
+import Match from "../components/results/Match";
+import MatchTitle from "../components/results/MatchTitle";
+
+export default function Home() {
+  const getTodayDate = (x: number) => {
+    var date = new Date();
+    date.setDate(date.getDate() + x);
+    let day = String(date.getDate());
+    let month = String(date.getMonth() + 1);
+    let year = date.getFullYear();
+    if (Number(day) < 10) day = "0" + day;
+    if (Number(month) < 10) month = "0" + month;
+    return day + "-" + month + "-" + year;
+  };
+
+  const getFilterSelect = (x: number) => {
+    var date = getTodayDate(x);
+    date = date.replace("-", "/");
+    date = date.replace("-2023", "");
+    return date;
+  };
+
+  const { navigate } = useNavigation();
+  const { colorMode } = useColorMode();
+  const context = useContext(RouteContext);
+  const route = useRoute();
+
+  const [loading, setLoading] = useState(true);
+  const [matchsData, setMatchsData] = useState([]);
+  const [dateFilter, setDateFilter] = useState(getTodayDate(0));
+  const [filterSelected, setFilterSelected] = useState("");
+  const [buttonChange, setButtonChange] = useState("all");
+  const [currentItems, setCurrentItems] = useState(6);
+  const itemsPerPage = 6;
+
+  useFocusEffect(
+    useCallback(() => {
+      if (context) context.handleRoute(route.name);
+    }, [])
+  );
+
+  useEffect(() => {
+    MatchService.getMatchsByDate(dateFilter, []).then((response) => {
+      setCurrentItems(itemsPerPage);
+      setMatchsData(response.data);
+      setLoading(false);
+    });
+  }, [dateFilter]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      MatchService.getMatchsByDate(dateFilter, []).then((response) => {
+        setMatchsData(response.data);
+      });
+    }, 30000);
+    return () => clearTimeout(timer);
+  });
+
+  const changeDate = (dateChange: string) => {
+    if (dateFilter !== dateChange) {
+      setLoading(true);
+      setDateFilter(dateChange);
+      if (dateChange !== getTodayDate(0)) {
+        setButtonChange("all");
+        setFilterSelected("");
+      }
+    }
+  };
+
+  const changeSelected = (buttonName: string) => {
+    setButtonChange(buttonName);
+    if (buttonName === "all") setFilterSelected("");
+    else if (buttonName === "live") setFilterSelected("AO VIVO");
+    else if (buttonName === "finished") setFilterSelected("ENCERRADO");
+    else setFilterSelected("A REALIZAR");
+  };
+
+  const haveChampionships = (data: championship[]) => {
+    let count = 0;
+    for (let i = 0; i < data?.length; i++) {
+      for (let j = 0; j < data[i]?.matchs?.length; j++) {
+        if (
+          filterSelected === "" ||
+          data[i].matchs[j].status === filterSelected
+        )
+          return true;
+      }
+    }
+
+    if (count === 0) return false;
+  };
+
+  const haveMatchs = (championship: championship) => {
+    let count = 0;
+    for (let i = 0; i < championship.matchs.length; i++) {
+      if (
+        filterSelected === "" ||
+        championship.matchs[i].status === filterSelected
+      )
+        return true;
+    }
+
+    if (count === 0) return false;
+  };
+
+  return (
+    <Box
+      _dark={{ bg: "blueGray.900" }}
+      _light={{ bg: "success.100" }}
+      flex={1}
+      w="100%"
+    >
+      <SelectHome
+        buttonChange={buttonChange}
+        colorMode={colorMode}
+        changeSelected={changeSelected}
+        getTodayDate={getTodayDate}
+        dateFilter={dateFilter}
+        changeDate={changeDate}
+        getFilterSelect={getFilterSelect}
+      />
+      {loading ? (
+        <SkeletonHome />
+      ) : matchsData?.length === 0 ? (
+        <NoMatchsToday dateFilter={dateFilter} />
+      ) : haveChampionships(matchsData) ? (
+        <ScrollView>
+          {matchsData?.map(
+            (championship: championship, i) =>
+              haveMatchs(championship) &&
+              i < currentItems && (
+                <Fragment key={i}>
+                  <MatchTitle title={championship._id.championship} />
+                  {championship?.matchs.map(
+                    (match, i) =>
+                      (filterSelected === "" ||
+                        match.status === filterSelected) && (
+                        <Match match={match} key={i} />
+                      )
+                  )}
+                </Fragment>
+              )
+          )}
+          <Center>
+            <Pressable
+              onPress={() => setCurrentItems(currentItems + itemsPerPage)}
+              disabled={currentItems >= matchsData.length}
+              _disabled={{ opacity: "0" }}
+              rounded="lg"
+              w="80%"
+              _dark={{ bg: "blueGray.700" }}
+              _light={{ bg: "emerald.700" }}
+              shadow={1}
+              p="4"
+              mt={4}
+            >
+              <Center>
+                <Text
+                  _dark={{ color: "orange.50" }}
+                  _light={{ color: "orange.100" }}
+                  fontSize={20}
+                  fontWeight="bold"
+                >
+                  Visualizar mais campeonatos
+                </Text>
+              </Center>
+            </Pressable>
+          </Center>
+          <Branding />
+        </ScrollView>
+      ) : filterSelected === "ENCERRADO" ? (
+        <NoMatchsEnded dateFilter={dateFilter} />
+      ) : (
+        <NoMatchsFilteredToday
+          filterSelected={filterSelected}
+          dateFilter={dateFilter}
+        />
+      )}
+    </Box>
+  );
+}
