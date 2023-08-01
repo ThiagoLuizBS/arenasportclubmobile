@@ -32,3 +32,26 @@ The official NativeBase TypeScript template for [Expo](https://docs.expo.io/)
 ```sh
 expo init my-app --template @native-base/expo-template-typescript
 ```
+## **Equipe de Engenharia de Software:**
+- Arthur Martins
+- Gabriel Souza
+- Luiz Felipe
+- Leandro Queiroz
+- Matheus Gabriel
+- Rafael lemos
+- Vinicius Diniz
+- Victor Miguel
+- Wellington Cunha
+
+## **Tecnologias utilizadas:**
+- Trello (Sprints)
+- Figma (Protótipo)
+
+Professor: Marcelo Marinho
+
+## [Trello do Projeto](https://trello.com/b/X7DkrMz9/arena-sc-ver1)
+
+
+## [Figma Projeto](https://www.figma.com/file/9yGsCN1tpxahA3FyZnFokf/ArenaSC?type=design&node-id=276-160&mode=design&t=mv5RJY2nMucigdyD-0)
+
+
