@@ -15,6 +15,7 @@ export declare global {
   export interface championship {
     _id: {
       championship: string;
+      idChampionship: string;
     };
     name: string;
     img: string;
@@ -35,6 +36,7 @@ export declare global {
     name: string;
     url: string;
     idTeam: string;
+    locality: string;
     infos: [{ title: string; description: string }];
     titles: [{ year: string; name: string; logo: string }];
   }
@@ -46,6 +48,7 @@ export declare global {
   }
 
   export interface match {
+    idMatch: string;
     status: string;
     time: string;
     schedule: string;

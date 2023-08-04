@@ -161,12 +161,27 @@ export default function Home() {
               haveMatchs(championship) &&
               i < currentItems && (
                 <Fragment key={i}>
-                  <MatchTitle title={championship._id.championship} />
+                  <Pressable
+                    onPress={() =>
+                      navigate("Championship", {
+                        championshipId: championship._id.idChampionship,
+                      })
+                    }
+                  >
+                    <MatchTitle title={championship._id.championship} />
+                  </Pressable>
                   {championship?.matchs.map(
                     (match, i) =>
                       (filterSelected === "" ||
                         match.status === filterSelected) && (
-                        <Match match={match} key={i} />
+                        <Pressable
+                          key={i}
+                          onPress={() =>
+                            navigate("Match", { matchId: match.idMatch })
+                          }
+                        >
+                          <Match match={match} />
+                        </Pressable>
                       )
                   )}
                 </Fragment>

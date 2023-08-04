@@ -50,7 +50,7 @@ export default function News() {
       ) : (
         <ScrollView>
           {news.map((category: news, i) => (
-            <VStack key={i} space={6} px={2} w="100%" my={2}>
+            <VStack key={i} space={4} px={2} w="100%" my={2}>
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
@@ -88,8 +88,7 @@ export default function News() {
                         _dark={{ color: "white" }}
                         _light={{ color: "black" }}
                         fontWeight="bold"
-                        fontSize={16}
-                        numberOfLines={5}
+                        fontSize={14}
                       >
                         {news?.title}
                       </Text>

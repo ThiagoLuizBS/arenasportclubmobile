@@ -3,6 +3,7 @@ import { NativeBaseProvider, extendTheme } from "native-base";
 import { Routes } from "./src/routes";
 import { AuthProvider } from "./src/contexts/AuthProvider";
 import { RouteProvider } from "./src/contexts/RouteProvider";
+import { SearchProvider } from "./src/contexts/SearchProvider";
 
 // Define the config
 const config = {
@@ -22,7 +23,9 @@ export default function App() {
     <NativeBaseProvider theme={theme}>
       <AuthProvider>
         <RouteProvider>
-          <Routes />
+          <SearchProvider>
+            <Routes />
+          </SearchProvider>
         </RouteProvider>
       </AuthProvider>
     </NativeBaseProvider>

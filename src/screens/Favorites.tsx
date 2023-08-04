@@ -9,6 +9,7 @@ import {
   Select,
   Icon,
   View,
+  Pressable,
 } from "native-base";
 import {
   useFocusEffect,
@@ -20,11 +21,10 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
 
 export default function Favorites() {
-  const id = "1185";
   const [teamsList, setTeamsList] = useState<team[]>();
   const [championshipsList, setChampionshipsList] = useState<championship[]>();
   const [type, setType] = useState("team");
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
   const [loading, setLoading] = useState(true);
   const { navigate } = useNavigation();
   const context = useContext(RouteContext);
@@ -154,34 +154,42 @@ export default function Favorites() {
         >
           {type === "team" // Verifica se loadingType é "Times" e se o time existe
             ? teamsList?.map((team, i) => (
-                <HStack
+                <Pressable
                   key={i}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  my={2}
-                  mx={2}
+                  onPress={() => navigate("Team", { teamId: team.idTeam })}
                 >
-                  <Image source={{ uri: team.img }} alt={team.name} size="10" />
-                  <Text
-                    _dark={{ color: "orange.50" }}
-                    _light={{ color: "orange.100" }}
-                    fontSize={18}
-                    fontWeight="bold"
+                  <HStack
+                    justifyContent="space-between"
+                    alignItems="center"
+                    my={2}
+                    mx={2}
                   >
-                    {team.name}
-                  </Text>
-                  <Icon
-                    size="7"
-                    _dark={{ color: "orange.50" }}
-                    _light={{ color: "orange.100" }}
-                    as={
-                      <Ionicons
-                        name={starredStates[1] ? "star" : "star-outline"}
-                        onPress={() => handleStarClick(1)}
-                      />
-                    }
-                  />
-                </HStack>
+                    <Image
+                      source={{ uri: team.img }}
+                      alt={team.name}
+                      size="10"
+                    />
+                    <Text
+                      _dark={{ color: "orange.50" }}
+                      _light={{ color: "orange.100" }}
+                      fontSize={18}
+                      fontWeight="bold"
+                    >
+                      {team.name}
+                    </Text>
+                    <Icon
+                      size="7"
+                      _dark={{ color: "orange.50" }}
+                      _light={{ color: "orange.100" }}
+                      as={
+                        <Ionicons
+                          name={starredStates[1] ? "star" : "star-outline"}
+                          onPress={() => handleStarClick(1)}
+                        />
+                      }
+                    />
+                  </HStack>
+                </Pressable>
               ))
             : championshipsList?.map((championship, i) => (
                 <HStack
@@ -192,7 +200,11 @@ export default function Favorites() {
                   mx={2}
                 >
                   <Image
-                    source={{ uri: championship.imgChampionship }}
+                    source={{
+                      uri: championship.imgChampionship
+                        ? championship.imgChampionship
+                        : championship.img,
+                    }}
                     alt={championship.name}
                     size="10"
                   />

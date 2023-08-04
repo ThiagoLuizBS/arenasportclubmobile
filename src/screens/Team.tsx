@@ -11,7 +11,7 @@ import {
   Icon,
 } from "native-base";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import MatchService from "../services/match";
 import logo from "../assets/logo1.png";
 import { AntDesign, EvilIcons } from "@expo/vector-icons";
@@ -24,16 +24,21 @@ type expandChampionship = {
   value: boolean;
 };
 
+type paramsProps = {
+  teamId: string;
+};
+
 export default function Team() {
-  const id = "1185";
+  const route = useRoute();
+  const { teamId } = route.params as paramsProps;
   const [team, setTeam] = useState<team>();
 
   useEffect(() => {
-    TeamService.getTeamById(id).then((response) => {
+    TeamService.getTeamById(teamId).then((response) => {
       setTeam(response.data[0]);
       setLoading(false);
     });
-  }, [id]);
+  }, [teamId]);
 
   const getTodayDate = (x: number) => {
     var date = new Date();
@@ -70,7 +75,6 @@ export default function Team() {
   useEffect(() => {
     MatchService.getMatchsByDate(dateFilter, []).then((response) => {
       setMatchsData(response.data);
-      setExpand(response.data.length);
       setLoading(false);
     });
   }, [dateFilter]);
@@ -101,14 +105,6 @@ export default function Team() {
     else setFilterSelected("A REALIZAR");
   };
 
-  const setExpand = (length: number) => {
-    const array: expandChampionship[] = [];
-    for (let index = 0; index < length; index++) {
-      array.push({ i: index, value: true });
-    }
-    setButtonExpand(array);
-  };
-
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
@@ -131,13 +127,7 @@ export default function Team() {
         }}
       >
         <HStack justifyContent="space-between" alignItems="center" space={8}>
-          <Image
-            source={{ uri: team?.img }}
-            alt={`${team?.name}`}
-            size="16"
-            borderRadius="xl"
-            maxHeight="lg"
-          />
+          <Image source={{ uri: team?.img }} alt={`${team?.name}`} size="16" />
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "orange.100" }}
@@ -218,6 +208,7 @@ export default function Team() {
         >
           {team?.infos.map((info, i) => (
             <Box
+              key={i}
               alignItems="flex-start"
               paddingBottom="13"
               justifyContent="center"

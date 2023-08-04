@@ -13,8 +13,8 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Input } from "../components/Input";
-import { Button } from "../components/Button";
+import { Input } from "../components/sign/Input";
+import { Button } from "../components/sign/Button";
 import userService from "../services/user";
 import {
   useFocusEffect,
@@ -97,7 +97,12 @@ export default function SignIn() {
       justifyContent="center"
       w="100%"
     >
-      <HStack w="100%" alignItems="flex-start" px={10}>
+      <HStack
+        w="100%"
+        alignItems="flex-start"
+        justifyContent="flex-start"
+        px={2}
+      >
         <Pressable onPress={() => navigate("Settings")}>
           <Ionicons
             name="arrow-back"
@@ -106,7 +111,7 @@ export default function SignIn() {
           />
         </Pressable>
       </HStack>
-      <VStack px={10}>
+      <VStack px={10} h="90%" justifyContent="center">
         <Center>
           <Heading
             _dark={{ color: "white" }}
