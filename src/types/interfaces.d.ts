@@ -48,12 +48,14 @@ export declare global {
   }
 
   export interface match {
+    championship: string;
     idMatch: string;
     status: string;
     time: string;
     schedule: string;
     scoreHome: string;
     scoreAway: string;
+    stadium: string;
     teams: {
       homeId: string;
       homeName: string;
