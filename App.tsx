@@ -1,14 +1,37 @@
 import React from "react";
-import { NativeBaseProvider, extendTheme } from "native-base";
+import {
+  ColorMode,
+  NativeBaseProvider,
+  extendTheme,
+  StorageManager,
+} from "native-base";
 import { Routes } from "./src/routes";
 import { AuthProvider } from "./src/contexts/AuthProvider";
 import { RouteProvider } from "./src/contexts/RouteProvider";
 import { SearchProvider } from "./src/contexts/SearchProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const colorModeManager: StorageManager = {
+  get: async () => {
+    try {
+      let val = await AsyncStorage.getItem("@arena:theme");
+      return val === "dark" ? "dark" : "light";
+    } catch (e) {
+      return "light";
+    }
+  },
+  set: async (value: ColorMode) => {
+    try {
+      if (value) await AsyncStorage.setItem("@arena:theme", value);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+};
 
 // Define the config
 const config = {
-  useSystemColorMode: false,
-  initialColorMode: "light",
+  useSystemColorMode: true,
 };
 
 // extend the theme
@@ -20,7 +43,7 @@ declare module "native-base" {
 
 export default function App() {
   return (
-    <NativeBaseProvider theme={theme}>
+    <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
       <AuthProvider>
         <RouteProvider>
           <SearchProvider>

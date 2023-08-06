@@ -16,9 +16,10 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import userService from "../services/user";
+import UserService from "../services/user";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
+import { AuthContext } from "../contexts/AuthProvider";
 
 export default function Favorites() {
   const [teamsList, setTeamsList] = useState<team[]>();
@@ -28,6 +29,7 @@ export default function Favorites() {
   const [loading, setLoading] = useState(true);
   const { navigate } = useNavigation();
   const context = useContext(RouteContext);
+  const authContext = useContext(AuthContext);
   const route = useRoute();
 
   const [favoritesChamp, setFavoritesChamp] = useState<championshipFavorite[]>(
@@ -42,11 +44,14 @@ export default function Favorites() {
   );
 
   useEffect(() => {
-    userService.getFavorites("64348ce9a06f54f0bdcd1dc6").then((response) => {
-      setTeamsList(response.data.teams);
-      setChampionshipsList(response.data.championships);
-      setLoading(false);
-    });
+    if (authContext?.authenticated)
+      UserService.getFavorites(authContext.userId).then((response) => {
+        setTeamsList(response.data.teams);
+        setFavoritesTeams(response.data.teams);
+        setChampionshipsList(response.data.championships);
+        setFavoritesChamp(response.data.championships);
+        setLoading(false);
+      });
   }, []);
 
   const [starredStates, setStarredStates] = useState<boolean[]>(

@@ -4,6 +4,7 @@ import UserService from "../services/user";
 
 type AuthProviderType = {
   authenticated: boolean;
+  userId: string;
   handleLogin: (token: string, id: string, nameUser: string) => Promise<void>;
   handleLogout: () => void;
 };
@@ -12,6 +13,9 @@ const AuthContext = createContext<null | AuthProviderType>(null);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [teamsList, setTeamsList] = useState<team[]>();
+  const [championshipsList, setChampionshipsList] = useState<championship[]>();
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -20,7 +24,10 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       if (token && id) {
         UserService.haveFavorites(JSON.parse(id))
           .then((response) => {
-            if (response.status === 200) setAuthenticated(true);
+            if (response.status === 200) {
+              setAuthenticated(true);
+              setUserId(JSON.parse(id));
+            }
           })
           .catch((response) => {
             if (response.response.status === 401) handleLogout();
@@ -48,6 +55,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         authenticated,
+        userId,
         handleLogin,
         handleLogout,
       }}

@@ -1,13 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import {
-  HStack,
-  VStack,
-  Text,
-  Image,
-  Center,
-  Divider,
-  Icon,
-} from "native-base";
+import { HStack, VStack, Text, Image, Divider, Icon } from "native-base";
 
 type MatchProps = {
   match: match;
@@ -76,7 +68,7 @@ export default function Match({ match }: MatchProps) {
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                fontSize={16}
+                fontSize={18}
               >
                 {match.teams?.homeName}
               </Text>
@@ -95,7 +87,7 @@ export default function Match({ match }: MatchProps) {
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                fontSize={16}
+                fontSize={18}
               >
                 {match.teams?.awayName}
               </Text>
@@ -103,23 +95,21 @@ export default function Match({ match }: MatchProps) {
           </HStack>
         </VStack>
         <VStack w="5%">
-          <Center>
-            <HStack h="50%" justifyContent="center" alignItems="center">
-              <Text
-                _dark={{ color: "white" }}
-                _light={{ color: "black" }}
-                fontSize={18}
-                fontWeight="bold"
-              >
-                {match.scoreHome}
-              </Text>
-            </HStack>
-          </Center>
           <HStack h="50%" justifyContent="center" alignItems="center">
             <Text
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
-              fontSize={18}
+              fontSize={20}
+              fontWeight="bold"
+            >
+              {match.scoreHome}
+            </Text>
+          </HStack>
+          <HStack h="50%" justifyContent="center" alignItems="center">
+            <Text
+              _dark={{ color: "white" }}
+              _light={{ color: "black" }}
+              fontSize={20}
               fontWeight="bold"
             >
               {match.scoreAway}
@@ -157,6 +147,7 @@ export default function Match({ match }: MatchProps) {
         </VStack>
       </HStack>
       <Divider
+        h={1}
         _dark={{
           bg: "blueGray.700",
         }}

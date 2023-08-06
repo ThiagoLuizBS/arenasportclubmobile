@@ -48,6 +48,13 @@ export default function Settings() {
     }, [])
   );
 
+  const toggleTheme = async () => {
+    if (colorMode === "light")
+      await AsyncStorage.setItem("@arena:theme", JSON.stringify("dark"));
+    else await AsyncStorage.setItem("@arena:theme", JSON.stringify("light"));
+    toggleColorMode();
+  };
+
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
@@ -208,7 +215,7 @@ export default function Settings() {
         <Switch
           colorScheme="emerald"
           isChecked={colorMode === "light"}
-          onToggle={toggleColorMode}
+          onToggle={toggleTheme}
           aria-label={
             colorMode === "light"
               ? "switch to dark mode"
@@ -244,6 +251,7 @@ export default function Settings() {
           Arena Sport Club
         </Heading>
       </VStack>
+      <Text fontSize={14}>Projeto criado com finalidade acadêmica</Text>
     </Box>
   );
 }
