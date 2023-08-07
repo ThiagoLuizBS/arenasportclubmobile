@@ -13,6 +13,8 @@ import {
   Pressable,
   Center,
   Text,
+  Divider,
+  Skeleton,
 } from "native-base";
 import {
   useFocusEffect,
@@ -57,6 +59,7 @@ export default function Home() {
   const route = useRoute();
 
   const [loading, setLoading] = useState(true);
+  const [loadingMoreChamps, setLoadingMoreChamps] = useState(false);
   const [matchsData, setMatchsData] = useState([]);
   const [dateFilter, setDateFilter] = useState(getTodayDate(0));
   const [filterSelected, setFilterSelected] = useState("");
@@ -134,6 +137,15 @@ export default function Home() {
     if (count === 0) return false;
   };
 
+  const getMoreChampionships = () => {
+    setLoadingMoreChamps(true);
+    const timer = setTimeout(() => {
+      setCurrentItems(currentItems + itemsPerPage);
+      setLoadingMoreChamps(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  };
+
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
@@ -181,6 +193,17 @@ export default function Home() {
                           }
                         >
                           <Match match={match} />
+                          {championship.matchs.length !== i + 1 && (
+                            <Divider
+                              h={1}
+                              _dark={{
+                                bg: "blueGray.700",
+                              }}
+                              _light={{
+                                bg: "emerald.700",
+                              }}
+                            />
+                          )}
                         </Pressable>
                       )
                   )}
@@ -189,9 +212,9 @@ export default function Home() {
           )}
           <Center>
             <Pressable
-              onPress={() => setCurrentItems(currentItems + itemsPerPage)}
-              disabled={currentItems >= matchsData.length}
-              _disabled={{ opacity: "0" }}
+              onPress={() => getMoreChampionships()}
+              disabled={currentItems >= matchsData.length || loadingMoreChamps}
+              _disabled={{ opacity: "0.5" }}
               rounded="lg"
               w="80%"
               _dark={{ bg: "blueGray.700" }}
@@ -201,14 +224,23 @@ export default function Home() {
               mt={4}
             >
               <Center>
-                <Text
-                  _dark={{ color: "orange.50" }}
-                  _light={{ color: "orange.100" }}
-                  fontSize={20}
-                  fontWeight="bold"
-                >
-                  Visualizar mais campeonatos
-                </Text>
+                {loadingMoreChamps ? (
+                  <Skeleton
+                    _dark={{ endColor: "blueGray.500" }}
+                    _light={{ endColor: "emerald.200" }}
+                    size="10"
+                    rounded="full"
+                  />
+                ) : (
+                  <Text
+                    _dark={{ color: "orange.50" }}
+                    _light={{ color: "orange.100" }}
+                    fontSize={20}
+                    fontWeight="bold"
+                  >
+                    Visualizar mais campeonatos
+                  </Text>
+                )}
               </Center>
             </Pressable>
           </Center>

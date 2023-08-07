@@ -23,9 +23,7 @@ const colorModeManager: StorageManager = {
   set: async (value: ColorMode) => {
     try {
       if (value) await AsyncStorage.setItem("@arena:theme", value);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   },
 };
 

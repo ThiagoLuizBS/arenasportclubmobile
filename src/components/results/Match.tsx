@@ -146,15 +146,6 @@ export default function Match({ match }: MatchProps) {
           )}
         </VStack>
       </HStack>
-      <Divider
-        h={1}
-        _dark={{
-          bg: "blueGray.700",
-        }}
-        _light={{
-          bg: "emerald.700",
-        }}
-      />
     </>
   );
 }

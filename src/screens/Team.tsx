@@ -18,6 +18,7 @@ import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import TeamService from "../services/team";
 import { color } from "native-base/lib/typescript/theme/styled-system";
 import { Ionicons } from "@expo/vector-icons";
+import SelectTeam from "../components/team/SelectTeam";
 
 type expandChampionship = {
   i: number;
@@ -60,10 +61,11 @@ export default function Team() {
 
   const [isStarred, setIsStarred] = useState(false);
   const { navigate } = useNavigation();
-  const { colorMode, toggleColorMode } = useColorMode();
+
   const [loading, setLoading] = useState(true);
   const [matchsData, setMatchsData] = useState([]);
   const [dateFilter, setDateFilter] = useState(getTodayDate(0));
+  const [type, setType] = useState("informations");
   const [buttonExpand, setButtonExpand] = useState<expandChampionship[]>([]);
   const [filterSelected, setFilterSelected] = useState("");
   const [buttonChange, setButtonChange] = useState("all");
@@ -88,23 +90,6 @@ export default function Team() {
     return () => clearTimeout(timer);
   });
 
-  const changeDate = (dateChange: string) => {
-    setLoading(true);
-    setDateFilter(dateChange);
-    if (dateChange !== getTodayDate(0)) {
-      setButtonChange("all");
-      setFilterSelected("");
-    }
-  };
-
-  const changeSelected = (buttonName: string) => {
-    setButtonChange(buttonName);
-    if (buttonName === "all") setFilterSelected("");
-    else if (buttonName === "live") setFilterSelected("AO VIVO");
-    else if (buttonName === "finished") setFilterSelected("ENCERRADO");
-    else setFilterSelected("A REALIZAR");
-  };
-
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
@@ -114,7 +99,6 @@ export default function Team() {
       w="100%"
     >
       <Box
-        my={4}
         width="100%"
         _dark={{ bg: "blueGray.600" }}
         _light={{ bg: "emerald.600" }}
@@ -147,54 +131,7 @@ export default function Team() {
           />
         </HStack>
       </Box>
-
-      <HStack
-        alignItems="center"
-        justifyContent="center"
-        marginRight="5"
-        space={5}
-      >
-        <Select
-          selectedValue={buttonChange}
-          defaultValue="all"
-          accessibilityLabel="Escolha o tipo"
-          placeholder="Escolha o tipo"
-          fontSize={16}
-          minWidth={140}
-          borderRadius={16}
-          borderWidth={0}
-          my={1}
-          _dark={{ bg: "blueGray.600", color: "orange.50" }}
-          _light={{ bg: "emerald.600", color: "orange.100" }}
-          dropdownIcon={
-            <Icon
-              name="down"
-              size="4"
-              mr={2}
-              _dark={{ color: "orange.50" }}
-              _light={{ color: "orange.100" }}
-              as={<AntDesign name="down" />}
-            />
-          }
-          _selectedItem={
-            colorMode === "light"
-              ? {
-                  bg: "emerald.100",
-                  color: "orange.100",
-                }
-              : {
-                  bg: "blueGray.600",
-                  color: "orange.50",
-                }
-          }
-          onValueChange={(itemValue) => changeSelected(itemValue)}
-        >
-          <Select.Item label="Informações" value="all" />
-          <Select.Item label="Títulos" value="Títulos" />
-          <Select.Item label="Resultados" value="Resultados" />
-          <Select.Item label="Calendário" value="Calendário" />
-        </Select>
-      </HStack>
+      <SelectTeam type={type} setType={setType} />
       <ScrollView>
         <Center
           alignItems="flex-start"
@@ -202,8 +139,6 @@ export default function Team() {
           justifyContent="center"
           _dark={{ bg: "blueGray.700" }}
           _light={{ bg: "emerald.600" }}
-          marginRight="2"
-          marginLeft="2"
           mb={4}
         >
           {team?.infos.map((info, i) => (

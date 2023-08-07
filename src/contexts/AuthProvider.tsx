@@ -4,18 +4,26 @@ import UserService from "../services/user";
 
 type AuthProviderType = {
   authenticated: boolean;
-  userId: string;
   handleLogin: (token: string, id: string, nameUser: string) => Promise<void>;
   handleLogout: () => void;
+  favoritesTeams: teamFavorite[];
+  setFavoritesTeams: React.Dispatch<React.SetStateAction<teamFavorite[]>>;
+  favoritesChampionships: championshipFavorite[];
+  setFavoritesChampionships: React.Dispatch<
+    React.SetStateAction<championshipFavorite[]>
+  >;
 };
 
 const AuthContext = createContext<null | AuthProviderType>(null);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [teamsList, setTeamsList] = useState<team[]>();
-  const [championshipsList, setChampionshipsList] = useState<championship[]>();
+  const [favoritesTeams, setFavoritesTeams] = useState<teamFavorite[]>([
+    { img: ".", name: ".", idTeam: "" },
+  ]);
+  const [favoritesChampionships, setFavoritesChampionships] = useState<
+    championshipFavorite[]
+  >([{ name: ".", img: ".", imgChampionship: ".", idChampionship: "" }]);
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -26,7 +34,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
           .then((response) => {
             if (response.status === 200) {
               setAuthenticated(true);
-              setUserId(JSON.parse(id));
             }
           })
           .catch((response) => {
@@ -36,6 +43,62 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     verifyToken();
   }, []);
+
+  useEffect(() => {
+    const getFavorites = async () => {
+      const id = await AsyncStorage.getItem("@arena:idUser");
+      if (authenticated && id) {
+        UserService.getFavorites(JSON.parse(id)).then((response) => {
+          setFavoritesTeams(response.data.teams);
+          setFavoritesChampionships(response.data.championships);
+        });
+      } else {
+        const teams = await AsyncStorage.getItem("@arena:favoritesTeams");
+        if (teams) setFavoritesTeams(JSON.parse(teams));
+        const championships = await AsyncStorage.getItem(
+          "@arena:favoritesChampionships"
+        );
+        if (championships) setFavoritesChampionships(JSON.parse(championships));
+      }
+    };
+    getFavorites();
+  }, [authenticated]);
+
+  useEffect(() => {
+    const setFavoritesTeams = async () => {
+      const id = await AsyncStorage.getItem("@arena:idUser");
+      if (authenticated && id) {
+        UserService.setFavorites(
+          JSON.parse(id),
+          favoritesTeams,
+          favoritesChampionships
+        );
+      }
+      await AsyncStorage.setItem(
+        "@arena:favoritesTeams",
+        JSON.stringify(favoritesTeams)
+      );
+    };
+    setFavoritesTeams();
+  }, [favoritesTeams]);
+
+  useEffect(() => {
+    const setFavoritesChampionships = async () => {
+      const id = await AsyncStorage.getItem("@arena:idUser");
+      if (authenticated && id) {
+        UserService.setFavorites(
+          JSON.parse(id),
+          favoritesTeams,
+          favoritesChampionships
+        );
+      }
+      await AsyncStorage.setItem(
+        "@arena:favoritesChampionships",
+        JSON.stringify(favoritesChampionships)
+      );
+    };
+    setFavoritesChampionships();
+  }, [favoritesChampionships]);
 
   async function handleLogin(token: string, id: string, nameUser: string) {
     await AsyncStorage.setItem("@arena:token", JSON.stringify(token));
@@ -55,9 +118,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         authenticated,
-        userId,
         handleLogin,
         handleLogout,
+        favoritesTeams,
+        setFavoritesTeams,
+        favoritesChampionships,
+        setFavoritesChampionships,
       }}
     >
       {children}

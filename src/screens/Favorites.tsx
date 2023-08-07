@@ -20,22 +20,15 @@ import UserService from "../services/user";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
 import { AuthContext } from "../contexts/AuthProvider";
+import SelectFavorites from "../components/favorites/SelectFavorites";
 
 export default function Favorites() {
-  const [teamsList, setTeamsList] = useState<team[]>();
-  const [championshipsList, setChampionshipsList] = useState<championship[]>();
   const [type, setType] = useState("team");
-  const { colorMode } = useColorMode();
-  const [loading, setLoading] = useState(true);
   const { navigate } = useNavigation();
   const context = useContext(RouteContext);
   const authContext = useContext(AuthContext);
   const route = useRoute();
-
-  const [favoritesChamp, setFavoritesChamp] = useState<championshipFavorite[]>(
-    []
-  );
-  const [favoritesTeams, setFavoritesTeams] = useState<teamFavorite[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
@@ -43,16 +36,7 @@ export default function Favorites() {
     }, [])
   );
 
-  useEffect(() => {
-    if (authContext?.authenticated)
-      UserService.getFavorites(authContext.userId).then((response) => {
-        setTeamsList(response.data.teams);
-        setFavoritesTeams(response.data.teams);
-        setChampionshipsList(response.data.championships);
-        setFavoritesChamp(response.data.championships);
-        setLoading(false);
-      });
-  }, []);
+  useEffect;
 
   const [starredStates, setStarredStates] = useState<boolean[]>(
     Array(5).fill(false)
@@ -66,27 +50,27 @@ export default function Favorites() {
     setStarredStates(newStarredStates);
   };
 
-  const addFavoriteChamp = (championship: championship) => {
+  const addFavoriteChamp = (championship: championshipFavorite) => {
     if (championship) {
       let { idChampionship, name, img, imgChampionship } = championship;
-      setFavoritesChamp((favorite) => [
+      authContext?.setFavoritesChampionships((favorite) => [
         ...favorite,
         { idChampionship, name, img, imgChampionship },
       ]);
     }
   };
 
-  const removeFavoriteChamp = (championship: championship) => {
+  const removeFavoriteChamp = (championship: championshipFavorite) => {
     if (championship)
-      setFavoritesChamp(
-        favoritesChamp.filter(
+      authContext?.setFavoritesChampionships(
+        authContext?.favoritesChampionships.filter(
           (camp) => camp.idChampionship !== championship.idChampionship
         )
       );
   };
 
-  const isFavoriteChamp = (championship: championship) =>
-    favoritesChamp?.some(
+  const isFavoriteChamp = (championship: championshipFavorite) =>
+    authContext?.favoritesChampionships?.some(
       (camp) => camp.idChampionship === championship.idChampionship
     );
 
@@ -99,51 +83,7 @@ export default function Favorites() {
       w="100%"
     >
       <ScrollView bg="success.100" px={4} flex={1}>
-        <HStack
-          alignItems="center"
-          justifyContent="center"
-          marginRight="5"
-          space={5}
-        >
-          <Select
-            selectedValue={type}
-            defaultValue="team"
-            accessibilityLabel="Escolha o tipo"
-            placeholder="Escolha o tipo"
-            fontSize={14}
-            minWidth={140}
-            borderRadius={16}
-            borderWidth={0}
-            my={1}
-            _dark={{ bg: "blueGray.600", color: "orange.50" }}
-            _light={{ bg: "emerald.600", color: "orange.100" }}
-            dropdownIcon={
-              <Icon
-                name="down"
-                size="4"
-                mr={2}
-                _dark={{ color: "orange.50" }}
-                _light={{ color: "orange.100" }}
-                as={<AntDesign name="down" />}
-              />
-            }
-            _selectedItem={
-              colorMode === "light"
-                ? {
-                    bg: "emerald.100",
-                    color: "orange.100",
-                  }
-                : {
-                    bg: "blueGray.600",
-                    color: "orange.50",
-                  }
-            }
-            onValueChange={(itemValue) => setType(itemValue)}
-          >
-            <Select.Item label="Times" value="team" />
-            <Select.Item label="Campeonatos" value="championship" />
-          </Select>
-        </HStack>
+        <SelectFavorites type={type} setType={setType} />
 
         <Box
           my={4}
@@ -158,7 +98,7 @@ export default function Favorites() {
           }}
         >
           {type === "team" // Verifica se loadingType é "Times" e se o time existe
-            ? teamsList?.map((team, i) => (
+            ? authContext?.favoritesTeams?.map((team, i) => (
                 <Pressable
                   key={i}
                   onPress={() => navigate("Team", { teamId: team.idTeam })}
@@ -196,7 +136,7 @@ export default function Favorites() {
                   </HStack>
                 </Pressable>
               ))
-            : championshipsList?.map((championship, i) => (
+            : authContext?.favoritesChampionships?.map((championship, i) => (
                 <HStack
                   key={i}
                   justifyContent="space-between"
