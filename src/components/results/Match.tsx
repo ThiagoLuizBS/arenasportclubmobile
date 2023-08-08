@@ -51,7 +51,7 @@ export default function Match({ match }: MatchProps) {
     <>
       <HStack
         w="100%"
-        h={24}
+        h={width > 700 ? 32 : 24}
         _dark={{ bg: "blueGray.900" }}
         _light={{ bg: "success.100" }}
         px={2}
@@ -71,7 +71,7 @@ export default function Match({ match }: MatchProps) {
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                fontSize={width > 700 ? 24 : 18}
+                fontSize={width > 700 ? 32 : 18}
               >
                 {match.teams?.homeName}
               </Text>
@@ -90,7 +90,7 @@ export default function Match({ match }: MatchProps) {
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                fontSize={width > 700 ? 24 : 18}
+                fontSize={width > 700 ? 32 : 18}
               >
                 {match.teams?.awayName}
               </Text>
@@ -102,7 +102,7 @@ export default function Match({ match }: MatchProps) {
             <Text
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
-              fontSize={width > 700 ? 32 : 20}
+              fontSize={width > 700 ? 40 : 20}
               fontWeight="bold"
             >
               {match.scoreHome}
@@ -112,7 +112,7 @@ export default function Match({ match }: MatchProps) {
             <Text
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
-              fontSize={width > 700 ? 32 : 20}
+              fontSize={width > 700 ? 40 : 20}
               fontWeight="bold"
             >
               {match.scoreAway}
@@ -127,15 +127,15 @@ export default function Match({ match }: MatchProps) {
           _light={{ color: "black" }}
         >
           {match?.status === "AO VIVO" ? (
-            <Text fontSize={width > 700 ? 24 : 18} fontWeight="bold">
+            <Text fontSize={width > 700 ? 32 : 18} fontWeight="bold">
               {changeMinMatch(match)}
             </Text>
           ) : match?.status === "ENCERRADO" ? (
-            <Text fontSize={width > 700 ? 24 : 18} fontWeight="bold">
+            <Text fontSize={width > 700 ? 32 : 18} fontWeight="bold">
               FIM
             </Text>
           ) : (
-            <Text fontSize={width > 700 ? 24 : 18} fontWeight="bold">
+            <Text fontSize={width > 700 ? 32 : 18} fontWeight="bold">
               {match.schedule}
             </Text>
           )}

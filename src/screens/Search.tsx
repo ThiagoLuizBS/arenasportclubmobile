@@ -24,11 +24,6 @@ export default function Search() {
     []
   );
 
-  //   const handleSearch = (event) => {
-  //     const { value } = event.target;
-  //     setSearchField(value);
-  //   };
-
   useEffect(() => {
     if (context?.searchField === "") {
       setListTeams([]);

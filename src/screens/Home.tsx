@@ -9,7 +9,6 @@ import {
   Box,
   useColorMode,
   ScrollView,
-  Button,
   Pressable,
   Center,
   Text,
@@ -34,6 +33,7 @@ import {
 } from "../components/results/NoMatchs";
 import Match from "../components/results/Match";
 import MatchTitle from "../components/results/MatchTitle";
+import i18n from "../languages/I18n";
 
 export default function Home() {
   const getTodayDate = (x: number) => {
@@ -239,7 +239,7 @@ export default function Home() {
                     fontSize={width > 700 ? 40 : 20}
                     fontWeight="bold"
                   >
-                    Visualizar mais campeonatos
+                    {i18n.t("vejaMais")}
                   </Text>
                 )}
               </Center>

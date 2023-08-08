@@ -1,4 +1,4 @@
-import { VStack, Skeleton, Spinner, Heading, HStack } from "native-base";
+import { VStack, Skeleton, HStack } from "native-base";
 
 export default function SkeletonNews() {
   return (

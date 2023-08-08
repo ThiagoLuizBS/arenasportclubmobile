@@ -1,8 +1,6 @@
-import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import {
   HStack,
-  Select,
-  Icon,
   useColorMode,
   Pressable,
   Divider,

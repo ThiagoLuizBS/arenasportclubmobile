@@ -21,6 +21,7 @@ type paramsProps = {
 export default function Match() {
   const route = useRoute();
   const { width } = useWindowDimensions();
+  console.log(width);
   const { matchId } = route.params as paramsProps;
   const { navigate, goBack } = useNavigation();
   const context = useContext(RouteContext);
