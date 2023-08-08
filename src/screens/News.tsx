@@ -8,10 +8,12 @@ import {
 import { RouteContext } from "../contexts/RouteProvider";
 import NewsService from "../services/news";
 import SkeletonNews from "../components/news/SkeletonNews";
+import { useWindowDimensions } from "react-native";
 
 export default function News() {
   const { navigate } = useNavigation();
   const [news, setNews] = useState([]);
+  const { width } = useWindowDimensions();
   const [loading, setLoading] = useState(true);
   const context = useContext(RouteContext);
   const route = useRoute();
@@ -54,7 +56,7 @@ export default function News() {
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                fontSize={28}
+                fontSize={width > 700 ? 40 : 28}
                 fontWeight="bold"
                 numberOfLines={5}
               >
@@ -88,7 +90,7 @@ export default function News() {
                         _dark={{ color: "white" }}
                         _light={{ color: "black" }}
                         fontWeight="bold"
-                        fontSize={14}
+                        fontSize={width > 700 ? 24 : 14}
                       >
                         {news?.title}
                       </Text>

@@ -1,11 +1,14 @@
 import { Button as ButtonNativeBase, IButtonProps } from "native-base";
 import { Text } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 type Props = IButtonProps & {
   title: string;
 };
 
 export function Button({ title, ...rest }: Props) {
+  const { width } = useWindowDimensions();
+
   return (
     <ButtonNativeBase
       w="full"
@@ -13,16 +16,16 @@ export function Button({ title, ...rest }: Props) {
       bg="green.800"
       borderRadius={24}
       _pressed={{
-        bgColor:"green.900"
+        bgColor: "green.900",
       }}
       {...rest}
     >
-      <Text 
-        color="white" 
+      <Text
+        color="white"
         fontWeight="semibold"
-        fontSize={22}
-        >
-            {title}
+        fontSize={width > 700 ? 32 : 24}
+      >
+        {title}
       </Text>
     </ButtonNativeBase>
   );

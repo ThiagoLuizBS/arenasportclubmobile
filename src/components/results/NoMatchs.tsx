@@ -1,11 +1,14 @@
 import { Center, Text } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 export function TextStylized({ text }: { text: string }) {
+  const { width } = useWindowDimensions();
+
   return (
     <Text
       _dark={{ color: "white" }}
       _light={{ color: "black" }}
-      fontSize={20}
+      fontSize={width > 700 ? 32 : 20}
       fontWeight="bold"
     >
       {text}

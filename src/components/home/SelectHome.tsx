@@ -9,6 +9,7 @@ import {
 } from "native-base";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import { useWindowDimensions } from "react-native";
 
 type SelectHomeProps = {
   buttonChange: string;
@@ -28,6 +29,7 @@ export default function SelectHome({
   dateFilter,
   changeDate,
 }: SelectHomeProps) {
+  const { width } = useWindowDimensions();
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const changeDatePicker = (date: Date) => {
@@ -85,7 +87,7 @@ export default function SelectHome({
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
           >
             Todas
@@ -132,7 +134,7 @@ export default function SelectHome({
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
           >
             Ao vivo
@@ -179,7 +181,7 @@ export default function SelectHome({
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
           >
             Encerradas
@@ -226,7 +228,7 @@ export default function SelectHome({
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
           >
             Próximas

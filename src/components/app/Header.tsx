@@ -4,10 +4,12 @@ import { VStack, Input, Icon, Flex, Image } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import logo from "../../assets/logo1.png";
 import { SearchContext } from "../../contexts/SearchProvider";
+import { useWindowDimensions } from "react-native";
 
 export default function Header() {
   const { navigate } = useNavigation();
   const context = useContext(SearchContext);
+  const { width } = useWindowDimensions();
 
   const handleSearch = (e: string) => {
     context?.handleSearchField(e);
@@ -47,7 +49,7 @@ export default function Header() {
             borderWidth="0"
             py="3"
             px="1"
-            fontSize="14"
+            fontSize={width > 700 ? 24 : 16}
             _dark={{ color: "orange.50", placeholderTextColor: "orange.50" }}
             _light={{
               color: "orange.100",
@@ -56,7 +58,6 @@ export default function Header() {
             InputLeftElement={
               <Icon
                 m="2"
-                ml="3"
                 size="6"
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}

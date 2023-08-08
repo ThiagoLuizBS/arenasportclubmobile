@@ -9,6 +9,7 @@ import {
   VStack,
   Text,
 } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 type SelectFavoritesProps = {
   type: string;
@@ -20,6 +21,7 @@ export default function SelectFavorites({
   setType,
 }: SelectFavoritesProps) {
   const { colorMode } = useColorMode();
+  const { width } = useWindowDimensions();
   return (
     <HStack
       alignItems="center"
@@ -57,7 +59,7 @@ export default function SelectFavorites({
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
             Equipes
@@ -102,7 +104,7 @@ export default function SelectFavorites({
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
             Campeonatos

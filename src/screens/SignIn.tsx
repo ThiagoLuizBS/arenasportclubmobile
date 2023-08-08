@@ -26,6 +26,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthProvider";
 import ToastLogin from "../components/app/ToastLogin";
+import { useWindowDimensions } from "react-native";
 
 type FormDataProps = {
   email: string;
@@ -41,6 +42,7 @@ const signInSchema = yup.object({
 });
 
 export default function SignIn() {
+  const { width } = useWindowDimensions();
   const { navigate, goBack } = useNavigation();
   const toast = useToast();
   const { colorMode } = useColorMode();
@@ -117,7 +119,7 @@ export default function SignIn() {
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
             marginY={3}
-            fontSize={30}
+            fontSize={width > 700 ? 48 : 32}
             fontWeight="bold"
           >
             Seja Bem-Vindo!

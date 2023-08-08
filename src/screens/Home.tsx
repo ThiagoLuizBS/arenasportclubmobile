@@ -21,6 +21,7 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
+import { useWindowDimensions } from "react-native";
 import MatchService from "../services/match";
 import { RouteContext } from "../contexts/RouteProvider";
 import SkeletonHome from "../components/home/SkeletonHome";
@@ -57,7 +58,7 @@ export default function Home() {
   const { colorMode } = useColorMode();
   const context = useContext(RouteContext);
   const route = useRoute();
-
+  const { width } = useWindowDimensions();
   const [loading, setLoading] = useState(true);
   const [loadingMoreChamps, setLoadingMoreChamps] = useState(false);
   const [matchsData, setMatchsData] = useState([]);
@@ -235,7 +236,7 @@ export default function Home() {
                   <Text
                     _dark={{ color: "orange.50" }}
                     _light={{ color: "orange.100" }}
-                    fontSize={20}
+                    fontSize={width > 700 ? 40 : 20}
                     fontWeight="bold"
                   >
                     Visualizar mais campeonatos

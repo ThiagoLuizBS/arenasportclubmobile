@@ -7,6 +7,7 @@ import {
   VStack,
   Divider,
 } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 type SelectTeamProps = {
   type: string;
@@ -14,7 +15,9 @@ type SelectTeamProps = {
 };
 
 export default function SelectTeam({ type, setType }: SelectTeamProps) {
+  const { width } = useWindowDimensions();
   const { colorMode } = useColorMode();
+
   return (
     <HStack
       alignItems="center"
@@ -51,7 +54,7 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
             Informações
@@ -96,7 +99,7 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
             Títulos
@@ -141,7 +144,7 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
             Resultados
@@ -186,7 +189,7 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
           <Text
             _dark={{ color: "white" }}
             _light={{ color: "black" }}
-            fontSize={14}
+            fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
             Calendário

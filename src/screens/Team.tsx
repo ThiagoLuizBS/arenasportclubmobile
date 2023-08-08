@@ -10,7 +10,11 @@ import {
   Select,
   Icon,
 } from "native-base";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import MatchService from "../services/match";
 import logo from "../assets/logo1.png";
@@ -30,6 +34,7 @@ type paramsProps = {
 };
 
 export default function Team() {
+  const { width } = useWindowDimensions();
   const route = useRoute();
   const { teamId } = route.params as paramsProps;
   const [team, setTeam] = useState<team>();
@@ -104,11 +109,6 @@ export default function Team() {
         _light={{ bg: "emerald.600" }}
         p="5"
         shadow={2}
-        _text={{
-          fontSize: "md",
-          fontWeight: "bold",
-          color: "white",
-        }}
       >
         <HStack justifyContent="space-between" alignItems="center" space={8}>
           <Image source={{ uri: team?.img }} alt={`${team?.name}`} size="16" />
@@ -116,7 +116,7 @@ export default function Team() {
             _dark={{ color: "white" }}
             _light={{ color: "orange.100" }}
             marginY={3}
-            fontSize={30}
+            fontSize={width > 700 ? 48 : 32}
             fontWeight="bold"
           >
             {team?.name}
@@ -156,12 +156,12 @@ export default function Team() {
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}
                 fontWeight="bold"
-                fontSize="24"
+                fontSize={width > 700 ? 40 : 24}
               >
                 {info.title}
               </Text>
               <Text
-                fontSize="18"
+                fontSize={width > 700 ? 32 : 20}
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}
               >

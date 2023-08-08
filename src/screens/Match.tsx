@@ -12,6 +12,7 @@ import { useRoute } from "@react-navigation/native";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { RouteContext } from "../contexts/RouteProvider";
 import MatchService from "../services/match";
+import { useWindowDimensions } from "react-native";
 
 type paramsProps = {
   matchId: string;
@@ -19,6 +20,7 @@ type paramsProps = {
 
 export default function Match() {
   const route = useRoute();
+  const { width } = useWindowDimensions();
   const { matchId } = route.params as paramsProps;
   const { navigate, goBack } = useNavigation();
   const context = useContext(RouteContext);
@@ -57,7 +59,7 @@ export default function Match() {
       alignItems="center"
       justifyContent="center"
     >
-      <Text fontSize={20}>{matchId} ID match</Text>
+      <Text fontSize={width > 700 ? 32 : 20}>{matchId} ID match</Text>
     </Box>
   );
 }

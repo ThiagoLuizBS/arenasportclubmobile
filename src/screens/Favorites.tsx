@@ -21,8 +21,10 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
 import { AuthContext } from "../contexts/AuthProvider";
 import SelectFavorites from "../components/favorites/SelectFavorites";
+import { useWindowDimensions } from "react-native";
 
 export default function Favorites() {
+  const { width } = useWindowDimensions();
   const [type, setType] = useState("team");
   const { navigate } = useNavigation();
   const context = useContext(RouteContext);
@@ -85,18 +87,7 @@ export default function Favorites() {
       <ScrollView bg="success.100" px={4} flex={1}>
         <SelectFavorites type={type} setType={setType} />
 
-        <Box
-          my={4}
-          width="100%"
-          bg="#008264"
-          p="1"
-          shadow={2}
-          _text={{
-            fontSize: "15",
-            fontWeight: "bold",
-            color: "white",
-          }}
-        >
+        <Box my={4} width="100%" bg="#008264" p="1" shadow={2}>
           {type === "team" // Verifica se loadingType é "Times" e se o time existe
             ? authContext?.favoritesTeams?.map((team, i) => (
                 <Pressable
@@ -117,7 +108,7 @@ export default function Favorites() {
                     <Text
                       _dark={{ color: "orange.50" }}
                       _light={{ color: "orange.100" }}
-                      fontSize={18}
+                      fontSize={width > 700 ? 24 : 16}
                       fontWeight="bold"
                     >
                       {team.name}
@@ -156,7 +147,7 @@ export default function Favorites() {
                   <Text
                     _dark={{ color: "orange.50" }}
                     _light={{ color: "orange.100" }}
-                    fontSize={16}
+                    fontSize={width > 700 ? 24 : 16}
                     fontWeight="bold"
                   >
                     {championship.name}

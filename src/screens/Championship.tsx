@@ -7,12 +7,14 @@ import {
 import { Box, Text, Button, Center, Flex, View } from "native-base";
 import ChampionshipService from "../services/championship";
 import { RouteContext } from "../contexts/RouteProvider";
+import { useWindowDimensions } from "react-native";
 
 type paramsProps = {
   championshipId: string;
 };
 
 export default function Championship() {
+  const { width } = useWindowDimensions();
   const { navigate } = useNavigation();
   const route = useRoute();
   const { championshipId } = route.params as paramsProps;
@@ -43,7 +45,9 @@ export default function Championship() {
       alignItems="center"
       justifyContent="center"
     >
-      <Text fontSize={20}>{championshipId} ID Championship</Text>
+      <Text fontSize={width > 700 ? 32 : 20}>
+        {championshipId} ID Championship
+      </Text>
     </Box>
   );
 }
