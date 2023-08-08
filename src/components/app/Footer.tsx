@@ -13,7 +13,7 @@ export default function Footer() {
   useEffect(() => {
     if (nomeRotaAtual === "Home") setSelected(0);
     else if (nomeRotaAtual === "Favorites") setSelected(1);
-    else if (nomeRotaAtual === "Team") setSelected(2);
+    else if (nomeRotaAtual === "Profile") setSelected(2);
     else if (nomeRotaAtual === "News") setSelected(3);
     else if (nomeRotaAtual === "Settings") setSelected(4);
     else if (nomeRotaAtual !== undefined) setSelected(-1);
@@ -23,7 +23,7 @@ export default function Footer() {
     setSelected(i);
     if (i === 0) navigate("Home");
     else if (i === 1) navigate("Favorites");
-    else if (i === 2) navigate("Team");
+    else if (i === 2) navigate("Profile");
     else if (i === 3) navigate("News");
     else if (i === 4) navigate("Settings");
   };

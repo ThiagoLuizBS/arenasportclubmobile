@@ -10,6 +10,7 @@ export declare global {
       SignUp: undefined;
       SignIn: undefined;
       Team: undefined;
+      Profile: undefined;
     }
   }
 }

@@ -20,12 +20,12 @@ import {
   Divider,
 } from "native-base";
 import logo from "../assets/logo1.png";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
 import { AuthContext } from "../contexts/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Settings() {
+export default function Profile() {
   const { navigate } = useNavigation();
   const { colorMode, toggleColorMode } = useColorMode();
   const [language, setLanguage] = useState("Português");
@@ -41,6 +41,14 @@ export default function Settings() {
       if (name) setNameUser(JSON.parse(name));
     };
     updateNameUser();
+  }, [authContext?.authenticated]);
+
+  useEffect(() => {
+    const updateEmailUser = async () => {
+      const email = await AsyncStorage.getItem("@arena:emailUser");
+      if (email) setNameEmail(JSON.parse(email));
+    };
+    updateEmailUser();
   }, [authContext?.authenticated]);
 
   useFocusEffect(
@@ -61,66 +69,66 @@ export default function Settings() {
     >
       {authContext?.authenticated ? (
         <>
-          <VStack space={5} alignItems="center">
+          <HStack
+            space={7}
+            alignItems="center"
+            flexDirection={"row"}
+            size="lg"
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            margin={5}
+            my={5}
+          >
+            <Ionicons
+              name="body-sharp"
+              size={45}
+              _dark={{ color: "white" }}
+              _light={{ color: "black" }}
+            />
+
             <Heading
+              flexDirection={"row"}
               size="lg"
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
+              margin={5}
+              my={5}
             >
-              Olá, {nameUser}!
+              Usuário: {nameUser}
             </Heading>
-          </VStack>
-          <Pressable
-            onPress={() => {
-              authContext.handleLogout();
-            }}
-            rounded="lg"
-            w="80%"
-            _dark={{ bg: "blueGray.700" }}
-            _light={{ bg: "emerald.700" }}
-            shadow={1}
-            p="4"
-            mt={4}
-            mb={2}
+          </HStack>
+
+          <HStack
+            space={7}
+            alignItems="center"
+            flexDirection={"row"}
+            size="lg"
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            margin={5}
+            my={5}
           >
-            <Center>
-              <Text
-                _dark={{ color: "red.500" }}
-                _light={{ color: "red.500" }}
-                fontSize={20}
-                fontWeight="bold"
-              >
-                Sair
-              </Text>
-            </Center>
-          </Pressable>
+            <Ionicons
+              name="mail"
+              size={45}
+              _dark={{ color: "white" }}
+              _light={{ color: "black" }}
+            />
+
+            <Heading
+              flexDirection={"row"}
+              size="lg"
+              _dark={{ color: "white" }}
+              _light={{ color: "black" }}
+              margin={5}
+              my={5}
+            >
+              Email: {EmailUser}
+            </Heading>
+          </HStack>
         </>
       ) : (
         <>
-          <Pressable
-            onPress={() => {
-              navigate("SignUp");
-            }}
-            rounded="lg"
-            w="80%"
-            _dark={{ bg: "blueGray.700" }}
-            _light={{ bg: "emerald.700" }}
-            shadow={1}
-            p="4"
-            mt={4}
-            mb={2}
-          >
-            <Center>
-              <Text
-                _dark={{ color: "orange.50" }}
-                _light={{ color: "orange.100" }}
-                fontSize={20}
-                fontWeight="bold"
-              >
-                Cadastrar
-              </Text>
-            </Center>
-          </Pressable>
           <Pressable
             onPress={() => {
               navigate("SignIn");
@@ -147,56 +155,7 @@ export default function Settings() {
           </Pressable>
         </>
       )}
-      <HStack w="80%" mb={2} alignItems="center" justifyContent="space-between">
-        <Text
-          w="40%"
-          textAlign="center"
-          _dark={{ color: "white" }}
-          _light={{ color: "black" }}
-          fontSize={20}
-          fontWeight="bold"
-        >
-          Linguagem
-        </Text>
-        <Select
-          selectedValue={language}
-          defaultValue={language}
-          accessibilityLabel="Escolha a linguagem"
-          placeholder="Escolha a linguagem"
-          _dark={{ bg: "blueGray.700", color: "orange.50" }}
-          _light={{ bg: "emerald.700", color: "orange.100" }}
-          width="180"
-          fontSize={20}
-          fontWeight="bold"
-          rounded="xl"
-          p={4}
-          dropdownIcon={
-            <Icon
-              name="down"
-              size="4"
-              mr={2}
-              _dark={{ color: "orange.50" }}
-              _light={{ color: "orange.100" }}
-              as={<AntDesign name="down" />}
-            />
-          }
-          _selectedItem={
-            colorMode === "light"
-              ? {
-                  bg: "emerald.300",
-                  color: "orange.100",
-                }
-              : {
-                  bg: "blueGray.500",
-                  color: "orange.50",
-                }
-          }
-          onValueChange={(itemValue) => setLanguage(itemValue)}
-        >
-          <Select.Item label="Português" value="Português" />
-          <Select.Item label="English" value="English" />
-        </Select>
-      </HStack>
+
       <HStack w="80%" space={2} alignItems="center" justifyContent="center">
         <Text
           _dark={{ color: "white" }}

@@ -9,6 +9,8 @@ import {
   Select,
   Icon,
   View,
+  Switch,
+  Divider,
 } from "native-base";
 import {
   useFocusEffect,
@@ -33,6 +35,7 @@ export default function Favorites() {
   const [favoritesChamp, setFavoritesChamp] = useState<championshipFavorite[]>(
     []
   );
+
   const [favoritesTeams, setFavoritesTeams] = useState<teamFavorite[]>([]);
 
   useFocusEffect(
@@ -43,23 +46,11 @@ export default function Favorites() {
 
   useEffect(() => {
     userService.getFavorites("64348ce9a06f54f0bdcd1dc6").then((response) => {
-      setTeamsList(response.data.teams);
       setChampionshipsList(response.data.championships);
+      setTeamsList(response.data.teams);
       setLoading(false);
     });
   }, []);
-
-  const [starredStates, setStarredStates] = useState<boolean[]>(
-    Array(5).fill(false)
-  );
-
-  const handleStarClick = (index: number) => {
-    const newStarredStates = [...starredStates];
-
-    newStarredStates[index] = !newStarredStates[index];
-
-    setStarredStates(newStarredStates);
-  };
 
   const addFavoriteChamp = (championship: championship) => {
     if (championship) {
@@ -80,6 +71,23 @@ export default function Favorites() {
       );
   };
 
+  const addFavoriteTeams = (team: team) => {
+    if (team) {
+      let { idTeam, name, img } = team;
+      setFavoritesTeams((favorite) => [...favorite, { idTeam, name, img }]);
+    }
+  };
+
+  const removeFavoriteTeams = (team: team) => {
+    if (team)
+      setFavoritesTeams(
+        favoritesTeams.filter((team) => team.idTeam !== team.idTeam)
+      );
+  };
+
+  const isFavoriteTeam = (teamToCheck: team) =>
+    favoritesTeams?.some((team) => teamToCheck.idTeam === team.idTeam);
+
   const isFavoriteChamp = (championship: championship) =>
     favoritesChamp?.some(
       (camp) => camp.idChampionship === championship.idChampionship
@@ -93,8 +101,16 @@ export default function Favorites() {
       px={2}
       w="100%"
     >
-      <ScrollView bg="success.100" px={4} flex={1}>
+      <ScrollView
+        bg="success.100"
+        px={4}
+        flex={1}
+        _dark={{ bg: "blueGray.900" }}
+        _light={{ bg: "success.100" }}
+      >
         <HStack
+          _dark={{ bg: "blueGray.900" }}
+          _light={{ bg: "success.100" }}
           alignItems="center"
           justifyContent="center"
           marginRight="5"
@@ -141,6 +157,8 @@ export default function Favorites() {
         </HStack>
 
         <Box
+          _dark={{ bg: "blueGray.600" }}
+          _light={{ bg: "emerald.600" }}
           my={4}
           width="100%"
           bg="#008264"
@@ -165,19 +183,22 @@ export default function Favorites() {
                   <Text
                     _dark={{ color: "orange.50" }}
                     _light={{ color: "orange.100" }}
-                    fontSize={18}
+                    fontSize={16}
                     fontWeight="bold"
                   >
                     {team.name}
                   </Text>
                   <Icon
                     size="7"
-                    _dark={{ color: "orange.50" }}
                     _light={{ color: "orange.100" }}
                     as={
                       <Ionicons
-                        name={starredStates[1] ? "star" : "star-outline"}
-                        onPress={() => handleStarClick(1)}
+                        name={isFavoriteTeam(team) ? "star" : "star-outline"}
+                        onPress={() => {
+                          isFavoriteTeam(team)
+                            ? removeFavoriteTeams(team)
+                            : addFavoriteTeams(team);
+                        }}
                       />
                     }
                   />
@@ -227,6 +248,53 @@ export default function Favorites() {
               ))}
         </Box>
       </ScrollView>
+
+      <HStack alignItems={"center"} justifyContent={"center"}>
+        <Text
+          _dark={{ color: "white" }}
+          _light={{ color: "black" }}
+          fontSize={20}
+          fontWeight="bold"
+        >
+          Escolha o modo
+        </Text>
+      </HStack>
+
+      <HStack
+        my={4}
+        alignItems={"center"}
+        flexDirection={"row"}
+        justifyContent={"center"}
+      >
+        <HStack w="80%" space={2} alignItems="center" justifyContent="center">
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            Dark
+          </Text>
+          <Switch
+            colorScheme="emerald"
+            isChecked={colorMode === "light"}
+            onToggle={toggleColorMode}
+            aria-label={
+              colorMode === "light"
+                ? "switch to dark mode"
+                : "switch to light mode"
+            }
+          />
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            Ligth
+          </Text>
+        </HStack>
+      </HStack>
     </Box>
   );
 }
