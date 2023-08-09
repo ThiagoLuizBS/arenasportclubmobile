@@ -67,7 +67,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const setFavoritesTeams = async () => {
       const id = await AsyncStorage.getItem("@arena:idUser");
-      if (authenticated && id) {
+      if (
+        authenticated &&
+        id &&
+        favoritesTeams[0]?.name !== "." &&
+        favoritesChampionships[0]?.name !== "."
+      ) {
         UserService.setFavorites(
           JSON.parse(id),
           favoritesTeams,
@@ -85,7 +90,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const setFavoritesChampionships = async () => {
       const id = await AsyncStorage.getItem("@arena:idUser");
-      if (authenticated && id) {
+      if (
+        authenticated &&
+        id &&
+        favoritesTeams[0]?.name !== "." &&
+        favoritesChampionships[0]?.name !== "."
+      ) {
         UserService.setFavorites(
           JSON.parse(id),
           favoritesTeams,
