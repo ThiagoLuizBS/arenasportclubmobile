@@ -9,6 +9,7 @@ import {
   ScrollView,
   Select,
   Icon,
+  Switch,
 } from "native-base";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -245,6 +246,54 @@ export default function Team() {
           ))}
         </Center>
       </ScrollView>
+
+      <HStack alignItems={"center"} justifyContent={"center"}>
+        <Text
+          _dark={{ color: "white" }}
+          _light={{ color: "black" }}
+          fontSize={20}
+          fontWeight="bold"
+          marginBottom={5}
+        >
+          Escolha o modo
+        </Text>
+      </HStack>
+
+      <HStack
+        my={4}
+        alignItems={"center"}
+        flexDirection={"row"}
+        justifyContent={"center"}
+      >
+        <HStack w="80%" space={2} alignItems="center" justifyContent="center">
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            Dark
+          </Text>
+          <Switch
+            colorScheme="emerald"
+            isChecked={colorMode === "light"}
+            onToggle={toggleColorMode}
+            aria-label={
+              colorMode === "light"
+                ? "switch to dark mode"
+                : "switch to light mode"
+            }
+          />
+          <Text
+            _dark={{ color: "white" }}
+            _light={{ color: "black" }}
+            fontSize={20}
+            fontWeight="bold"
+          >
+            Ligth
+          </Text>
+        </HStack>
+      </HStack>
     </Box>
   );
 }
