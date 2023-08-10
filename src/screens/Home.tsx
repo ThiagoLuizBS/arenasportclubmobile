@@ -78,10 +78,7 @@ export default function Home() {
 
   useEffect(() => {
     if (favoritesContext?.favoritesChampionships)
-      MatchService.getMatchsByDate(
-        dateFilter,
-        favoritesContext?.favoritesChampionships
-      ).then((response) => {
+      MatchService.getMatchsByDate(dateFilter, []).then((response) => {
         setCurrentItems(itemsPerPage);
         setMatchsData(response.data);
         setLoading(false);
