@@ -50,12 +50,12 @@ export default function SelectFavorites({
                   ? "#047857"
                   : "black"
                 : type === "team"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
@@ -95,12 +95,12 @@ export default function SelectFavorites({
                   ? "#047857"
                   : "black"
                 : type === "championship"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"

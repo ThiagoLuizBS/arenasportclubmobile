@@ -6,7 +6,7 @@ export function TextStylized({ text }: { text: string }) {
 
   return (
     <Text
-      _dark={{ color: "white" }}
+      _dark={{ color: "orange.50" }}
       _light={{ color: "black" }}
       fontSize={width > 700 ? 32 : 20}
       fontWeight="bold"

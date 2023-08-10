@@ -54,7 +54,7 @@ export default function News() {
           {news.map((category: news, i) => (
             <VStack key={i} space={4} px={2} w="100%" my={2}>
               <Text
-                _dark={{ color: "white" }}
+                _dark={{ color: "orange.50" }}
                 _light={{ color: "black" }}
                 fontSize={width > 700 ? 40 : 28}
                 fontWeight="bold"
@@ -87,7 +87,7 @@ export default function News() {
                       <Text
                         my={4}
                         px={4}
-                        _dark={{ color: "white" }}
+                        _dark={{ color: "orange.50" }}
                         _light={{ color: "black" }}
                         fontWeight="bold"
                         fontSize={width > 700 ? 24 : 14}

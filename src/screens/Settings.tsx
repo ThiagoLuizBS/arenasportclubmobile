@@ -72,7 +72,7 @@ export default function Settings() {
           <VStack space={5} alignItems="center">
             <Heading
               size="lg"
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
             >
               Olá, {nameUser}!
@@ -159,7 +159,7 @@ export default function Settings() {
         <Text
           w="40%"
           textAlign="center"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
           fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
@@ -207,7 +207,7 @@ export default function Settings() {
       </HStack>
       <HStack w="80%" space={2} alignItems="center" justifyContent="center">
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
           fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
@@ -225,7 +225,7 @@ export default function Settings() {
           }
         />
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
           fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
@@ -247,7 +247,7 @@ export default function Settings() {
         <Image source={logo} alt="ArenaSportClub" size="xl" />
         <Heading
           size="lg"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
         >
           Arena Sport Club

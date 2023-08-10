@@ -47,12 +47,12 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
                   ? "#047857"
                   : "black"
                 : type === "informations"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
@@ -92,12 +92,12 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
                   ? "#047857"
                   : "black"
                 : type === "titles"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
@@ -137,12 +137,12 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
                   ? "#047857"
                   : "black"
                 : type === "results"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
@@ -182,12 +182,12 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
                   ? "#047857"
                   : "black"
                 : type === "calendar"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"

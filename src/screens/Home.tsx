@@ -34,6 +34,7 @@ import {
 import Match from "../components/results/Match";
 import MatchTitle from "../components/results/MatchTitle";
 import i18n from "../languages/I18n";
+import { FavoritesContext } from "../contexts/FavoritesProvider";
 
 export default function Home() {
   const getTodayDate = (x: number) => {
@@ -57,6 +58,7 @@ export default function Home() {
   const { navigate } = useNavigation();
   const { colorMode } = useColorMode();
   const context = useContext(RouteContext);
+  const favoritesContext = useContext(FavoritesContext);
   const route = useRoute();
   const { width } = useWindowDimensions();
   const [loading, setLoading] = useState(true);
@@ -75,18 +77,26 @@ export default function Home() {
   );
 
   useEffect(() => {
-    MatchService.getMatchsByDate(dateFilter, []).then((response) => {
-      setCurrentItems(itemsPerPage);
-      setMatchsData(response.data);
-      setLoading(false);
-    });
+    if (favoritesContext?.favoritesChampionships)
+      MatchService.getMatchsByDate(
+        dateFilter,
+        favoritesContext?.favoritesChampionships
+      ).then((response) => {
+        setCurrentItems(itemsPerPage);
+        setMatchsData(response.data);
+        setLoading(false);
+      });
   }, [dateFilter]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      MatchService.getMatchsByDate(dateFilter, []).then((response) => {
-        setMatchsData(response.data);
-      });
+      if (favoritesContext?.favoritesChampionships)
+        MatchService.getMatchsByDate(
+          dateFilter,
+          favoritesContext?.favoritesChampionships
+        ).then((response) => {
+          setMatchsData(response.data);
+        });
     }, 30000);
     return () => clearTimeout(timer);
   });

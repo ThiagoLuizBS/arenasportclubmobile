@@ -103,7 +103,7 @@ export default function SignUp() {
         <Pressable onPress={() => navigate("Settings")}>
           <Ionicons
             name="arrow-back"
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === "light" ? "black" : "#fff7ed"}
             size={24}
           />
         </Pressable>
@@ -111,7 +111,7 @@ export default function SignUp() {
       <VStack px={10} h="90%" justifyContent="center">
         <Center>
           <Heading
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             marginY={3}
             fontSize={width > 700 ? 48 : 32}

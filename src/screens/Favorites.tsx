@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import {
   Text,
   HStack,
@@ -6,30 +6,30 @@ import {
   Image,
   useColorMode,
   ScrollView,
-  Select,
   Icon,
-  View,
   Pressable,
+  VStack,
+  Divider,
 } from "native-base";
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import UserService from "../services/user";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
-import { AuthContext } from "../contexts/AuthProvider";
-import SelectFavorites from "../components/favorites/SelectFavorites";
+import { FavoritesContext } from "../contexts/FavoritesProvider";
 import { useWindowDimensions } from "react-native";
+import SelectFavorites from "../components/favorites/SelectFavorites";
 
 export default function Favorites() {
-  const { width } = useWindowDimensions();
-  const [type, setType] = useState("team");
+  const { colorMode } = useColorMode();
   const { navigate } = useNavigation();
-  const context = useContext(RouteContext);
-  const authContext = useContext(AuthContext);
+  const { width } = useWindowDimensions();
   const route = useRoute();
+  const context = useContext(RouteContext);
+  const favoritesContext = useContext(FavoritesContext);
+  const [type, setType] = useState("team");
   const [loading, setLoading] = useState(true);
 
   useFocusEffect(
@@ -37,44 +37,6 @@ export default function Favorites() {
       if (context) context.handleRoute(route.name);
     }, [])
   );
-
-  useEffect;
-
-  const [starredStates, setStarredStates] = useState<boolean[]>(
-    Array(5).fill(false)
-  );
-
-  const handleStarClick = (index: number) => {
-    const newStarredStates = [...starredStates];
-
-    newStarredStates[index] = !newStarredStates[index];
-
-    setStarredStates(newStarredStates);
-  };
-
-  const addFavoriteChamp = (championship: championshipFavorite) => {
-    if (championship) {
-      let { idChampionship, name, img, imgChampionship } = championship;
-      authContext?.setFavoritesChampionships((favorite) => [
-        ...favorite,
-        { idChampionship, name, img, imgChampionship },
-      ]);
-    }
-  };
-
-  const removeFavoriteChamp = (championship: championshipFavorite) => {
-    if (championship)
-      authContext?.setFavoritesChampionships(
-        authContext?.favoritesChampionships.filter(
-          (camp) => camp.idChampionship !== championship.idChampionship
-        )
-      );
-  };
-
-  const isFavoriteChamp = (championship: championshipFavorite) =>
-    authContext?.favoritesChampionships?.some(
-      (camp) => camp.idChampionship === championship.idChampionship
-    );
 
   return (
     <Box
@@ -84,95 +46,158 @@ export default function Favorites() {
       px={2}
       w="100%"
     >
-      <ScrollView bg="success.100" px={4} flex={1}>
-        <SelectFavorites type={type} setType={setType} />
-
-        <Box my={4} width="100%" bg="#008264" p="1" shadow={2}>
+      <SelectFavorites type={type} setType={setType} />
+      <ScrollView>
+        <Box m={2} width="100%" shadow={2}>
           {type === "team" // Verifica se loadingType é "Times" e se o time existe
-            ? authContext?.favoritesTeams?.map((team, i) => (
+            ? favoritesContext?.favoritesTeams?.map((team, i) => (
                 <Pressable
                   key={i}
                   onPress={() => navigate("Team", { teamId: team.idTeam })}
                 >
                   <HStack
-                    justifyContent="space-between"
+                    w="100%"
+                    justifyContent="center"
                     alignItems="center"
                     my={2}
-                    mx={2}
                   >
-                    <Image
-                      source={{ uri: team.img }}
-                      alt={team.name}
-                      size="10"
-                    />
-                    <Text
-                      _dark={{ color: "orange.50" }}
-                      _light={{ color: "orange.100" }}
-                      fontSize={width > 700 ? 24 : 16}
-                      fontWeight="bold"
-                    >
-                      {team.name}
-                    </Text>
-                    <Icon
-                      size="7"
-                      _dark={{ color: "orange.50" }}
-                      _light={{ color: "orange.100" }}
-                      as={
-                        <Ionicons
-                          name={starredStates[1] ? "star" : "star-outline"}
-                          onPress={() => handleStarClick(1)}
-                        />
-                      }
-                    />
+                    <VStack w="20%">
+                      <Image
+                        source={{ uri: team?.img }}
+                        alt={team?.name}
+                        size="10"
+                        m="auto"
+                      />
+                    </VStack>
+                    <VStack w="70%">
+                      <Text
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "black" }}
+                        fontSize={width > 700 ? 24 : 16}
+                        fontWeight="bold"
+                        overflow="hidden"
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                      >
+                        {team?.name}
+                      </Text>
+                    </VStack>
+                    <VStack w="10%" justifyContent="center">
+                      <Icon
+                        size="7"
+                        _dark={{ color: "orange.300" }}
+                        _light={{ color: "orange.500" }}
+                        as={
+                          <Ionicons
+                            name={
+                              favoritesContext?.isFavoriteTeam(team)
+                                ? "star"
+                                : "star-outline"
+                            }
+                            onPress={() => {
+                              favoritesContext?.isFavoriteTeam(team)
+                                ? favoritesContext?.removeFavoriteTeam(team)
+                                : favoritesContext?.addFavoriteTeam(team);
+                            }}
+                          />
+                        }
+                      />
+                    </VStack>
                   </HStack>
+                  {favoritesContext?.favoritesTeams.length !== i + 1 && (
+                    <Divider
+                      h="0.5"
+                      _dark={{
+                        bg: "blueGray.700",
+                      }}
+                      _light={{
+                        bg: "emerald.700",
+                      }}
+                    />
+                  )}
                 </Pressable>
               ))
-            : authContext?.favoritesChampionships?.map((championship, i) => (
-                <HStack
-                  key={i}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  my={2}
-                  mx={2}
-                >
-                  <Image
-                    source={{
-                      uri: championship.imgChampionship
-                        ? championship.imgChampionship
-                        : championship.img,
-                    }}
-                    alt={championship.name}
-                    size="10"
-                  />
-                  <Text
-                    _dark={{ color: "orange.50" }}
-                    _light={{ color: "orange.100" }}
-                    fontSize={width > 700 ? 24 : 16}
-                    fontWeight="bold"
+            : favoritesContext?.favoritesChampionships?.map(
+                (championship, i) => (
+                  <Pressable
+                    key={i}
+                    onPress={() =>
+                      navigate("Championship", {
+                        championshipId: championship.idChampionship,
+                      })
+                    }
                   >
-                    {championship.name}
-                  </Text>
-                  <Icon
-                    size="7"
-                    _dark={{ color: "orange.50" }}
-                    _light={{ color: "orange.100" }}
-                    as={
-                      <Ionicons
-                        name={
-                          isFavoriteChamp(championship)
-                            ? "star"
-                            : "star-outline"
-                        }
-                        onPress={() => {
-                          isFavoriteChamp(championship)
-                            ? removeFavoriteChamp(championship)
-                            : addFavoriteChamp(championship);
+                    <HStack
+                      justifyContent="space-between"
+                      alignItems="center"
+                      my={2}
+                    >
+                      <VStack w="20%">
+                        <Image
+                          source={{
+                            uri: championship?.imgChampionship
+                              ? championship?.imgChampionship
+                              : championship?.img,
+                          }}
+                          alt={championship?.name}
+                          size="10"
+                          m="auto"
+                        />
+                      </VStack>
+                      <VStack w="70%">
+                        <Text
+                          _dark={{ color: "orange.50" }}
+                          _light={{ color: "black" }}
+                          fontSize={width > 700 ? 24 : 16}
+                          fontWeight="bold"
+                          overflow="hidden"
+                          numberOfLines={1}
+                          ellipsizeMode="tail"
+                        >
+                          {championship?.name}
+                        </Text>
+                      </VStack>
+                      <VStack w="10%" justifyContent="center">
+                        <Icon
+                          size="7"
+                          _dark={{ color: "orange.300" }}
+                          _light={{ color: "orange.500" }}
+                          as={
+                            <Ionicons
+                              name={
+                                favoritesContext?.isFavoriteChamp(championship)
+                                  ? "star"
+                                  : "star-outline"
+                              }
+                              onPress={() => {
+                                favoritesContext?.isFavoriteChamp(championship)
+                                  ? favoritesContext?.removeFavoriteChamp(
+                                      championship
+                                    )
+                                  : favoritesContext?.addFavoriteChamp(
+                                      championship
+                                    );
+                              }}
+                            />
+                          }
+                        />
+                      </VStack>
+                    </HStack>
+                    {favoritesContext?.favoritesChampionships.length !==
+                      i + 1 && (
+                      <Divider
+                        h="0.5"
+                        _dark={{
+                          bg: "blueGray.700",
+                        }}
+                        _light={{
+                          bg: "emerald.700",
                         }}
                       />
-                    }
-                  />
-                </HStack>
-              ))}
+                    )}
+                  </Pressable>
+                )
+              )}
         </Box>
       </ScrollView>
     </Box>

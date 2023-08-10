@@ -80,12 +80,12 @@ export default function SelectHome({
                   ? "#047857"
                   : "black"
                 : buttonChange === "all"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
@@ -127,12 +127,12 @@ export default function SelectHome({
                   ? "#047857"
                   : "black"
                 : buttonChange === "live"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
@@ -174,12 +174,12 @@ export default function SelectHome({
                   ? "#047857"
                   : "black"
                 : buttonChange === "finished"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
@@ -221,12 +221,12 @@ export default function SelectHome({
                   ? "#047857"
                   : "black"
                 : buttonChange === "next"
-                ? "white"
+                ? "#fff7ed"
                 : "#334155"
             }
           />
           <Text
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
@@ -256,7 +256,7 @@ export default function SelectHome({
           <Fontisto
             name="date"
             size={32}
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === "light" ? "black" : "#fff7ed"}
           />
         </VStack>
       </Pressable>

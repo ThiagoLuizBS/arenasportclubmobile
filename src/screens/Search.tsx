@@ -15,16 +15,18 @@ import {
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { SearchContext } from "../contexts/SearchProvider";
+import { FavoritesContext } from "../contexts/FavoritesProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { useWindowDimensions } from "react-native";
-import { AuthContext } from "../contexts/AuthProvider";
+import SkeletonSearch from "../components/search/SkeletonSearch";
 
 export default function Search() {
   const { width } = useWindowDimensions();
   const { navigate, goBack } = useNavigation();
   const { colorMode } = useColorMode();
   const context = useContext(SearchContext);
-  const authContext = useContext(AuthContext);
+  const favoritesContext = useContext(FavoritesContext);
+  const [loading, setLoading] = useState(true);
   const [listTeams, setListTeams] = useState<team[]>([]);
   const [listChampionships, setListChampionships] = useState<championship[]>(
     []
@@ -32,6 +34,7 @@ export default function Search() {
 
   useEffect(() => {
     if (context?.searchField === "") {
+      setLoading(true);
       setListTeams([]);
       setListChampionships([]);
     } else if (context?.searchField) {
@@ -43,36 +46,13 @@ export default function Search() {
           setListChampionships(response.data.championship);
         }
       );
+      setLoading(false);
     }
   }, [context?.searchField]);
 
   const deleteSearch = () => {
     context?.handleSearchField("");
   };
-
-  const addFavoriteChamp = (championship: championshipFavorite) => {
-    if (championship) {
-      let { idChampionship, name, img, imgChampionship } = championship;
-      authContext?.setFavoritesChampionships((favorite) => [
-        ...favorite,
-        { idChampionship, name, img, imgChampionship },
-      ]);
-    }
-  };
-
-  const removeFavoriteChamp = (championship: championshipFavorite) => {
-    if (championship)
-      authContext?.setFavoritesChampionships(
-        authContext?.favoritesChampionships.filter(
-          (camp) => camp.idChampionship !== championship.idChampionship
-        )
-      );
-  };
-
-  const isFavoriteChamp = (championship: championshipFavorite) =>
-    authContext?.favoritesChampionships?.some(
-      (camp) => camp.idChampionship === championship.idChampionship
-    );
 
   return (
     <Box
@@ -91,16 +71,20 @@ export default function Search() {
         >
           <Ionicons
             name="arrow-back"
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === "light" ? "black" : "#fff7ed"}
             size={24}
           />
         </Pressable>
       </HStack>
       <ScrollView>
+        {(loading ||
+          (listTeams.length === 0 && listChampionships.length === 0)) && (
+          <SkeletonSearch />
+        )}
         {listTeams.length > 0 && (
           <HStack w="100%" my={2} justifyContent="center" alignItems="center">
             <Text
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
               fontSize={width > 700 ? 32 : 24}
               fontWeight="bold"
@@ -138,7 +122,27 @@ export default function Search() {
                     {team.name}
                   </Text>
                 </VStack>
-                <VStack w="10%"></VStack>
+                <VStack w="10%">
+                  <Icon
+                    size="7"
+                    _dark={{ color: "orange.300" }}
+                    _light={{ color: "orange.500" }}
+                    as={
+                      <Ionicons
+                        name={
+                          favoritesContext?.isFavoriteTeam(team)
+                            ? "star"
+                            : "star-outline"
+                        }
+                        onPress={() => {
+                          favoritesContext?.isFavoriteTeam(team)
+                            ? favoritesContext?.removeFavoriteTeam(team)
+                            : favoritesContext?.addFavoriteTeam(team);
+                        }}
+                      />
+                    }
+                  />
+                </VStack>
               </HStack>
             </Pressable>
             {listTeams.length !== i + 1 && (
@@ -157,7 +161,7 @@ export default function Search() {
         {listChampionships.length > 0 && (
           <HStack w="100%" my={2} justifyContent="center" alignItems="center">
             <Text
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
               fontSize={width > 700 ? 32 : 24}
               fontWeight="bold"
@@ -206,15 +210,19 @@ export default function Search() {
                 <VStack w="10%">
                   <Icon
                     size="7"
-                    _dark={{ color: "white" }}
-                    _light={{ color: "black" }}
+                    _dark={{ color: "orange.300" }}
+                    _light={{ color: "orange.500" }}
                     as={
                       <Ionicons
-                        name={isFavoriteChamp(champ) ? "star" : "star-outline"}
+                        name={
+                          favoritesContext?.isFavoriteChamp(champ)
+                            ? "star"
+                            : "star-outline"
+                        }
                         onPress={() => {
-                          isFavoriteChamp(champ)
-                            ? removeFavoriteChamp(champ)
-                            : addFavoriteChamp(champ);
+                          favoritesContext?.isFavoriteChamp(champ)
+                            ? favoritesContext?.removeFavoriteChamp(champ)
+                            : favoritesContext?.addFavoriteChamp(champ);
                         }}
                       />
                     }

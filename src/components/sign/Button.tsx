@@ -21,7 +21,7 @@ export function Button({ title, ...rest }: Props) {
       {...rest}
     >
       <Text
-        color="white"
+        color="orange.50"
         fontWeight="semibold"
         fontSize={width > 700 ? 32 : 24}
       >

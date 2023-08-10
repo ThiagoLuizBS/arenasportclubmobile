@@ -69,7 +69,7 @@ export default function Match({ match }: MatchProps) {
             </VStack>
             <VStack h="100%" w="80%" justifyContent="center">
               <Text
-                _dark={{ color: "white" }}
+                _dark={{ color: "orange.50" }}
                 _light={{ color: "black" }}
                 fontSize={width > 700 ? 32 : 18}
               >
@@ -88,7 +88,7 @@ export default function Match({ match }: MatchProps) {
             </VStack>
             <VStack h="100%" w="80%" justifyContent="center">
               <Text
-                _dark={{ color: "white" }}
+                _dark={{ color: "orange.50" }}
                 _light={{ color: "black" }}
                 fontSize={width > 700 ? 32 : 18}
               >
@@ -100,7 +100,7 @@ export default function Match({ match }: MatchProps) {
         <VStack w="5%">
           <HStack h="50%" justifyContent="center" alignItems="center">
             <Text
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
               fontSize={width > 700 ? 40 : 20}
               fontWeight="bold"
@@ -110,7 +110,7 @@ export default function Match({ match }: MatchProps) {
           </HStack>
           <HStack h="50%" justifyContent="center" alignItems="center">
             <Text
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
               fontSize={width > 700 ? 40 : 20}
               fontWeight="bold"
@@ -123,7 +123,7 @@ export default function Match({ match }: MatchProps) {
           w="15%"
           justifyContent="center"
           alignItems="center"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
         >
           {match?.status === "AO VIVO" ? (
