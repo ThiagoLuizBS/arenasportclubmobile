@@ -30,7 +30,6 @@ export default function Settings() {
   const { width } = useWindowDimensions();
   const { navigate } = useNavigation();
   const { colorMode, toggleColorMode } = useColorMode();
-  const [language, setLanguage] = useState("Português");
   const [nameUser, setNameUser] = useState("");
   const context = useContext(RouteContext);
   const authContext = useContext(AuthContext);
@@ -82,7 +81,7 @@ export default function Settings() {
             onPress={() => {
               authContext.handleLogout();
             }}
-            rounded="lg"
+            rounded="xl"
             w="80%"
             _dark={{ bg: "blueGray.700" }}
             _light={{ bg: "emerald.700" }}
@@ -109,7 +108,7 @@ export default function Settings() {
             onPress={() => {
               navigate("SignUp");
             }}
-            rounded="lg"
+            rounded="xl"
             w="80%"
             _dark={{ bg: "blueGray.700" }}
             _light={{ bg: "emerald.700" }}
@@ -133,7 +132,7 @@ export default function Settings() {
             onPress={() => {
               navigate("SignIn");
             }}
-            rounded="lg"
+            rounded="xl"
             w="80%"
             _dark={{ bg: "blueGray.700" }}
             _light={{ bg: "emerald.700" }}
@@ -167,8 +166,8 @@ export default function Settings() {
           Linguagem
         </Text>
         <Select
-          selectedValue={language}
-          defaultValue={language}
+          selectedValue={authContext?.language}
+          defaultValue={authContext?.language}
           accessibilityLabel="Escolha a linguagem"
           placeholder="Escolha a linguagem"
           _dark={{ bg: "blueGray.700", color: "orange.50" }}
@@ -199,10 +198,10 @@ export default function Settings() {
                   color: "orange.50",
                 }
           }
-          onValueChange={(itemValue) => setLanguage(itemValue)}
+          onValueChange={(itemValue) => authContext?.setLanguage(itemValue)}
         >
-          <Select.Item label="Português" value="Português" />
-          <Select.Item label="English" value="English" />
+          <Select.Item label="Português" value="pt" />
+          <Select.Item label="English" value="en" />
         </Select>
       </HStack>
       <HStack w="80%" space={2} alignItems="center" justifyContent="center">

@@ -1,17 +1,21 @@
 import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserService from "../services/user";
+import i18n from "../languages/I18n";
 
 type AuthProviderType = {
   authenticated: boolean;
   handleLogin: (token: string, id: string, nameUser: string) => Promise<void>;
   handleLogout: () => void;
+  language: string;
+  setLanguage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const AuthContext = createContext<null | AuthProviderType>(null);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
+  const [language, setLanguage] = useState("pt");
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -31,6 +35,23 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     verifyToken();
   }, []);
+
+  useEffect(() => {
+    const verifyLanguage = async () => {
+      const lang = await AsyncStorage.getItem("@arena:language");
+      if (lang && (JSON.parse(lang) === "pt" || JSON.parse(lang) === "en"))
+        setLanguage(JSON.parse(lang));
+    };
+    verifyLanguage();
+  }, []);
+
+  useEffect(() => {
+    i18n.locale = language;
+    const changeLanguage = async () => {
+      await AsyncStorage.setItem("@arena:language", JSON.stringify(language));
+    };
+    changeLanguage();
+  }, [language]);
 
   async function handleLogin(token: string, id: string, nameUser: string) {
     await AsyncStorage.setItem("@arena:token", JSON.stringify(token));
@@ -52,6 +73,8 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         authenticated,
         handleLogin,
         handleLogout,
+        language,
+        setLanguage,
       }}
     >
       {children}

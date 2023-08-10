@@ -133,7 +133,7 @@ export default function Profile() {
             onPress={() => {
               navigate("SignIn");
             }}
-            rounded="lg"
+            rounded="xl"
             w="80%"
             _dark={{ bg: "blueGray.700" }}
             _light={{ bg: "emerald.700" }}

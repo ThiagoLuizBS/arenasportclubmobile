@@ -226,7 +226,7 @@ export default function Home() {
               onPress={() => getMoreChampionships()}
               disabled={currentItems >= matchsData.length || loadingMoreChamps}
               _disabled={{ opacity: "0.5" }}
-              rounded="lg"
+              rounded="xl"
               w="80%"
               _dark={{ bg: "blueGray.700" }}
               _light={{ bg: "emerald.700" }}

@@ -4,7 +4,6 @@ import {
   VStack,
   Text,
   Heading,
-  ScrollView,
   HStack,
   Pressable,
   useColorMode,
@@ -43,7 +42,7 @@ const signInSchema = yup.object({
 
 export default function SignIn() {
   const { width } = useWindowDimensions();
-  const { navigate, goBack } = useNavigation();
+  const { navigate } = useNavigation();
   const toast = useToast();
   const { colorMode } = useColorMode();
   const context = useContext(RouteContext);

@@ -1,4 +1,4 @@
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import {
   HStack,
   useColorMode,
@@ -86,8 +86,8 @@ export default function SelectFavorites({
           justifyContent="center"
           alignItems="center"
         >
-          <FontAwesome
-            name="trophy"
+          <Ionicons
+            name="trophy-sharp"
             size={32}
             color={
               colorMode === "light"

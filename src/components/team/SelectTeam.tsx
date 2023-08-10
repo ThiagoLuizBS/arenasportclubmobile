@@ -23,7 +23,9 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
       alignItems="center"
       justifyContent="center"
       w="100%"
-      my={2}
+      my={3}
+      pb={3}
+      borderBottomWidth={2}
       _dark={{ borderBottomColor: "blueGray.700" }}
       _light={{ borderBottomColor: "emerald.700" }}
     >
@@ -83,8 +85,8 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
           justifyContent="center"
           alignItems="center"
         >
-          <FontAwesome
-            name="trophy"
+          <Ionicons
+            name="trophy-sharp"
             size={32}
             color={
               colorMode === "light"

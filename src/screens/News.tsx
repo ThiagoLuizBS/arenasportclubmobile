@@ -81,7 +81,7 @@ export default function News() {
                             ? "56"
                             : "40"
                         }
-                        rounded="md"
+                        rounded="xl"
                         m="auto"
                       />
                       <Text
