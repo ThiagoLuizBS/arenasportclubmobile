@@ -3,14 +3,16 @@ export declare global {
     interface RootParamList {
       Home: undefined;
       Profile: undefined;
-      Championship: undefined;
-      Match: { itemId: number };
+      Championship: { championshipId: string };
+      Match: { matchId: string };
+      Team: { teamId: string };
       Favorites: undefined;
-      Settings: undefined;
       News: undefined;
+      Discover: undefined;
+      Settings: undefined;
+      Search: undefined;
       SignUp: undefined;
       SignIn: undefined;
-      Team: undefined;
     }
   }
 }

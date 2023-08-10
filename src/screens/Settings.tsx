@@ -24,8 +24,10 @@ import { AntDesign } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
 import { AuthContext } from "../contexts/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useWindowDimensions } from "react-native";
 
 export default function Settings() {
+  const { width } = useWindowDimensions();
   const { navigate } = useNavigation();
   const { colorMode, toggleColorMode } = useColorMode();
   const [language, setLanguage] = useState("Português");
@@ -48,6 +50,13 @@ export default function Settings() {
     }, [])
   );
 
+  const toggleTheme = async () => {
+    if (colorMode === "light")
+      await AsyncStorage.setItem("@arena:theme", JSON.stringify("dark"));
+    else await AsyncStorage.setItem("@arena:theme", JSON.stringify("light"));
+    toggleColorMode();
+  };
+
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
@@ -63,7 +72,7 @@ export default function Settings() {
           <VStack space={5} alignItems="center">
             <Heading
               size="lg"
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
             >
               Olá, {nameUser}!
@@ -86,7 +95,7 @@ export default function Settings() {
               <Text
                 _dark={{ color: "red.500" }}
                 _light={{ color: "red.500" }}
-                fontSize={20}
+                fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
                 Sair
@@ -113,7 +122,7 @@ export default function Settings() {
               <Text
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}
-                fontSize={20}
+                fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
                 Cadastrar
@@ -137,7 +146,7 @@ export default function Settings() {
               <Text
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}
-                fontSize={20}
+                fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
                 Entrar
@@ -150,9 +159,9 @@ export default function Settings() {
         <Text
           w="40%"
           textAlign="center"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
-          fontSize={20}
+          fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
         >
           Linguagem
@@ -165,7 +174,7 @@ export default function Settings() {
           _dark={{ bg: "blueGray.700", color: "orange.50" }}
           _light={{ bg: "emerald.700", color: "orange.100" }}
           width="180"
-          fontSize={20}
+          fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
           rounded="xl"
           p={4}
@@ -198,9 +207,9 @@ export default function Settings() {
       </HStack>
       <HStack w="80%" space={2} alignItems="center" justifyContent="center">
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
-          fontSize={20}
+          fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
         >
           Dark
@@ -208,7 +217,7 @@ export default function Settings() {
         <Switch
           colorScheme="emerald"
           isChecked={colorMode === "light"}
-          onToggle={toggleColorMode}
+          onToggle={toggleTheme}
           aria-label={
             colorMode === "light"
               ? "switch to dark mode"
@@ -216,9 +225,9 @@ export default function Settings() {
           }
         />
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
-          fontSize={20}
+          fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
         >
           Ligth
@@ -238,12 +247,15 @@ export default function Settings() {
         <Image source={logo} alt="ArenaSportClub" size="xl" />
         <Heading
           size="lg"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
         >
           Arena Sport Club
         </Heading>
       </VStack>
+      <Text fontSize={width > 700 ? 24 : 16}>
+        Projeto criado com finalidade acadêmica
+      </Text>
     </Box>
   );
 }

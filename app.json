@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Arena Sports Club",
-    "slug": "Arena Sports Club",
+    "slug": "arenaSportClub",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -33,6 +33,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "locales": {
+      "ptBR": "./languages/portugues.json",
+      "en": "./languages/english.json"
     },
     "plugins": [
       [

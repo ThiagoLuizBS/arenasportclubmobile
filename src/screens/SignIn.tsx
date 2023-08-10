@@ -13,8 +13,8 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Input } from "../components/Input";
-import { Button } from "../components/Button";
+import { Input } from "../components/sign/Input";
+import { Button } from "../components/sign/Button";
 import userService from "../services/user";
 import {
   useFocusEffect,
@@ -26,6 +26,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthProvider";
 import ToastLogin from "../components/app/ToastLogin";
+import { useWindowDimensions } from "react-native";
 
 type FormDataProps = {
   email: string;
@@ -41,6 +42,7 @@ const signInSchema = yup.object({
 });
 
 export default function SignIn() {
+  const { width } = useWindowDimensions();
   const { navigate, goBack } = useNavigation();
   const toast = useToast();
   const { colorMode } = useColorMode();
@@ -97,22 +99,27 @@ export default function SignIn() {
       justifyContent="center"
       w="100%"
     >
-      <HStack w="100%" alignItems="flex-start" px={10}>
+      <HStack
+        w="100%"
+        alignItems="flex-start"
+        justifyContent="flex-start"
+        px={2}
+      >
         <Pressable onPress={() => navigate("Settings")}>
           <Ionicons
             name="arrow-back"
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === "light" ? "black" : "#fff7ed"}
             size={24}
           />
         </Pressable>
       </HStack>
-      <VStack px={10}>
+      <VStack px={10} h="90%" justifyContent="center">
         <Center>
           <Heading
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             marginY={3}
-            fontSize={30}
+            fontSize={width > 700 ? 48 : 32}
             fontWeight="bold"
           >
             Seja Bem-Vindo!

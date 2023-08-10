@@ -14,7 +14,7 @@ export default function Branding() {
         <Image source={logo} alt="ArenaSportClub" size="xl" />
         <Heading
           size="lg"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
         >
           Arena Sport Club

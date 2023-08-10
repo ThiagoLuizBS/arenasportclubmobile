@@ -4,15 +4,23 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { Box, Button, Center, Flex, View } from "native-base";
+import { Box, Text, Button, Center, Flex, View } from "native-base";
 import ChampionshipService from "../services/championship";
 import { RouteContext } from "../contexts/RouteProvider";
+import { useWindowDimensions } from "react-native";
+
+type paramsProps = {
+  championshipId: string;
+};
 
 export default function Championship() {
+  const { width } = useWindowDimensions();
   const { navigate } = useNavigation();
-  const [championshipList, setChampionshipList] = useState([]);
-  const context = useContext(RouteContext);
   const route = useRoute();
+  const { championshipId } = route.params as paramsProps;
+  const context = useContext(RouteContext);
+  const [championship, setChampionship] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
@@ -21,10 +29,11 @@ export default function Championship() {
   );
 
   useEffect(() => {
-    ChampionshipService.getChampionshipsPriority().then((response) => {
-      setChampionshipList(response.data);
+    ChampionshipService.getChampionshipById(championshipId).then((response) => {
+      setChampionship(response.data[0]);
+      setLoading(false);
     });
-  }, []);
+  }, [championshipId]);
 
   return (
     <Box
@@ -33,15 +42,12 @@ export default function Championship() {
       flex={1}
       px={2}
       w="100%"
+      alignItems="center"
+      justifyContent="center"
     >
-      Championship
-      <Button
-        p={4}
-        borderRadius={16}
-        onPress={() => navigate("Match", { itemId: 32 })}
-      >
-        Match
-      </Button>
+      <Text fontSize={width > 700 ? 32 : 20}>
+        {championshipId} ID Championship
+      </Text>
     </Box>
   );
 }

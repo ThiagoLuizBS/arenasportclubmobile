@@ -1,70 +1,127 @@
-import { useState } from "react";
+import { FontAwesome, Fontisto, Ionicons } from "@expo/vector-icons";
 import {
   HStack,
-  ColorMode,
-  VStack,
+  useColorMode,
   Text,
   Pressable,
+  VStack,
   Divider,
 } from "native-base";
-import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useWindowDimensions } from "react-native";
 
-type SelectHomeProps = {
-  buttonChange: string;
-  colorMode: ColorMode;
-  changeSelected: (buttonName: string) => void;
-  getTodayDate: (x: number) => string;
-  dateFilter: string;
-  changeDate: (dateChange: string) => void;
-  getFilterSelect: (x: number) => string;
+type SelectTeamProps = {
+  type: string;
+  setType: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function SelectHome({
-  buttonChange,
-  colorMode,
-  changeSelected,
-  getTodayDate,
-  dateFilter,
-  changeDate,
-}: SelectHomeProps) {
+export default function SelectTeam({ type, setType }: SelectTeamProps) {
   const { width } = useWindowDimensions();
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const { colorMode } = useColorMode();
 
-  const changeDatePicker = (date: Date) => {
-    setSelectedDate(date);
-    let day = String(date.getDate());
-    let month = String(date.getMonth() + 1);
-    let year = date.getFullYear();
-    if (Number(day) < 10) day = "0" + day;
-    if (Number(month) < 10) month = "0" + month;
-    changeDate(`${day}-${month}-${year}`);
-  };
-
-  const showMode = () => {
-    DateTimePickerAndroid.open({
-      value: selectedDate,
-      onChange(event, date) {
-        if (date) changeDatePicker(date);
-      },
-      mode: "date",
-      is24Hour: true,
-    });
-  };
   return (
     <HStack
+      alignItems="center"
+      justifyContent="center"
       w="100%"
-      py={1}
-      borderBottomWidth={2}
+      my={2}
       _dark={{ borderBottomColor: "blueGray.700" }}
       _light={{ borderBottomColor: "emerald.700" }}
     >
       <Pressable
-        w="20%"
+        w="25%"
         justifyContent="center"
         alignItems="center"
-        onPress={() => changeSelected("all")}
+        onPress={() => setType("informations")}
+      >
+        <VStack
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Ionicons
+            name="information-circle"
+            size={32}
+            color={
+              colorMode === "light"
+                ? type === "informations"
+                  ? "#047857"
+                  : "black"
+                : type === "informations"
+                ? "#fff7ed"
+                : "#334155"
+            }
+          />
+          <Text
+            _dark={{ color: "orange.50" }}
+            _light={{ color: "black" }}
+            fontSize={width > 700 ? 24 : 16}
+            fontWeight="bold"
+          >
+            Informações
+          </Text>
+        </VStack>
+      </Pressable>
+      <Divider
+        h="60%"
+        m="auto"
+        orientation="vertical"
+        _dark={{
+          bg: "blueGray.700",
+        }}
+        _light={{
+          bg: "emerald.700",
+        }}
+      />
+      <Pressable
+        w="25%"
+        justifyContent="center"
+        alignItems="center"
+        onPress={() => setType("titles")}
+      >
+        <VStack
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <FontAwesome
+            name="trophy"
+            size={32}
+            color={
+              colorMode === "light"
+                ? type === "titles"
+                  ? "#047857"
+                  : "black"
+                : type === "titles"
+                ? "#fff7ed"
+                : "#334155"
+            }
+          />
+          <Text
+            _dark={{ color: "orange.50" }}
+            _light={{ color: "black" }}
+            fontSize={width > 700 ? 24 : 16}
+            fontWeight="bold"
+          >
+            Títulos
+          </Text>
+        </VStack>
+      </Pressable>
+      <Divider
+        h="60%"
+        m="auto"
+        orientation="vertical"
+        _dark={{
+          bg: "blueGray.700",
+        }}
+        _light={{
+          bg: "emerald.700",
+        }}
+      />
+      <Pressable
+        w="25%"
+        justifyContent="center"
+        alignItems="center"
+        onPress={() => setType("results")}
       >
         <VStack
           flexDirection="column"
@@ -76,10 +133,10 @@ export default function SelectHome({
             size={32}
             color={
               colorMode === "light"
-                ? buttonChange === "all"
+                ? type === "results"
                   ? "#047857"
                   : "black"
-                : buttonChange === "all"
+                : type === "results"
                 ? "#fff7ed"
                 : "#334155"
             }
@@ -87,10 +144,10 @@ export default function SelectHome({
           <Text
             _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
-            fontSize={width > 700 ? 24 : 14}
+            fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
-            Todas
+            Resultados
           </Text>
         </VStack>
       </Pressable>
@@ -106,158 +163,37 @@ export default function SelectHome({
         }}
       />
       <Pressable
-        w="20%"
+        w="25%"
         justifyContent="center"
         alignItems="center"
-        isDisabled={getTodayDate(0) !== dateFilter}
-        _disabled={{ opacity: 0.4 }}
-        onPress={() => changeSelected("live")}
+        onPress={() => setType("calendar")}
       >
         <VStack
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
         >
-          <MaterialCommunityIcons
-            name="clock"
-            size={32}
-            color={
-              colorMode === "light"
-                ? buttonChange === "live"
-                  ? "#047857"
-                  : "black"
-                : buttonChange === "live"
-                ? "#fff7ed"
-                : "#334155"
-            }
-          />
-          <Text
-            _dark={{ color: "orange.50" }}
-            _light={{ color: "black" }}
-            fontSize={width > 700 ? 24 : 14}
-            fontWeight="bold"
-          >
-            Ao vivo
-          </Text>
-        </VStack>
-      </Pressable>
-      <Divider
-        h="60%"
-        m="auto"
-        orientation="vertical"
-        _dark={{
-          bg: "blueGray.700",
-        }}
-        _light={{
-          bg: "emerald.700",
-        }}
-      />
-      <Pressable
-        w="20%"
-        justifyContent="center"
-        alignItems="center"
-        isDisabled={getTodayDate(0) !== dateFilter}
-        _disabled={{ opacity: 0.4 }}
-        onPress={() => changeSelected("finished")}
-      >
-        <VStack
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <MaterialCommunityIcons
-            name="whistle"
-            size={32}
-            color={
-              colorMode === "light"
-                ? buttonChange === "finished"
-                  ? "#047857"
-                  : "black"
-                : buttonChange === "finished"
-                ? "#fff7ed"
-                : "#334155"
-            }
-          />
-          <Text
-            _dark={{ color: "orange.50" }}
-            _light={{ color: "black" }}
-            fontSize={width > 700 ? 24 : 14}
-            fontWeight="bold"
-          >
-            Encerradas
-          </Text>
-        </VStack>
-      </Pressable>
-      <Divider
-        h="60%"
-        m="auto"
-        orientation="vertical"
-        _dark={{
-          bg: "blueGray.700",
-        }}
-        _light={{
-          bg: "emerald.700",
-        }}
-      />
-      <Pressable
-        w="20%"
-        justifyContent="center"
-        alignItems="center"
-        isDisabled={getTodayDate(0) !== dateFilter}
-        _disabled={{ opacity: 0.4 }}
-        onPress={() => changeSelected("next")}
-      >
-        <VStack
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Ionicons
-            name="play-forward"
-            size={32}
-            color={
-              colorMode === "light"
-                ? buttonChange === "next"
-                  ? "#047857"
-                  : "black"
-                : buttonChange === "next"
-                ? "#fff7ed"
-                : "#334155"
-            }
-          />
-          <Text
-            _dark={{ color: "orange.50" }}
-            _light={{ color: "black" }}
-            fontSize={width > 700 ? 24 : 14}
-            fontWeight="bold"
-          >
-            Próximas
-          </Text>
-        </VStack>
-      </Pressable>
-      <Divider
-        h="60%"
-        m="auto"
-        orientation="vertical"
-        _dark={{
-          bg: "blueGray.700",
-        }}
-        _light={{
-          bg: "emerald.700",
-        }}
-      />
-      <Pressable
-        w="20%"
-        justifyContent="center"
-        alignItems="center"
-        onPress={() => showMode()}
-      >
-        <VStack>
           <Fontisto
             name="date"
             size={32}
-            color={colorMode === "light" ? "black" : "#fff7ed"}
+            color={
+              colorMode === "light"
+                ? type === "calendar"
+                  ? "#047857"
+                  : "black"
+                : type === "calendar"
+                ? "#fff7ed"
+                : "#334155"
+            }
           />
+          <Text
+            _dark={{ color: "orange.50" }}
+            _light={{ color: "black" }}
+            fontSize={width > 700 ? 24 : 16}
+            fontWeight="bold"
+          >
+            Calendário
+          </Text>
         </VStack>
       </Pressable>
     </HStack>

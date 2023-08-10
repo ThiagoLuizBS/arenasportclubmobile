@@ -1,24 +1,53 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Box, Button, Center, Heading, ScrollView, VStack } from "native-base";
+import {
+  Box,
+  Text,
+  Button,
+  Center,
+  Heading,
+  ScrollView,
+  VStack,
+} from "native-base";
 import { useRoute } from "@react-navigation/native";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { RouteContext } from "../contexts/RouteProvider";
+import MatchService from "../services/match";
+import { useWindowDimensions } from "react-native";
 
 type paramsProps = {
-  itemId: number;
+  matchId: string;
 };
 
 export default function Match() {
   const route = useRoute();
-  const { itemId } = route.params as paramsProps;
+  const { width } = useWindowDimensions();
+  const { matchId } = route.params as paramsProps;
   const { navigate, goBack } = useNavigation();
   const context = useContext(RouteContext);
+  const [match, setMatch] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
       if (context) context.handleRoute(route.name);
     }, [])
   );
+
+  useEffect(() => {
+    MatchService.getMatch(matchId).then((response) => {
+      setMatch(response.data[0]);
+      setLoading(false);
+    });
+  }, [matchId]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      MatchService.getMatch(matchId).then((response) =>
+        setMatch(response.data[0])
+      );
+    }, 15000);
+    return () => clearTimeout(timer);
+  });
 
   return (
     <Box
@@ -27,11 +56,10 @@ export default function Match() {
       flex={1}
       px={2}
       w="100%"
+      alignItems="center"
+      justifyContent="center"
     >
-      {itemId}
-      <Button p={4} borderRadius={16} onPress={() => goBack()}>
-        Home
-      </Button>
+      <Text fontSize={width > 700 ? 32 : 20}>{matchId} ID match</Text>
     </Box>
   );
 }

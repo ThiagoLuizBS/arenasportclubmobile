@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Icon, Box, Center, HStack, Pressable, Text } from "native-base";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
+import { useWindowDimensions } from "react-native";
 
 export default function Footer() {
   const [selected, setSelected] = useState(0);
   const { navigate } = useNavigation();
+  const { width } = useWindowDimensions();
   const navigationState = useNavigationState((state) => state);
   const rotaAtual = navigationState?.routes[navigationState.index];
   const nomeRotaAtual = rotaAtual?.name;
@@ -13,7 +15,7 @@ export default function Footer() {
   useEffect(() => {
     if (nomeRotaAtual === "Home") setSelected(0);
     else if (nomeRotaAtual === "Favorites") setSelected(1);
-    else if (nomeRotaAtual === "Team") setSelected(2);
+    else if (nomeRotaAtual === "Favorites") setSelected(2);
     else if (nomeRotaAtual === "Profile") setSelected(3);
     else if (nomeRotaAtual === "Settings") setSelected(4);
     else if (nomeRotaAtual !== undefined) setSelected(-1);
@@ -23,7 +25,7 @@ export default function Footer() {
     setSelected(i);
     if (i === 0) navigate("Home");
     else if (i === 1) navigate("Favorites");
-    else if (i === 2) navigate("Team");
+    else if (i === 2) navigate("Favorites");
     else if (i === 3) navigate("Profile");
     else if (i === 4) navigate("Settings");
   };
@@ -44,7 +46,7 @@ export default function Footer() {
       >
         <Pressable
           opacity={selected === 0 ? 1 : 0.5}
-          py="3"
+          py="2"
           flex={1}
           onPress={() => handleSelected(0)}
         >
@@ -60,12 +62,12 @@ export default function Footer() {
               }
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              size="md"
+              size="xl"
             />
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="14"
+              fontSize={width > 700 ? 24 : 16}
             >
               Resultados
             </Text>
@@ -87,12 +89,12 @@ export default function Footer() {
               }
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              size="md"
+              size="xl"
             />
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="14"
+              fontSize={width > 700 ? 24 : 16}
             >
               Favoritos
             </Text>
@@ -114,12 +116,12 @@ export default function Footer() {
               }
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              size="md"
+              size="xl"
             />
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="14"
+              fontSize={width > 700 ? 24 : 16}
             >
               Descubra
             </Text>
@@ -141,41 +143,14 @@ export default function Footer() {
               }
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              size="md"
+              size="xl"
             />
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="14"
+              fontSize={width > 700 ? 24 : 16}
             >
               Notícias
-            </Text>
-          </Center>
-        </Pressable>
-        <Pressable
-          opacity={selected === 4 ? 1 : 0.5}
-          py="2"
-          flex={1}
-          onPress={() => handleSelected(4)}
-        >
-          <Center>
-            <Icon
-              mb="1"
-              as={
-                <Ionicons
-                  name={selected === 4 ? "settings" : "settings-outline"}
-                />
-              }
-              _dark={{ color: "orange.50" }}
-              _light={{ color: "orange.100" }}
-              size="md"
-            />
-            <Text
-              _dark={{ color: "orange.50" }}
-              _light={{ color: "orange.100" }}
-              fontSize="14"
-            >
-              Opções
             </Text>
           </Center>
         </Pressable>

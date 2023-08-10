@@ -1,4 +1,5 @@
 import { VStack, HStack, Alert, Text } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 export default function ToastLogin({
   nameUser,
@@ -7,6 +8,7 @@ export default function ToastLogin({
   nameUser: string;
   type: string;
 }) {
+  const { width } = useWindowDimensions();
   return (
     <Alert
       maxWidth="80%"
@@ -25,7 +27,7 @@ export default function ToastLogin({
           <HStack space={2} flexShrink={1} alignItems="center">
             <Alert.Icon />
             <Text
-              fontSize="md"
+              fontSize={width > 700 ? 24 : 16}
               fontWeight="medium"
               flexShrink={1}
               color="lightText"

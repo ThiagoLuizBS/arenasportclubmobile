@@ -359,7 +359,7 @@ export default function Profile() {
         marginRight="5"
       >
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
           fontSize={20}
           fontWeight="bold"
@@ -377,7 +377,7 @@ export default function Profile() {
           }
         />
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
           fontSize={20}
           fontWeight="bold"
