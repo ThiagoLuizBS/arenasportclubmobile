@@ -74,7 +74,7 @@ export default function Profile() {
             alignItems="center"
             flexDirection={"row"}
             size="lg"
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             margin={5}
             my={5}
@@ -82,14 +82,14 @@ export default function Profile() {
             <Ionicons
               name="body-sharp"
               size={45}
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
             />
 
             <Heading
               flexDirection={"row"}
               size="lg"
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
               margin={5}
               my={5}
@@ -103,7 +103,7 @@ export default function Profile() {
             alignItems="center"
             flexDirection={"row"}
             size="lg"
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             margin={5}
             my={5}
@@ -111,14 +111,14 @@ export default function Profile() {
             <Ionicons
               name="mail"
               size={45}
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
             />
 
             <Heading
               flexDirection={"row"}
               size="lg"
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
               margin={5}
               my={5}
@@ -158,7 +158,7 @@ export default function Profile() {
 
       <HStack w="80%" space={2} alignItems="center" justifyContent="center">
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
           fontSize={20}
           fontWeight="bold"
@@ -176,7 +176,7 @@ export default function Profile() {
           }
         />
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
           fontSize={20}
           fontWeight="bold"
@@ -198,7 +198,7 @@ export default function Profile() {
         <Image source={logo} alt="ArenaSportClub" size="xl" />
         <Heading
           size="lg"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
         >
           Arena Sport Club

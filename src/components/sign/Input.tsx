@@ -3,19 +3,21 @@ import {
   IInputProps,
   FormControl,
 } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 type Props = IInputProps & {
   errorMessage?: string | null;
 };
 
 export function Input({ errorMessage = null, isInvalid, ...rest }: Props) {
+  const { width } = useWindowDimensions();
   const invalid = !!errorMessage || isInvalid;
 
   return (
     <FormControl marginBottom={4} isInvalid={invalid}>
       <NativeBaseInput
-        bg={"white"}
-        fontSize={"md"}
+        bg={"orange.50"}
+        fontSize={width > 700 ? 24 : 16}
         h={"16"}
         borderRadius={20}
         isInvalid={invalid}

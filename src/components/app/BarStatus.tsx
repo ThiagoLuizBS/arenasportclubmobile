@@ -6,7 +6,7 @@ export default function BarStatus() {
   return (
     <StatusBar
       barStyle={colorMode === "light" ? "dark-content" : "light-content"}
-      backgroundColor={colorMode === "light" ? "#d1fae5" : "#0f172a"}
+      backgroundColor={colorMode === "light" ? "#dcfce7" : "#0f172a"}
     />
   );
 }

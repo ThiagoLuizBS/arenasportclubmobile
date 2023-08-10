@@ -20,7 +20,9 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       if (token && id) {
         UserService.haveFavorites(JSON.parse(id))
           .then((response) => {
-            if (response.status === 200) setAuthenticated(true);
+            if (response.status === 200) {
+              setAuthenticated(true);
+            }
           })
           .catch((response) => {
             if (response.response.status === 401) handleLogout();

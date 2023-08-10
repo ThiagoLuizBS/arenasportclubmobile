@@ -13,8 +13,8 @@ class UserService {
 
   setFavorites(
     id: string,
-    teams: favoritesTeams,
-    championships: favoritesChampionships
+    teams: teamFavorite[],
+    championships: championshipFavorite[]
   ) {
     let favorites = { id: id, teams: teams, championships: championships };
     return api.put(`/setFavorites`, favorites);

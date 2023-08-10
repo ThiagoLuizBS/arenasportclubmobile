@@ -5,7 +5,7 @@ class MatchService {
     return api.get(`/matchs/id/${id}`);
   }
 
-  getMatchsByDate(date: string, favorites: favoritesChampionships[]) {
+  getMatchsByDate(date: string, favorites: championshipFavorite[]) {
     const array = [];
     for (let index = 0; index < favorites.length; index++) {
       array.push(favorites[index].idChampionship);

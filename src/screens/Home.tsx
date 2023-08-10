@@ -9,16 +9,18 @@ import {
   Box,
   useColorMode,
   ScrollView,
-  Button,
   Pressable,
   Center,
   Text,
+  Divider,
+  Skeleton,
 } from "native-base";
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
+import { useWindowDimensions } from "react-native";
 import MatchService from "../services/match";
 import { RouteContext } from "../contexts/RouteProvider";
 import SkeletonHome from "../components/home/SkeletonHome";
@@ -31,6 +33,8 @@ import {
 } from "../components/results/NoMatchs";
 import Match from "../components/results/Match";
 import MatchTitle from "../components/results/MatchTitle";
+import i18n from "../languages/I18n";
+import { FavoritesContext } from "../contexts/FavoritesProvider";
 
 export default function Home() {
   const getTodayDate = (x: number) => {
@@ -54,9 +58,11 @@ export default function Home() {
   const { navigate } = useNavigation();
   const { colorMode } = useColorMode();
   const context = useContext(RouteContext);
+  const favoritesContext = useContext(FavoritesContext);
   const route = useRoute();
-
+  const { width } = useWindowDimensions();
   const [loading, setLoading] = useState(true);
+  const [loadingMoreChamps, setLoadingMoreChamps] = useState(false);
   const [matchsData, setMatchsData] = useState([]);
   const [dateFilter, setDateFilter] = useState(getTodayDate(0));
   const [filterSelected, setFilterSelected] = useState("");
@@ -71,18 +77,26 @@ export default function Home() {
   );
 
   useEffect(() => {
-    MatchService.getMatchsByDate(dateFilter, []).then((response) => {
-      setCurrentItems(itemsPerPage);
-      setMatchsData(response.data);
-      setLoading(false);
-    });
+    if (favoritesContext?.favoritesChampionships)
+      MatchService.getMatchsByDate(
+        dateFilter,
+        favoritesContext?.favoritesChampionships
+      ).then((response) => {
+        setCurrentItems(itemsPerPage);
+        setMatchsData(response.data);
+        setLoading(false);
+      });
   }, [dateFilter]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      MatchService.getMatchsByDate(dateFilter, []).then((response) => {
-        setMatchsData(response.data);
-      });
+      if (favoritesContext?.favoritesChampionships)
+        MatchService.getMatchsByDate(
+          dateFilter,
+          favoritesContext?.favoritesChampionships
+        ).then((response) => {
+          setMatchsData(response.data);
+        });
     }, 30000);
     return () => clearTimeout(timer);
   });
@@ -134,6 +148,15 @@ export default function Home() {
     if (count === 0) return false;
   };
 
+  const getMoreChampionships = () => {
+    setLoadingMoreChamps(true);
+    const timer = setTimeout(() => {
+      setCurrentItems(currentItems + itemsPerPage);
+      setLoadingMoreChamps(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  };
+
   return (
     <Box
       _dark={{ bg: "blueGray.900" }}
@@ -161,12 +184,38 @@ export default function Home() {
               haveMatchs(championship) &&
               i < currentItems && (
                 <Fragment key={i}>
-                  <MatchTitle title={championship._id.championship} />
+                  <Pressable
+                    onPress={() =>
+                      navigate("Championship", {
+                        championshipId: championship._id.idChampionship,
+                      })
+                    }
+                  >
+                    <MatchTitle title={championship._id.championship} />
+                  </Pressable>
                   {championship?.matchs.map(
                     (match, i) =>
                       (filterSelected === "" ||
                         match.status === filterSelected) && (
-                        <Match match={match} key={i} />
+                        <Pressable
+                          key={i}
+                          onPress={() =>
+                            navigate("Match", { matchId: match.idMatch })
+                          }
+                        >
+                          <Match match={match} />
+                          {championship.matchs.length !== i + 1 && (
+                            <Divider
+                              h={1}
+                              _dark={{
+                                bg: "blueGray.700",
+                              }}
+                              _light={{
+                                bg: "emerald.700",
+                              }}
+                            />
+                          )}
+                        </Pressable>
                       )
                   )}
                 </Fragment>
@@ -174,9 +223,9 @@ export default function Home() {
           )}
           <Center>
             <Pressable
-              onPress={() => setCurrentItems(currentItems + itemsPerPage)}
-              disabled={currentItems >= matchsData.length}
-              _disabled={{ opacity: "0" }}
+              onPress={() => getMoreChampionships()}
+              disabled={currentItems >= matchsData.length || loadingMoreChamps}
+              _disabled={{ opacity: "0.5" }}
               rounded="lg"
               w="80%"
               _dark={{ bg: "blueGray.700" }}
@@ -186,14 +235,23 @@ export default function Home() {
               mt={4}
             >
               <Center>
-                <Text
-                  _dark={{ color: "orange.50" }}
-                  _light={{ color: "orange.100" }}
-                  fontSize={20}
-                  fontWeight="bold"
-                >
-                  Visualizar mais campeonatos
-                </Text>
+                {loadingMoreChamps ? (
+                  <Skeleton
+                    _dark={{ endColor: "blueGray.500" }}
+                    _light={{ endColor: "emerald.200" }}
+                    size="10"
+                    rounded="full"
+                  />
+                ) : (
+                  <Text
+                    _dark={{ color: "orange.50" }}
+                    _light={{ color: "orange.100" }}
+                    fontSize={width > 700 ? 40 : 20}
+                    fontWeight="bold"
+                  >
+                    {i18n.t("vejaMais")}
+                  </Text>
+                )}
               </Center>
             </Pressable>
           </Center>
