@@ -1,5 +1,12 @@
 export declare global {
-  export interface championship {
+  export interface championshipDate {
+    _id: {
+      day: string;
+    };
+    matchs: match[];
+  }
+
+  export interface championshipMatchs {
     _id: {
       championship: string;
       idChampionship: string;
@@ -9,6 +16,34 @@ export declare global {
     imgChampionship: string;
     idChampionship: string;
     matchs: match[];
+  }
+
+  export interface championship {
+    _id: string;
+    idChampionship: string;
+    url: string;
+    name: string;
+    img: string;
+    imgChampionship: string;
+    priority: number;
+    statistics: {
+      name: string;
+      table: { num: string; player: string; team: string; value: string }[];
+    }[];
+    table: {
+      phase: string;
+      group: string;
+      table: {
+        num: string;
+        team: string;
+        points: string;
+        games: string;
+        victorys: string;
+        draws: string;
+        loses: string;
+        goaldiference: string;
+      }[];
+    }[];
   }
 
   export interface championshipFavorite {

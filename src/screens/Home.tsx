@@ -33,8 +33,9 @@ import {
 } from "../components/results/NoMatchs";
 import Match from "../components/results/Match";
 import MatchTitle from "../components/results/MatchTitle";
-import i18n from "../languages/I18n";
 import { FavoritesContext } from "../contexts/FavoritesProvider";
+import i18n from "../languages/I18n";
+import { AuthContext } from "../contexts/AuthProvider";
 
 export default function Home() {
   const getTodayDate = (x: number) => {
@@ -59,6 +60,7 @@ export default function Home() {
   const { colorMode } = useColorMode();
   const context = useContext(RouteContext);
   const favoritesContext = useContext(FavoritesContext);
+  const authContext = useContext(AuthContext);
   const route = useRoute();
   const { width } = useWindowDimensions();
   const [loading, setLoading] = useState(true);
@@ -83,7 +85,7 @@ export default function Home() {
         setMatchsData(response.data);
         setLoading(false);
       });
-  }, [dateFilter]);
+  }, [dateFilter, authContext?.language]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -117,7 +119,7 @@ export default function Home() {
     else setFilterSelected("A REALIZAR");
   };
 
-  const haveChampionships = (data: championship[]) => {
+  const haveChampionships = (data: championshipMatchs[]) => {
     let count = 0;
     for (let i = 0; i < data?.length; i++) {
       for (let j = 0; j < data[i]?.matchs?.length; j++) {
@@ -132,7 +134,7 @@ export default function Home() {
     if (count === 0) return false;
   };
 
-  const haveMatchs = (championship: championship) => {
+  const haveMatchs = (championship: championshipMatchs) => {
     let count = 0;
     for (let i = 0; i < championship.matchs.length; i++) {
       if (
@@ -177,7 +179,7 @@ export default function Home() {
       ) : haveChampionships(matchsData) ? (
         <ScrollView>
           {matchsData?.map(
-            (championship: championship, i) =>
+            (championship: championshipMatchs, i) =>
               haveMatchs(championship) &&
               i < currentItems && (
                 <Fragment key={i}>
