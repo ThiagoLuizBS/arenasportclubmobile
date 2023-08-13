@@ -1,11 +1,28 @@
-import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { Box, Text } from "native-base";
 import { useWindowDimensions } from "react-native";
 import i18n from "../languages/I18n";
+import * as Location from "expo-location";
 
 export default function Discover() {
-  const { navigate } = useNavigation();
   const { width } = useWindowDimensions();
+  const [location, setLocation] = useState<Location.LocationObject | null>(
+    null
+  );
+  const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
   return (
     <Box
@@ -17,7 +34,18 @@ export default function Discover() {
       alignItems="center"
       justifyContent="center"
     >
-      <Text fontSize={width > 700 ? 32 : 20}> {i18n.t("Descubra")}</Text>
+      {errorMsg !== "" ? (
+        <Text fontSize={width > 700 ? 32 : 20}>{errorMsg}</Text>
+      ) : (
+        <>
+          <Text fontSize={width > 700 ? 32 : 20}>
+            {location?.coords.latitude}
+          </Text>
+          <Text fontSize={width > 700 ? 32 : 20}>
+            {location?.coords.longitude}
+          </Text>
+        </>
+      )}
     </Box>
   );
 }

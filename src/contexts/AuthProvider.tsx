@@ -5,7 +5,12 @@ import i18n from "../languages/I18n";
 
 type AuthProviderType = {
   authenticated: boolean;
-  handleLogin: (token: string, id: string, nameUser: string) => Promise<void>;
+  handleLogin: (
+    token: string,
+    id: string,
+    nameUser: string,
+    email: string
+  ) => Promise<void>;
   handleLogout: () => void;
   language: string;
   setLanguage: React.Dispatch<React.SetStateAction<string>>;
@@ -53,10 +58,16 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     changeLanguage();
   }, [language]);
 
-  async function handleLogin(token: string, id: string, nameUser: string) {
+  async function handleLogin(
+    token: string,
+    id: string,
+    nameUser: string,
+    email: string
+  ) {
     await AsyncStorage.setItem("@arena:token", JSON.stringify(token));
     await AsyncStorage.setItem("@arena:idUser", JSON.stringify(id));
     await AsyncStorage.setItem("@arena:nameUser", JSON.stringify(nameUser));
+    await AsyncStorage.setItem("@arena:emailUser", JSON.stringify(id));
     setAuthenticated(true);
   }
 
@@ -65,6 +76,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     await AsyncStorage.removeItem("@arena:token");
     await AsyncStorage.removeItem("@arena:idUser");
     await AsyncStorage.removeItem("@arena:nameUser");
+    await AsyncStorage.removeItem("@arena:emailUser");
   }
 
   return (

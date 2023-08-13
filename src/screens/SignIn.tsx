@@ -76,7 +76,8 @@ export default function SignIn() {
         authContext?.handleLogin(
           response.data.token,
           response.data.idUser,
-          response.data.nameUser
+          response.data.nameUser,
+          data.email
         );
         toast.show({
           render: () => {
