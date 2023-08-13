@@ -3,9 +3,7 @@ import {
   Center,
   VStack,
   Text,
-  Image,
   Heading,
-  ScrollView,
   HStack,
   Pressable,
   useColorMode,
@@ -26,6 +24,7 @@ import { useContext, useCallback, useState } from "react";
 import { RouteContext } from "../contexts/RouteProvider";
 import { Ionicons } from "@expo/vector-icons";
 import ToastLogin from "../components/app/ToastLogin";
+import { useWindowDimensions } from "react-native";
 
 type FormDataProps = {
   name: string;
@@ -52,6 +51,7 @@ const signUpSchema = yup.object({
 
 export default function SignUp() {
   const { navigate, goBack } = useNavigation();
+  const { width } = useWindowDimensions();
   const toast = useToast();
   const { colorMode } = useColorMode();
   const context = useContext(RouteContext);
@@ -101,7 +101,7 @@ export default function SignUp() {
         <Pressable onPress={() => navigate("Settings")}>
           <Ionicons
             name="arrow-back"
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === "light" ? "black" : "#fff7ed"}
             size={24}
           />
         </Pressable>
@@ -109,10 +109,10 @@ export default function SignUp() {
       <VStack px={10} h="90%" justifyContent="center">
         <Center>
           <Heading
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             marginY={3}
-            fontSize={30}
+            fontSize={width > 700 ? 48 : 32}
             fontWeight="bold"
           >
             Criar Conta

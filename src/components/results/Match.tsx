@@ -1,11 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
 import { HStack, VStack, Text, Image, Divider, Icon } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 type MatchProps = {
   match: match;
 };
 
 export default function Match({ match }: MatchProps) {
+  const { width } = useWindowDimensions();
+
   const checkLastEvent = (match: match) => {
     let event = "";
     if (match.events?.length > 0) {
@@ -48,7 +51,7 @@ export default function Match({ match }: MatchProps) {
     <>
       <HStack
         w="100%"
-        h={24}
+        h={width > 700 ? 32 : 24}
         _dark={{ bg: "blueGray.900" }}
         _light={{ bg: "success.100" }}
         px={2}
@@ -66,9 +69,9 @@ export default function Match({ match }: MatchProps) {
             </VStack>
             <VStack h="100%" w="80%" justifyContent="center">
               <Text
-                _dark={{ color: "white" }}
+                _dark={{ color: "orange.50" }}
                 _light={{ color: "black" }}
-                fontSize={18}
+                fontSize={width > 700 ? 32 : 18}
               >
                 {match.teams?.homeName}
               </Text>
@@ -85,9 +88,9 @@ export default function Match({ match }: MatchProps) {
             </VStack>
             <VStack h="100%" w="80%" justifyContent="center">
               <Text
-                _dark={{ color: "white" }}
+                _dark={{ color: "orange.50" }}
                 _light={{ color: "black" }}
-                fontSize={18}
+                fontSize={width > 700 ? 32 : 18}
               >
                 {match.teams?.awayName}
               </Text>
@@ -97,9 +100,9 @@ export default function Match({ match }: MatchProps) {
         <VStack w="5%">
           <HStack h="50%" justifyContent="center" alignItems="center">
             <Text
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
-              fontSize={20}
+              fontSize={width > 700 ? 40 : 20}
               fontWeight="bold"
             >
               {match.scoreHome}
@@ -107,9 +110,9 @@ export default function Match({ match }: MatchProps) {
           </HStack>
           <HStack h="50%" justifyContent="center" alignItems="center">
             <Text
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
-              fontSize={20}
+              fontSize={width > 700 ? 40 : 20}
               fontWeight="bold"
             >
               {match.scoreAway}
@@ -120,19 +123,19 @@ export default function Match({ match }: MatchProps) {
           w="15%"
           justifyContent="center"
           alignItems="center"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
         >
           {match?.status === "AO VIVO" ? (
-            <Text fontSize={18} fontWeight="bold">
+            <Text fontSize={width > 700 ? 32 : 18} fontWeight="bold">
               {changeMinMatch(match)}
             </Text>
           ) : match?.status === "ENCERRADO" ? (
-            <Text fontSize={18} fontWeight="bold">
+            <Text fontSize={width > 700 ? 32 : 18} fontWeight="bold">
               FIM
             </Text>
           ) : (
-            <Text fontSize={18} fontWeight="bold">
+            <Text fontSize={width > 700 ? 32 : 18} fontWeight="bold">
               {match.schedule}
             </Text>
           )}
@@ -146,15 +149,6 @@ export default function Match({ match }: MatchProps) {
           )}
         </VStack>
       </HStack>
-      <Divider
-        h={1}
-        _dark={{
-          bg: "blueGray.700",
-        }}
-        _light={{
-          bg: "emerald.700",
-        }}
-      />
     </>
   );
 }

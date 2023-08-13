@@ -1,6 +1,9 @@
 import { Flex, HStack, Text } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 export default function MatchTitle({ title }: { title: string }) {
+  const { width } = useWindowDimensions();
+
   return (
     <Flex
       _dark={{ bg: "blueGray.700", color: "orange.50" }}
@@ -25,7 +28,7 @@ export default function MatchTitle({ title }: { title: string }) {
           overflow="hidden"
           numberOfLines={1}
           ellipsizeMode="tail"
-          fontSize={16}
+          fontSize={width > 700 ? 24 : 16}
           fontWeight="bold"
         >
           {title}

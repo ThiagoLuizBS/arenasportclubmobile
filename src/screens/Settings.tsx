@@ -24,11 +24,12 @@ import { AntDesign } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
 import { AuthContext } from "../contexts/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useWindowDimensions } from "react-native";
 
 export default function Settings() {
+  const { width } = useWindowDimensions();
   const { navigate } = useNavigation();
   const { colorMode, toggleColorMode } = useColorMode();
-  const [language, setLanguage] = useState("Português");
   const [nameUser, setNameUser] = useState("");
   const context = useContext(RouteContext);
   const authContext = useContext(AuthContext);
@@ -70,7 +71,7 @@ export default function Settings() {
           <VStack space={5} alignItems="center">
             <Heading
               size="lg"
-              _dark={{ color: "white" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
             >
               Olá, {nameUser}!
@@ -80,7 +81,7 @@ export default function Settings() {
             onPress={() => {
               authContext.handleLogout();
             }}
-            rounded="lg"
+            rounded="xl"
             w="80%"
             _dark={{ bg: "blueGray.700" }}
             _light={{ bg: "emerald.700" }}
@@ -93,7 +94,7 @@ export default function Settings() {
               <Text
                 _dark={{ color: "red.500" }}
                 _light={{ color: "red.500" }}
-                fontSize={20}
+                fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
                 Sair
@@ -107,7 +108,7 @@ export default function Settings() {
             onPress={() => {
               navigate("SignUp");
             }}
-            rounded="lg"
+            rounded="xl"
             w="80%"
             _dark={{ bg: "blueGray.700" }}
             _light={{ bg: "emerald.700" }}
@@ -120,7 +121,7 @@ export default function Settings() {
               <Text
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}
-                fontSize={20}
+                fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
                 Cadastrar
@@ -131,7 +132,7 @@ export default function Settings() {
             onPress={() => {
               navigate("SignIn");
             }}
-            rounded="lg"
+            rounded="xl"
             w="80%"
             _dark={{ bg: "blueGray.700" }}
             _light={{ bg: "emerald.700" }}
@@ -144,7 +145,7 @@ export default function Settings() {
               <Text
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}
-                fontSize={20}
+                fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
                 Entrar
@@ -157,22 +158,22 @@ export default function Settings() {
         <Text
           w="40%"
           textAlign="center"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
-          fontSize={20}
+          fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
         >
           Linguagem
         </Text>
         <Select
-          selectedValue={language}
-          defaultValue={language}
+          selectedValue={authContext?.language}
+          defaultValue={authContext?.language}
           accessibilityLabel="Escolha a linguagem"
           placeholder="Escolha a linguagem"
           _dark={{ bg: "blueGray.700", color: "orange.50" }}
           _light={{ bg: "emerald.700", color: "orange.100" }}
           width="180"
-          fontSize={20}
+          fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
           rounded="xl"
           p={4}
@@ -197,17 +198,17 @@ export default function Settings() {
                   color: "orange.50",
                 }
           }
-          onValueChange={(itemValue) => setLanguage(itemValue)}
+          onValueChange={(itemValue) => authContext?.setLanguage(itemValue)}
         >
-          <Select.Item label="Português" value="Português" />
-          <Select.Item label="English" value="English" />
+          <Select.Item label="Português" value="pt" />
+          <Select.Item label="English" value="en" />
         </Select>
       </HStack>
       <HStack w="80%" space={2} alignItems="center" justifyContent="center">
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
-          fontSize={20}
+          fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
         >
           Dark
@@ -223,9 +224,9 @@ export default function Settings() {
           }
         />
         <Text
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
-          fontSize={20}
+          fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
         >
           Ligth
@@ -245,13 +246,15 @@ export default function Settings() {
         <Image source={logo} alt="ArenaSportClub" size="xl" />
         <Heading
           size="lg"
-          _dark={{ color: "white" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
         >
           Arena Sport Club
         </Heading>
       </VStack>
-      <Text fontSize={14}>Projeto criado com finalidade acadêmica</Text>
+      <Text fontSize={width > 700 ? 24 : 16}>
+        Projeto criado com finalidade acadêmica
+      </Text>
     </Box>
   );
 }

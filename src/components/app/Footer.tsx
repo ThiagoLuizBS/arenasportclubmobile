@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Icon, Box, Center, HStack, Pressable, Text } from "native-base";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
+import { useWindowDimensions } from "react-native";
 
 export default function Footer() {
   const [selected, setSelected] = useState(0);
   const { navigate } = useNavigation();
+  const { width } = useWindowDimensions();
   const navigationState = useNavigationState((state) => state);
   const rotaAtual = navigationState?.routes[navigationState.index];
   const nomeRotaAtual = rotaAtual?.name;
@@ -63,7 +65,7 @@ export default function Footer() {
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="14"
+              fontSize={width > 700 ? 24 : 16}
             >
               Resultados
             </Text>
@@ -90,7 +92,7 @@ export default function Footer() {
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="14"
+              fontSize={width > 700 ? 24 : 16}
             >
               Favoritos
             </Text>
@@ -117,7 +119,7 @@ export default function Footer() {
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="14"
+              fontSize={width > 700 ? 24 : 16}
             >
               Descubra
             </Text>
@@ -144,7 +146,7 @@ export default function Footer() {
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
-              fontSize="14"
+              fontSize={width > 700 ? 24 : 16}
             >
               Notícias
             </Text>

@@ -10,6 +10,7 @@ import { AuthProvider } from "./src/contexts/AuthProvider";
 import { RouteProvider } from "./src/contexts/RouteProvider";
 import { SearchProvider } from "./src/contexts/SearchProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FavoritesProvider } from "./src/contexts/FavoritesProvider";
 
 const colorModeManager: StorageManager = {
   get: async () => {
@@ -23,9 +24,7 @@ const colorModeManager: StorageManager = {
   set: async (value: ColorMode) => {
     try {
       if (value) await AsyncStorage.setItem("@arena:theme", value);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   },
 };
 
@@ -45,11 +44,13 @@ export default function App() {
   return (
     <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
       <AuthProvider>
-        <RouteProvider>
-          <SearchProvider>
-            <Routes />
-          </SearchProvider>
-        </RouteProvider>
+        <FavoritesProvider>
+          <RouteProvider>
+            <SearchProvider>
+              <Routes />
+            </SearchProvider>
+          </RouteProvider>
+        </FavoritesProvider>
       </AuthProvider>
     </NativeBaseProvider>
   );

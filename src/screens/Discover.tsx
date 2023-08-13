@@ -1,8 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { Box, Text } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 export default function Discover() {
   const { navigate } = useNavigation();
+  const { width } = useWindowDimensions();
 
   return (
     <Box
@@ -14,7 +16,7 @@ export default function Discover() {
       alignItems="center"
       justifyContent="center"
     >
-      <Text fontSize={20}>Descubra</Text>
+      <Text fontSize={width > 700 ? 32 : 20}>Descubra</Text>
     </Box>
   );
 }

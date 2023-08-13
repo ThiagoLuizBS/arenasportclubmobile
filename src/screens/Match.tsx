@@ -16,6 +16,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import MatchService from "../services/match";
 import MatchComp from "../components/match/MatchComp";
 import SelectMatch from "../components/match/SelectMatch";
+import { useWindowDimensions } from "react-native";
 
 type paramsProps = {
   matchId: string;
@@ -23,6 +24,7 @@ type paramsProps = {
 
 export default function Match() {
   const route = useRoute();
+  const { width } = useWindowDimensions();
   const { matchId } = route.params as paramsProps;
   const { navigate, goBack } = useNavigation();
   const context = useContext(RouteContext);

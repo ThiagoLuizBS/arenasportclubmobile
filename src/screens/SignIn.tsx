@@ -4,7 +4,6 @@ import {
   VStack,
   Text,
   Heading,
-  ScrollView,
   HStack,
   Pressable,
   useColorMode,
@@ -26,6 +25,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthProvider";
 import ToastLogin from "../components/app/ToastLogin";
+import { useWindowDimensions } from "react-native";
 
 type FormDataProps = {
   email: string;
@@ -41,7 +41,8 @@ const signInSchema = yup.object({
 });
 
 export default function SignIn() {
-  const { navigate, goBack } = useNavigation();
+  const { width } = useWindowDimensions();
+  const { navigate } = useNavigation();
   const toast = useToast();
   const { colorMode } = useColorMode();
   const context = useContext(RouteContext);
@@ -106,7 +107,7 @@ export default function SignIn() {
         <Pressable onPress={() => navigate("Settings")}>
           <Ionicons
             name="arrow-back"
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === "light" ? "black" : "#fff7ed"}
             size={24}
           />
         </Pressable>
@@ -114,10 +115,10 @@ export default function SignIn() {
       <VStack px={10} h="90%" justifyContent="center">
         <Center>
           <Heading
-            _dark={{ color: "white" }}
+            _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
             marginY={3}
-            fontSize={30}
+            fontSize={width > 700 ? 48 : 32}
             fontWeight="bold"
           >
             Seja Bem-Vindo!
