@@ -49,13 +49,7 @@ export default function Table({ championship, width }: TableProps) {
                     </>
                   )}
                   <Box py={2} px={4} justifyContent="center" w="100%">
-                    <HStack
-                      space={2}
-                      px={4}
-                      rounded="xl"
-                      justifyContent="center"
-                      w="100%"
-                    >
+                    <HStack space={2} px={4} justifyContent="center" w="100%">
                       <Text minW="8%"></Text>
                       <Text minW="30%">Equipe</Text>
                       <Text minW="8%">P</Text>
@@ -77,7 +71,6 @@ export default function Table({ championship, width }: TableProps) {
                         py={2}
                         px={4}
                         my={1}
-                        rounded="xl"
                         justifyContent="center"
                         w="100%"
                       >

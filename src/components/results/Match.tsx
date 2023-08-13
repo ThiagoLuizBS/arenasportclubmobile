@@ -142,7 +142,7 @@ export default function Match({ match }: MatchProps) {
           {match.status === "AO VIVO" && checkLastEvent(match) !== "" && (
             <Icon
               size={6}
-              _dark={{ color: "blueGray.700" }}
+              _dark={{ color: "orange.50" }}
               _light={{ color: "emerald.700" }}
               as={<Ionicons name={"ios-football"} />}
             />

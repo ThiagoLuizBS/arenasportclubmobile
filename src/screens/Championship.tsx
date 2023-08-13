@@ -20,7 +20,6 @@ import ChampionshipService from "../services/championship";
 import { RouteContext } from "../contexts/RouteProvider";
 import { ScrollView, useWindowDimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import team from "../services/team";
 import { FavoritesContext } from "../contexts/FavoritesProvider";
 import SelectChampionship from "../components/championship/SelectChampionship";
 import Table from "../components/championship/Table";
