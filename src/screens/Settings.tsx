@@ -25,6 +25,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import { AuthContext } from "../contexts/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useWindowDimensions } from "react-native";
+import i18n from "../languages/I18n";
 
 export default function Settings() {
   const { width } = useWindowDimensions();
@@ -74,7 +75,7 @@ export default function Settings() {
               _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
             >
-              Olá, {nameUser}!
+              {i18n.t("saudacao")} , {nameUser}!
             </Heading>
           </VStack>
           <Pressable
@@ -97,7 +98,7 @@ export default function Settings() {
                 fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
-                Sair
+                {i18n.t("Sair")}
               </Text>
             </Center>
           </Pressable>
@@ -124,7 +125,7 @@ export default function Settings() {
                 fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
-                Cadastrar
+                {i18n.t("Cadastrar")}
               </Text>
             </Center>
           </Pressable>
@@ -148,7 +149,7 @@ export default function Settings() {
                 fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
-                Entrar
+                {i18n.t("Entrar")}
               </Text>
             </Center>
           </Pressable>
@@ -163,7 +164,7 @@ export default function Settings() {
           fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
         >
-          Linguagem
+          {i18n.t("Linguagem")}
         </Text>
         <Select
           selectedValue={authContext?.language}
@@ -252,9 +253,7 @@ export default function Settings() {
           Arena Sport Club
         </Heading>
       </VStack>
-      <Text fontSize={width > 700 ? 24 : 16}>
-        Projeto criado com finalidade acadêmica
-      </Text>
+      <Text fontSize={width > 700 ? 24 : 16}>{i18n.t("ProjetoAcademico")}</Text>
     </Box>
   );
 }

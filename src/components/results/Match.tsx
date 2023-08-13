@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { HStack, VStack, Text, Image, Divider, Icon } from "native-base";
 import { useWindowDimensions } from "react-native";
+import i18n from "../../languages/I18n";
 
 type MatchProps = {
   match: match;
@@ -132,7 +133,7 @@ export default function Match({ match }: MatchProps) {
             </Text>
           ) : match?.status === "ENCERRADO" ? (
             <Text fontSize={width > 700 ? 32 : 18} fontWeight="bold">
-              FIM
+              {i18n.t("Fim")}
             </Text>
           ) : (
             <Text fontSize={width > 700 ? 32 : 18} fontWeight="bold">

@@ -26,6 +26,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthProvider";
 import ToastLogin from "../components/app/ToastLogin";
 import { useWindowDimensions } from "react-native";
+import i18n from "../languages/I18n";
 
 type FormDataProps = {
   email: string;
@@ -33,11 +34,11 @@ type FormDataProps = {
 };
 
 const signInSchema = yup.object({
-  email: yup.string().required("Informe o e-mail").email("E-mail incorreto"),
+  email: yup.string().required("Informe o e-mail").email("E-mail incorreto"), // {i18n.t("InformeEmail")}  {i18n.t("EmailIncorreto")}
   password: yup
     .string()
-    .required("Informe a senha")
-    .min(8, "A senha deve conter pelo menos 8 dígitos"),
+    .required("Informe a senha") // {i18n.t("InformeSenha")}
+    .min(8, "A senha deve conter pelo menos 8 dígitos"), // {i18n.t("RequisicaoSenha")}
 });
 
 export default function SignIn() {
@@ -85,7 +86,7 @@ export default function SignIn() {
       })
       .catch((error) => {
         if (error.response) {
-          setServerErrorMessage("Email ou senha incorretos.");
+          setServerErrorMessage("Email ou senha incorretos."); // // {i18n.t("EmailSenhaIncorreto")}
         }
       });
   }
@@ -121,7 +122,7 @@ export default function SignIn() {
             fontSize={width > 700 ? 48 : 32}
             fontWeight="bold"
           >
-            Seja Bem-Vindo!
+            {i18n.t("BemVindo")}
           </Heading>
 
           <Controller
@@ -142,7 +143,7 @@ export default function SignIn() {
             name="password"
             render={({ field: { onChange } }) => (
               <Input
-                placeholder="Senha"
+                placeholder={i18n.t("Senha")}
                 secureTextEntry
                 onChangeText={onChange}
                 errorMessage={errors.password?.message || serverErrorMessage}
@@ -150,13 +151,13 @@ export default function SignIn() {
             )}
           />
           <Button
-            title="Entrar"
+            title={i18n.t("Entrar")}
             marginTop={10}
             onPress={handleSubmit(handleSignIn)}
           />
           <HStack>
             <Text marginTop={3} fontWeight="bold">
-              Não possui conta?{" "}
+              {i18n.t("SemConta")}{" "}
             </Text>
             <Text
               marginTop={3}
@@ -164,7 +165,7 @@ export default function SignIn() {
               fontWeight="bold"
               onPress={() => navigate("SignUp")}
             >
-              Registre-se aqui.
+              {i18n.t("Registre")}
             </Text>
           </HStack>
         </Center>

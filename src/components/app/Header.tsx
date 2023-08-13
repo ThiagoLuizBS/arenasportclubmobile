@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import logo from "../../assets/logo1.png";
 import { SearchContext } from "../../contexts/SearchProvider";
 import { useWindowDimensions } from "react-native";
+import i18n from "../../languages/I18n";
 
 export default function Header() {
   const { navigate } = useNavigation();
@@ -41,7 +42,7 @@ export default function Header() {
       >
         <VStack w="100%" space={5} alignItems="center" justifyContent="center">
           <Input
-            placeholder="Buscar equipes e campeonatos"
+            placeholder={i18n.t("BuscarItens")}
             value={context?.searchField}
             onPressIn={() => navigate("Search")}
             onChangeText={(e) => handleSearch(e)}
@@ -49,7 +50,7 @@ export default function Header() {
             borderWidth="0"
             py="3"
             px="1"
-            fontSize={width > 700 ? 24 : 16}
+            fontSize={width > 700 ? 24 : 14}
             _dark={{ color: "orange.50", placeholderTextColor: "orange.50" }}
             _light={{
               color: "orange.100",

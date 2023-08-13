@@ -10,6 +10,7 @@ import News from "../screens/News";
 import Settings from "../screens/Settings";
 import Discover from "../screens/Discover";
 import Search from "../screens/Search";
+import Profile from "../screens/Profile";
 
 export function AppRoutes() {
   const { Navigator, Screen } = createNativeStackNavigator();
@@ -26,7 +27,7 @@ export function AppRoutes() {
       <Screen name="Match" component={Match} />
       <Screen name="Favorites" component={Favorites} />
       <Screen name="News" component={News} />
-      <Screen name="Discover" component={Discover} />
+      <Screen name="Discover" component={Profile} />
       <Screen name="Settings" component={Settings} />
       <Screen name="Search" component={Search} />
       <Screen name="SignUp" component={SignUp} />

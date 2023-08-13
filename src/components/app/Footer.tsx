@@ -3,6 +3,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Icon, Box, Center, HStack, Pressable, Text } from "native-base";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { useWindowDimensions } from "react-native";
+import i18n from "../../languages/I18n";
 
 export default function Footer() {
   const [selected, setSelected] = useState(0);
@@ -67,7 +68,7 @@ export default function Footer() {
               _light={{ color: "orange.100" }}
               fontSize={width > 700 ? 24 : 16}
             >
-              Resultados
+              {i18n.t("Resultados")}
             </Text>
           </Center>
         </Pressable>
@@ -94,7 +95,7 @@ export default function Footer() {
               _light={{ color: "orange.100" }}
               fontSize={width > 700 ? 24 : 16}
             >
-              Favoritos
+              {i18n.t("Favoritos")}
             </Text>
           </Center>
         </Pressable>
@@ -121,7 +122,7 @@ export default function Footer() {
               _light={{ color: "orange.100" }}
               fontSize={width > 700 ? 24 : 16}
             >
-              Descubra
+              {i18n.t("Descubra")}
             </Text>
           </Center>
         </Pressable>
@@ -148,7 +149,7 @@ export default function Footer() {
               _light={{ color: "orange.100" }}
               fontSize={width > 700 ? 24 : 16}
             >
-              Notícias
+              {i18n.t("Noticia")}
             </Text>
           </Center>
         </Pressable>

@@ -1,5 +1,6 @@
 import { VStack, HStack, Alert, Text } from "native-base";
 import { useWindowDimensions } from "react-native";
+import i18n from "../../languages/I18n";
 
 export default function ToastLogin({
   nameUser,
@@ -37,7 +38,7 @@ export default function ToastLogin({
           </HStack>
         </HStack>
         <Text px="6" color="lightText">
-          Bem vindo {nameUser}!
+          {i18n.t("BemVindo")} {nameUser}!
         </Text>
       </VStack>
     </Alert>

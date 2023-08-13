@@ -25,6 +25,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import { Ionicons } from "@expo/vector-icons";
 import ToastLogin from "../components/app/ToastLogin";
 import { useWindowDimensions } from "react-native";
+import i18n from "../languages/I18n";
 
 type FormDataProps = {
   name: string;
@@ -115,7 +116,7 @@ export default function SignUp() {
             fontSize={width > 700 ? 48 : 32}
             fontWeight="bold"
           >
-            Criar Conta
+            {i18n.t("CriaConta")}
           </Heading>
 
           <Controller
@@ -123,7 +124,7 @@ export default function SignUp() {
             name="name"
             render={({ field: { onChange } }) => (
               <Input
-                placeholder="Nome"
+                placeholder={i18n.t("Nome")}
                 marginTop={10}
                 onChangeText={onChange}
                 errorMessage={errors.name?.message}
@@ -148,7 +149,7 @@ export default function SignUp() {
             name="password"
             render={({ field: { onChange } }) => (
               <Input
-                placeholder="Senha"
+                placeholder={i18n.t("Senha")}
                 secureTextEntry
                 onChangeText={onChange}
                 errorMessage={errors.password?.message}
@@ -161,17 +162,20 @@ export default function SignUp() {
             name="password_confirm"
             render={({ field: { onChange } }) => (
               <Input
-                placeholder="Confirme Senha"
+                placeholder={i18n.t("ConfirmaSenha")}
                 secureTextEntry
                 onChangeText={onChange}
                 errorMessage={errors.password_confirm?.message}
               />
             )}
           />
-          <Button title="Criar" onPress={handleSubmit(handleSignUp)} />
+          <Button
+            title={i18n.t("Criar")}
+            onPress={handleSubmit(handleSignUp)}
+          />
           <HStack>
             <Text marginTop={3} fontWeight="bold">
-              Já tem uma conta?{" "}
+              {i18n.t("TemConta")}{" "}
             </Text>
             <Text
               marginTop={3}
@@ -179,7 +183,7 @@ export default function SignUp() {
               fontWeight="bold"
               onPress={() => navigate("SignIn")}
             >
-              Entre aqui.
+              {i18n.t("EntraAqui")}
             </Text>
           </HStack>
         </Center>

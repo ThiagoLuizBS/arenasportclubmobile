@@ -10,6 +10,7 @@ import {
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useWindowDimensions } from "react-native";
+import i18n from "../../languages/I18n";
 
 type SelectHomeProps = {
   buttonChange: string;
@@ -90,7 +91,7 @@ export default function SelectHome({
             fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
           >
-            Todas
+            {i18n.t("Todas")}
           </Text>
         </VStack>
       </Pressable>
@@ -137,7 +138,7 @@ export default function SelectHome({
             fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
           >
-            Ao vivo
+            {i18n.t("AoVivo")}
           </Text>
         </VStack>
       </Pressable>
@@ -184,7 +185,7 @@ export default function SelectHome({
             fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
           >
-            Encerradas
+            {i18n.t("Encerradas")}
           </Text>
         </VStack>
       </Pressable>
@@ -231,7 +232,7 @@ export default function SelectHome({
             fontSize={width > 700 ? 24 : 14}
             fontWeight="bold"
           >
-            Próximas
+            {i18n.t("Proximas")}
           </Text>
         </VStack>
       </Pressable>
