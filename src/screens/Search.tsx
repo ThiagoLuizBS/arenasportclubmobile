@@ -27,7 +27,8 @@ export default function Search() {
   const { colorMode } = useColorMode();
   const context = useContext(SearchContext);
   const favoritesContext = useContext(FavoritesContext);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [warning, setWarning] = useState(true);
   const [listTeams, setListTeams] = useState<team[]>([]);
   const [listChampionships, setListChampionships] = useState<championship[]>(
     []
@@ -35,19 +36,29 @@ export default function Search() {
 
   useEffect(() => {
     if (context?.searchField === "") {
-      setLoading(true);
+      setWarning(true);
+      setLoading(false);
       setListTeams([]);
       setListChampionships([]);
     } else if (context?.searchField) {
+      setLoading(true);
+      setWarning(true);
       TeamService.getTeams(context?.searchField).then((response) => {
+        if (response.data.team.length > 0) {
+          setWarning(false);
+          setLoading(false);
+        }
         setListTeams(response.data.team);
       });
       ChampionshipService.getChampionships(context?.searchField).then(
         (response) => {
+          if (response.data.championship.length > 0) {
+            setWarning(false);
+            setLoading(false);
+          }
           setListChampionships(response.data.championship);
         }
       );
-      setLoading(false);
     }
   }, [context?.searchField]);
 
@@ -63,7 +74,12 @@ export default function Search() {
       px={2}
       w="100%"
     >
-      <HStack w="100%" alignItems="flex-start" px={4}>
+      <HStack
+        w="100%"
+        alignItems="flex-start"
+        justifyContent="space-between"
+        px={4}
+      >
         <Pressable
           onPress={() => {
             deleteSearch();
@@ -76,12 +92,14 @@ export default function Search() {
             size={24}
           />
         </Pressable>
+        {warning && (
+          <Text fontWeight="semibold" fontSize={width > 700 ? 24 : 16}>
+            Nada foi encontrado, digite mais caracteres
+          </Text>
+        )}
       </HStack>
       <ScrollView>
-        {(loading ||
-          (listTeams.length === 0 && listChampionships.length === 0)) && (
-          <SkeletonSearch />
-        )}
+        {loading && <SkeletonSearch />}
         {listTeams.length > 0 && (
           <HStack w="100%" my={2} justifyContent="center" alignItems="center">
             <Text
