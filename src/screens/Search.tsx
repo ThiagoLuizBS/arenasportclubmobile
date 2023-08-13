@@ -19,6 +19,7 @@ import { FavoritesContext } from "../contexts/FavoritesProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { useWindowDimensions } from "react-native";
 import SkeletonSearch from "../components/search/SkeletonSearch";
+import i18n from "../languages/I18n";
 
 export default function Search() {
   const { width } = useWindowDimensions();
@@ -93,7 +94,7 @@ export default function Search() {
         </Pressable>
         {warning && (
           <Text fontWeight="semibold" fontSize={width > 700 ? 24 : 16}>
-            Nada foi encontrado, digite mais caracteres
+            {i18n.t("PesquisaVazia")}
           </Text>
         )}
       </HStack>
@@ -107,7 +108,7 @@ export default function Search() {
               fontSize={width > 700 ? 32 : 24}
               fontWeight="bold"
             >
-              Equipes
+              {i18n.t("Equipe")}
             </Text>
           </HStack>
         )}
@@ -184,7 +185,7 @@ export default function Search() {
               fontSize={width > 700 ? 32 : 24}
               fontWeight="bold"
             >
-              Campeonatos
+              {i18n.t("Campeonatos")}
             </Text>
           </HStack>
         )}

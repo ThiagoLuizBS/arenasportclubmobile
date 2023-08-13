@@ -20,11 +20,12 @@ import {
   Divider,
 } from "native-base";
 import logo from "../assets/logo1.png";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { RouteContext } from "../contexts/RouteProvider";
 import { AuthContext } from "../contexts/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useWindowDimensions } from "react-native";
+import i18n from "../languages/I18n";
 
 export default function Settings() {
   const { width } = useWindowDimensions();
@@ -34,6 +35,11 @@ export default function Settings() {
   const context = useContext(RouteContext);
   const authContext = useContext(AuthContext);
   const route = useRoute();
+  const [update, setUpdate] = useState(false);
+
+  useEffect(() => {
+    setUpdate((prev) => !prev);
+  }, [authContext?.language]);
 
   useEffect(() => {
     const updateNameUser = async () => {
@@ -74,7 +80,7 @@ export default function Settings() {
               _dark={{ color: "orange.50" }}
               _light={{ color: "black" }}
             >
-              Olá, {nameUser}!
+              {i18n.t("saudacao")}, {nameUser}!
             </Heading>
           </VStack>
           <Pressable
@@ -97,7 +103,7 @@ export default function Settings() {
                 fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
-                Sair
+                {i18n.t("Sair")}
               </Text>
             </Center>
           </Pressable>
@@ -124,7 +130,7 @@ export default function Settings() {
                 fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
-                Cadastrar
+                {i18n.t("Cadastrar")}
               </Text>
             </Center>
           </Pressable>
@@ -148,7 +154,7 @@ export default function Settings() {
                 fontSize={width > 700 ? 32 : 20}
                 fontWeight="bold"
               >
-                Entrar
+                {i18n.t("Entrar")}
               </Text>
             </Center>
           </Pressable>
@@ -163,7 +169,7 @@ export default function Settings() {
           fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
         >
-          Linguagem
+          {i18n.t("Linguagem")}
         </Text>
         <Select
           selectedValue={authContext?.language}
@@ -205,14 +211,12 @@ export default function Settings() {
         </Select>
       </HStack>
       <HStack w="80%" space={2} alignItems="center" justifyContent="center">
-        <Text
+        <Icon
+          as={<Ionicons name="moon" />}
           _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
-          fontSize={width > 700 ? 32 : 20}
-          fontWeight="bold"
-        >
-          Dark
-        </Text>
+          size="2xl"
+        />
         <Switch
           colorScheme="emerald"
           isChecked={colorMode === "light"}
@@ -223,14 +227,12 @@ export default function Settings() {
               : "switch to light mode"
           }
         />
-        <Text
+        <Icon
+          as={<Ionicons name="sunny" />}
           _dark={{ color: "orange.50" }}
           _light={{ color: "black" }}
-          fontSize={width > 700 ? 32 : 20}
-          fontWeight="bold"
-        >
-          Ligth
-        </Text>
+          size="2xl"
+        />
       </HStack>
       <Divider
         w="80%"
@@ -252,9 +254,7 @@ export default function Settings() {
           Arena Sport Club
         </Heading>
       </VStack>
-      <Text fontSize={width > 700 ? 24 : 16}>
-        Projeto criado com finalidade acadêmica
-      </Text>
+      <Text fontSize={width > 700 ? 24 : 16}>{i18n.t("ProjetoAcademico")}</Text>
     </Box>
   );
 }

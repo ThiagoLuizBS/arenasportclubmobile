@@ -9,6 +9,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import NewsService from "../services/news";
 import SkeletonNews from "../components/news/SkeletonNews";
 import { useWindowDimensions } from "react-native";
+import i18n from "../languages/I18n";
 
 export default function News() {
   const { navigate } = useNavigation();

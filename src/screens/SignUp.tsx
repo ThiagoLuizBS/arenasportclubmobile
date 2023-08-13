@@ -25,6 +25,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import { Ionicons } from "@expo/vector-icons";
 import ToastLogin from "../components/app/ToastLogin";
 import { useWindowDimensions } from "react-native";
+import i18n from "../languages/I18n";
 
 type FormDataProps = {
   name: string;
@@ -33,23 +34,26 @@ type FormDataProps = {
   password_confirm: string;
 };
 
-const signUpSchema = yup.object({
-  name: yup
-    .string()
-    .required("Informe o nome")
-    .min(4, "Tem que ter pelo menos 4 dígitos"),
-  email: yup.string().required("Informe o e-mail").email("E-mail inválido"),
-  password: yup
-    .string()
-    .required("Informe a senha")
-    .min(8, "A senha deve conter pelo menos 8 dígitos"),
-  password_confirm: yup
-    .string()
-    .required("Informe a confirmação de senha")
-    .oneOf([yup.ref("password"), ""], "A confirmação de senha não é igual"),
-});
-
 export default function SignUp() {
+  const signUpSchema = yup.object({
+    name: yup
+      .string()
+      .required(i18n.t("InformeNome"))
+      .min(4, i18n.t("NomeIncorreto")),
+    email: yup
+      .string()
+      .required(i18n.t("InformeEmail"))
+      .email(i18n.t("EmailIncorreto")),
+    password: yup
+      .string()
+      .required(i18n.t("InformeSenha"))
+      .min(8, i18n.t("RequisicaoSenha")),
+    password_confirm: yup
+      .string()
+      .required(i18n.t("InformeConfirmacaoSenha"))
+      .oneOf([yup.ref("password"), ""], i18n.t("ConfirmacaoSenha")),
+  });
+
   const { navigate, goBack } = useNavigation();
   const { width } = useWindowDimensions();
   const toast = useToast();
@@ -115,7 +119,7 @@ export default function SignUp() {
             fontSize={width > 700 ? 48 : 32}
             fontWeight="bold"
           >
-            Criar Conta
+            {i18n.t("CriaConta")}
           </Heading>
 
           <Controller
@@ -123,7 +127,7 @@ export default function SignUp() {
             name="name"
             render={({ field: { onChange } }) => (
               <Input
-                placeholder="Nome"
+                placeholder={i18n.t("Nome")}
                 marginTop={10}
                 onChangeText={onChange}
                 errorMessage={errors.name?.message}
@@ -148,7 +152,7 @@ export default function SignUp() {
             name="password"
             render={({ field: { onChange } }) => (
               <Input
-                placeholder="Senha"
+                placeholder={i18n.t("Senha")}
                 secureTextEntry
                 onChangeText={onChange}
                 errorMessage={errors.password?.message}
@@ -161,17 +165,20 @@ export default function SignUp() {
             name="password_confirm"
             render={({ field: { onChange } }) => (
               <Input
-                placeholder="Confirme Senha"
+                placeholder={i18n.t("ConfirmaSenha")}
                 secureTextEntry
                 onChangeText={onChange}
                 errorMessage={errors.password_confirm?.message}
               />
             )}
           />
-          <Button title="Criar" onPress={handleSubmit(handleSignUp)} />
+          <Button
+            title={i18n.t("Criar")}
+            onPress={handleSubmit(handleSignUp)}
+          />
           <HStack>
             <Text marginTop={3} fontWeight="bold">
-              Já tem uma conta?{" "}
+              {i18n.t("TemConta")}{" "}
             </Text>
             <Text
               marginTop={3}
@@ -179,7 +186,7 @@ export default function SignUp() {
               fontWeight="bold"
               onPress={() => navigate("SignIn")}
             >
-              Entre aqui.
+              {i18n.t("EntraAqui")}
             </Text>
           </HStack>
         </Center>

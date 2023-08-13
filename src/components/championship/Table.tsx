@@ -1,4 +1,5 @@
 import { Box, FlatList, HStack, Text } from "native-base";
+import i18n from "../../languages/I18n";
 
 type TableProps = {
   championship: championship;
@@ -25,39 +26,114 @@ export default function Table({ championship, width }: TableProps) {
                 <Box alignItems="center">
                   {item?.group === "" ? (
                     item?.phase !== "" ? (
-                      <Text fontSize={20} fontWeight="bold">
+                      <Text
+                        fontSize={20}
+                        fontWeight="bold"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                      >
                         {item.phase}
                       </Text>
                     ) : (
-                      <Text fontSize={20} fontWeight="bold">
-                        Classificação
+                      <Text
+                        fontSize={20}
+                        fontWeight="bold"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                      >
+                        {i18n.t("Classificacao")}
                       </Text>
                     )
                   ) : (
                     <>
                       {item.group === "Grupo A" ? (
-                        <Text fontSize={20} fontWeight="bold">
+                        <Text
+                          fontSize={20}
+                          fontWeight="bold"
+                          _dark={{ color: "orange.50" }}
+                          _light={{ color: "orange.100" }}
+                        >
                           {item.phase}
                         </Text>
                       ) : (
                         <></>
                       )}
-                      <Text fontSize={20} fontWeight="bold">
-                        {" "}
-                        {item.group}{" "}
+                      <Text
+                        fontSize={20}
+                        fontWeight="bold"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                      >
+                        {item.group}
                       </Text>
                     </>
                   )}
                   <Box py={2} px={4} justifyContent="center" w="100%">
                     <HStack space={2} px={4} justifyContent="center" w="100%">
                       <Text minW="8%"></Text>
-                      <Text minW="30%">Equipe</Text>
-                      <Text minW="8%">P</Text>
-                      <Text minW="8%">J</Text>
-                      <Text minW="8%">V</Text>
-                      <Text minW="8%">E</Text>
-                      <Text minW="8%">D</Text>
-                      <Text minW="8%">SG</Text>
+                      <Text
+                        minW="30%"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontWeight="semibold"
+                        fontSize="md"
+                      >
+                        {i18n.t("EquipeTabela")}
+                      </Text>
+                      <Text
+                        minW="8%"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontWeight="semibold"
+                        fontSize="md"
+                      >
+                        P
+                      </Text>
+                      <Text
+                        minW="8%"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontWeight="semibold"
+                        fontSize="md"
+                      >
+                        J
+                      </Text>
+                      <Text
+                        minW="8%"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontWeight="semibold"
+                        fontSize="md"
+                      >
+                        V
+                      </Text>
+                      <Text
+                        minW="8%"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontWeight="semibold"
+                        fontSize="md"
+                      >
+                        E
+                      </Text>
+                      <Text
+                        minW="8%"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontWeight="semibold"
+                        fontSize="md"
+                      >
+                        D
+                      </Text>
+                      <Text
+                        minW="8%"
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontWeight="semibold"
+                        fontSize="md"
+                      >
+                        SG
+                      </Text>
                     </HStack>
                   </Box>
                 </Box>
@@ -67,7 +143,7 @@ export default function Table({ championship, width }: TableProps) {
                     return (
                       <Box
                         _dark={{ bg: "blueGray.700" }}
-                        _light={{ bg: "emerald.100" }}
+                        _light={{ bg: "emerald.500" }}
                         py={2}
                         px={4}
                         my={1}
@@ -75,14 +151,81 @@ export default function Table({ championship, width }: TableProps) {
                         w="100%"
                       >
                         <HStack space={2}>
-                          <Text minW="8%">{item.num}</Text>
-                          <Text minW="30%">{item.team}</Text>
-                          <Text minW="8%">{item.points}</Text>
-                          <Text minW="8%">{item.games}</Text>
-                          <Text minW="8%">{item.victorys}</Text>
-                          <Text minW="8%">{item.draws}</Text>
-                          <Text minW="8%">{item.loses}</Text>
-                          <Text minW="8%">{item.goaldiference}</Text>
+                          <Text
+                            minW="8%"
+                            maxW="8%"
+                            _dark={{ color: "orange.50" }}
+                            _light={{ color: "orange.100" }}
+                            fontWeight="semibold"
+                          >
+                            {item.num}
+                          </Text>
+                          <Text
+                            minW="30%"
+                            maxW="30%"
+                            overflow="hidden"
+                            ellipsizeMode="tail"
+                            numberOfLines={1}
+                            _dark={{ color: "orange.50" }}
+                            _light={{ color: "orange.100" }}
+                            fontWeight="semibold"
+                          >
+                            {item.team}
+                          </Text>
+                          <Text
+                            minW="8%"
+                            maxW="8%"
+                            _dark={{ color: "orange.50" }}
+                            _light={{ color: "orange.100" }}
+                            fontWeight="semibold"
+                          >
+                            {item.points}
+                          </Text>
+                          <Text
+                            minW="8%"
+                            maxW="8%"
+                            _dark={{ color: "orange.50" }}
+                            _light={{ color: "orange.100" }}
+                            fontWeight="semibold"
+                          >
+                            {item.games}
+                          </Text>
+                          <Text
+                            minW="8%"
+                            maxW="8%"
+                            _dark={{ color: "orange.50" }}
+                            _light={{ color: "orange.100" }}
+                            fontWeight="semibold"
+                          >
+                            {item.victorys}
+                          </Text>
+                          <Text
+                            minW="8%"
+                            maxW="8%"
+                            _dark={{ color: "orange.50" }}
+                            _light={{ color: "orange.100" }}
+                            fontWeight="semibold"
+                          >
+                            {item.draws}
+                          </Text>
+                          <Text
+                            minW="8%"
+                            maxW="8%"
+                            _dark={{ color: "orange.50" }}
+                            _light={{ color: "orange.100" }}
+                            fontWeight="semibold"
+                          >
+                            {item.loses}
+                          </Text>
+                          <Text
+                            minW="8%"
+                            maxW="8%"
+                            _dark={{ color: "orange.50" }}
+                            _light={{ color: "orange.100" }}
+                            fontWeight="semibold"
+                          >
+                            {item.goaldiference}
+                          </Text>
                         </HStack>
                       </Box>
                     );

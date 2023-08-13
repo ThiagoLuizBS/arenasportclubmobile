@@ -8,6 +8,7 @@ import {
   Text,
 } from "native-base";
 import { useWindowDimensions } from "react-native";
+import i18n from "../../languages/I18n";
 
 type SelectFavoritesProps = {
   type: string;
@@ -60,7 +61,7 @@ export default function SelectFavorites({
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
-            Equipes
+            {i18n.t("Equipe")}
           </Text>
         </VStack>
       </Pressable>
@@ -105,7 +106,7 @@ export default function SelectFavorites({
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
-            Campeonatos
+            {i18n.t("Campeonatos")}
           </Text>
         </VStack>
       </Pressable>

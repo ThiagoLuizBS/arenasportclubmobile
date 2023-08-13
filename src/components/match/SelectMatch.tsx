@@ -1,19 +1,10 @@
-import {
-  HStack,
-  Select,
-  Icon,
-  ColorMode,
-  VStack,
-  Pressable,
-  Text,
-} from "native-base";
+import { HStack, ColorMode, VStack, Pressable, Text } from "native-base";
 import {
   AntDesign,
-  Fontisto,
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { useState } from "react";
+import i18n from "../../languages/I18n";
 
 type SelectHomeProps = {
   buttonChange: string;
@@ -55,7 +46,7 @@ export default function SelectMatch({
                 : "#334155"
             }
           />
-          <Text ml={1}>Sumário</Text>
+          <Text ml={1}>{i18n.t("Sumario")}</Text>
         </VStack>
       </Pressable>
       <Pressable
@@ -78,7 +69,7 @@ export default function SelectMatch({
                 : "#334155"
             }
           />
-          <Text ml={1}>Estatíticas</Text>
+          <Text ml={1}>{i18n.t("Estatisticas")}</Text>
         </VStack>
       </Pressable>
       <Pressable
@@ -101,7 +92,7 @@ export default function SelectMatch({
                 : "#334155"
             }
           />
-          <Text ml={1}>Escalações</Text>
+          <Text ml={1}>{i18n.t("Escalacoes")}</Text>
         </VStack>
       </Pressable>
     </HStack>

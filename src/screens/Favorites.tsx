@@ -21,6 +21,7 @@ import { RouteContext } from "../contexts/RouteProvider";
 import { FavoritesContext } from "../contexts/FavoritesProvider";
 import { useWindowDimensions } from "react-native";
 import SelectFavorites from "../components/favorites/SelectFavorites";
+import i18n from "../languages/I18n";
 
 export default function Favorites() {
   const { colorMode } = useColorMode();

@@ -1,5 +1,4 @@
 import {
-  FontAwesome,
   Fontisto,
   Foundation,
   Ionicons,
@@ -14,6 +13,7 @@ import {
   Divider,
 } from "native-base";
 import { useWindowDimensions } from "react-native";
+import i18n from "../../languages/I18n";
 
 type SelectChampionshipProps = {
   type: string;
@@ -68,7 +68,7 @@ export default function SelectChampionship({
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
-            Resultados
+            {i18n.t("Resultados")}
           </Text>
         </VStack>
       </Pressable>
@@ -113,7 +113,7 @@ export default function SelectChampionship({
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
-            Calendário
+            {i18n.t("Calendario")}
           </Text>
         </VStack>
       </Pressable>
@@ -158,7 +158,7 @@ export default function SelectChampionship({
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
-            Tabela
+            {i18n.t("Tabela")}
           </Text>
         </VStack>
       </Pressable>
@@ -203,7 +203,7 @@ export default function SelectChampionship({
             fontSize={width > 700 ? 24 : 16}
             fontWeight="bold"
           >
-            Estatísticas
+            {i18n.t("Estatisticas")}
           </Text>
         </VStack>
       </Pressable>

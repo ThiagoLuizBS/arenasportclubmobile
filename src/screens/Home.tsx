@@ -90,10 +90,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (favoritesContext?.favoritesChampionships)
-        MatchService.getMatchsByDate(
-          dateFilter,
-          favoritesContext?.favoritesChampionships
-        ).then((response) => {
+        MatchService.getMatchsByDate(dateFilter, []).then((response) => {
           setMatchsData(response.data);
         });
     }, 30000);

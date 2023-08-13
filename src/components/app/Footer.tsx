@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Icon, Box, Center, HStack, Pressable, Text } from "native-base";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { useWindowDimensions } from "react-native";
+import i18n from "../../languages/I18n";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 export default function Footer() {
+  const authContext = useContext(AuthContext);
   const [selected, setSelected] = useState(0);
   const { navigate } = useNavigation();
   const { width } = useWindowDimensions();
   const navigationState = useNavigationState((state) => state);
   const rotaAtual = navigationState?.routes[navigationState.index];
   const nomeRotaAtual = rotaAtual?.name;
+  const [update, setUpdate] = useState(false);
+
+  useEffect(() => {
+    setUpdate((prev) => !prev);
+  }, [authContext?.language]);
 
   useEffect(() => {
     if (nomeRotaAtual === "Home") setSelected(0);
@@ -67,7 +75,7 @@ export default function Footer() {
               _light={{ color: "orange.100" }}
               fontSize={width > 700 ? 24 : 16}
             >
-              Resultados
+              {i18n.t("Resultados")}
             </Text>
           </Center>
         </Pressable>
@@ -94,7 +102,7 @@ export default function Footer() {
               _light={{ color: "orange.100" }}
               fontSize={width > 700 ? 24 : 16}
             >
-              Favoritos
+              {i18n.t("Favoritos")}
             </Text>
           </Center>
         </Pressable>
@@ -121,7 +129,7 @@ export default function Footer() {
               _light={{ color: "orange.100" }}
               fontSize={width > 700 ? 24 : 16}
             >
-              Descubra
+              {i18n.t("Descubra")}
             </Text>
           </Center>
         </Pressable>
@@ -148,7 +156,7 @@ export default function Footer() {
               _light={{ color: "orange.100" }}
               fontSize={width > 700 ? 24 : 16}
             >
-              Notícias
+              {i18n.t("Noticia")}
             </Text>
           </Center>
         </Pressable>
