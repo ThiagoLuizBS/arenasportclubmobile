@@ -24,6 +24,8 @@ import team from "../services/team";
 import { FavoritesContext } from "../contexts/FavoritesProvider";
 import SelectChampionship from "../components/championship/SelectChampionship";
 import Table from "../components/championship/Table";
+import Results from "../components/championship/Results";
+import Calendar from "../components/championship/Calendar";
 
 type paramsProps = {
   championshipId: string;
@@ -152,13 +154,19 @@ export default function Championship() {
       <SelectChampionship type={type} setType={setType} />
 
       {type === "results" ? (
-        <></>
+        <ScrollView>
+          <Results championshipId={championshipId} />
+        </ScrollView>
       ) : type === "calendar" ? (
-        <></>
+        <ScrollView>
+          <Calendar championshipId={championshipId} />
+        </ScrollView>
       ) : type === "table" ? (
-        <Table championship={championship} width={width} />
+        <Box flex={1}>
+          <Table championship={championship} width={width} />
+        </Box>
       ) : (
-        <></>
+        <Box flex={1}></Box>
       )}
     </Box>
   );

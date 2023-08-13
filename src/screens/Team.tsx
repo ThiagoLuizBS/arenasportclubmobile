@@ -17,6 +17,8 @@ import SelectTeam from "../components/team/SelectTeam";
 import { FavoritesContext } from "../contexts/FavoritesProvider";
 import Informations from "../components/team/Informations";
 import Titles from "../components/team/Titles";
+import Results from "../components/team/Results";
+import Calendar from "../components/team/Calendar";
 
 type paramsProps = {
   teamId: string;
@@ -70,7 +72,7 @@ export default function Team() {
               m="auto"
             />
           </VStack>
-          <VStack w="70%">
+          <VStack w="70%" alignItems="center">
             <Text
               _dark={{ color: "orange.50" }}
               _light={{ color: "orange.100" }}
@@ -114,9 +116,9 @@ export default function Team() {
         ) : type === "titles" ? (
           <Titles team={team} width={width} />
         ) : type === "results" ? (
-          <></>
+          <Results teamId={teamId} />
         ) : (
-          <></>
+          <Calendar teamId={teamId} />
         )}
       </ScrollView>
     </Box>
