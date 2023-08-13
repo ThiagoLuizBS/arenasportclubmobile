@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { HStack, VStack, Text, Image, Divider, Icon } from "native-base";
 import { useWindowDimensions } from "react-native";
 import i18n from "../../languages/I18n";
+import { I18n } from "i18n-js";
 
 type MatchProps = {
   match: match;
@@ -32,13 +33,13 @@ export default function Match({ match }: MatchProps) {
   const changeMinMatch = (match: match) => {
     let time;
     if (match?.time === "INTERVALO")
-      time = match?.time?.replace("INTERVALO", "INT");
+      time = match?.time?.replace("INTERVALO", i18n.t("Intervalo"));
     else if (match?.time === "SUSPENSO")
       time = match?.time?.replace("SUSPENSO", "SUSP");
     else if (match?.time === "ADIADO")
       time = match?.time?.replace("ADIADO", "CANC");
     else if (match?.time === "ATRASADO")
-      time = match?.time?.replace("ATRASADO", "ATRA");
+      time = match?.time?.replace("ATRASADO", i18n.t("Atrasado"));
     else if (match?.time === "INTERROMPIDO")
       time = match?.time?.replace("INTERROMPIDO", "SUSP");
     else if (match?.time === "PÊNALTIS")

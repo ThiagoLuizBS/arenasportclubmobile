@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { VStack, Input, Icon, Flex, Image } from "native-base";
 import { useNavigation } from "@react-navigation/native";
@@ -6,11 +6,18 @@ import logo from "../../assets/logo1.png";
 import { SearchContext } from "../../contexts/SearchProvider";
 import { useWindowDimensions } from "react-native";
 import i18n from "../../languages/I18n";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 export default function Header() {
+  const authContext = useContext(AuthContext);
   const { navigate } = useNavigation();
   const context = useContext(SearchContext);
   const { width } = useWindowDimensions();
+  const [update, setUpdate] = useState(false);
+
+  useEffect(() => {
+    setUpdate((prev) => !prev);
+  }, [authContext?.language]);
 
   const handleSearch = (e: string) => {
     context?.handleSearchField(e);
@@ -65,16 +72,6 @@ export default function Header() {
                 as={<MaterialIcons name="search" />}
               />
             }
-            // InputRightElement={
-            //   <Icon
-            //     m="2"
-            //     mr="3"
-            //     size="6"
-            //     _dark={{ color: "orange.50" }}
-            //     _light={{ color: "orange.100" }}
-            //     as={<MaterialIcons name="mic" />}
-            //   />
-            // }
           />
         </VStack>
       </VStack>
@@ -82,7 +79,7 @@ export default function Header() {
         <Icon
           onPress={() => navigate("Settings")}
           as={<Ionicons name="settings" />}
-          _dark={{ color: "blueGray.500" }}
+          _dark={{ color: "orange.50" }}
           _light={{ color: "emerald.700" }}
           size="10"
         />

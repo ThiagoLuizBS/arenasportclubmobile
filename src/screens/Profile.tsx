@@ -336,7 +336,11 @@ export default function Profile() {
                     mx={2}
                   >
                     <Image
-                      source={{ uri: championship.imgChampionship }}
+                      source={{
+                        uri: championship?.imgChampionship
+                          ? championship?.imgChampionship
+                          : championship?.img,
+                      }}
                       alt={championship.name}
                       size="10"
                     />

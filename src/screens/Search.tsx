@@ -94,7 +94,7 @@ export default function Search() {
         </Pressable>
         {warning && (
           <Text fontWeight="semibold" fontSize={width > 700 ? 24 : 16}>
-            Nada foi encontrado, digite mais caracteres
+            {i18n.t("PesquisaVazia")}
           </Text>
         )}
       </HStack>

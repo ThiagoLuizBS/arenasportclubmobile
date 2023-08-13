@@ -1,3 +1,4 @@
+import { useCallback, useContext, useState } from "react";
 import {
   Box,
   Center,
@@ -20,7 +21,6 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { useCallback, useContext, useState } from "react";
 import { RouteContext } from "../contexts/RouteProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthProvider";
@@ -33,15 +33,18 @@ type FormDataProps = {
   password: string;
 };
 
-const signInSchema = yup.object({
-  email: yup.string().required("Informe o e-mail").email("E-mail incorreto"), // {i18n.t("InformeEmail")}  {i18n.t("EmailIncorreto")}
-  password: yup
-    .string()
-    .required("Informe a senha") // {i18n.t("InformeSenha")}
-    .min(8, "A senha deve conter pelo menos 8 dígitos"), // {i18n.t("RequisicaoSenha")}
-});
-
 export default function SignIn() {
+  const signInSchema = yup.object({
+    email: yup
+      .string()
+      .required(i18n.t("InformeEmail"))
+      .email(i18n.t("EmailIncorreto")),
+    password: yup
+      .string()
+      .required(i18n.t("InformeSenha"))
+      .min(8, i18n.t("RequisicaoSenha")),
+  });
+
   const { width } = useWindowDimensions();
   const { navigate } = useNavigation();
   const toast = useToast();
@@ -86,7 +89,7 @@ export default function SignIn() {
       })
       .catch((error) => {
         if (error.response) {
-          setServerErrorMessage("Email ou senha incorretos."); // // {i18n.t("EmailSenhaIncorreto")}
+          setServerErrorMessage(i18n.t("EmailSenhaIncorreto")); // // {i18n.t("EmailSenhaIncorreto")}
         }
       });
   }

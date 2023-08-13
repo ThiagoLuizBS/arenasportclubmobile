@@ -34,23 +34,26 @@ type FormDataProps = {
   password_confirm: string;
 };
 
-const signUpSchema = yup.object({
-  name: yup
-    .string()
-    .required("Informe o nome")
-    .min(4, "Tem que ter pelo menos 4 dígitos"),
-  email: yup.string().required("Informe o e-mail").email("E-mail inválido"),
-  password: yup
-    .string()
-    .required("Informe a senha")
-    .min(8, "A senha deve conter pelo menos 8 dígitos"),
-  password_confirm: yup
-    .string()
-    .required("Informe a confirmação de senha")
-    .oneOf([yup.ref("password"), ""], "A confirmação de senha não é igual"),
-});
-
 export default function SignUp() {
+  const signUpSchema = yup.object({
+    name: yup
+      .string()
+      .required(i18n.t("InformeNome"))
+      .min(4, i18n.t("NomeIncorreto")),
+    email: yup
+      .string()
+      .required(i18n.t("InformeEmail"))
+      .email(i18n.t("EmailIncorreto")),
+    password: yup
+      .string()
+      .required(i18n.t("InformeSenha"))
+      .min(8, i18n.t("RequisicaoSenha")),
+    password_confirm: yup
+      .string()
+      .required(i18n.t("InformeConfirmacaoSenha"))
+      .oneOf([yup.ref("password"), ""], i18n.t("ConfirmacaoSenha")),
+  });
+
   const { navigate, goBack } = useNavigation();
   const { width } = useWindowDimensions();
   const toast = useToast();

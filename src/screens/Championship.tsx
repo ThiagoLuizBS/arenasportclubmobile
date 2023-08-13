@@ -1,21 +1,6 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
-import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
-import {
-  Box,
-  Text,
-  Button,
-  Center,
-  Flex,
-  View,
-  HStack,
-  VStack,
-  Image,
-  Icon,
-} from "native-base";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { Box, Text, HStack, VStack, Image, Icon } from "native-base";
 import ChampionshipService from "../services/championship";
 import { RouteContext } from "../contexts/RouteProvider";
 import { ScrollView, useWindowDimensions } from "react-native";
@@ -32,7 +17,6 @@ type paramsProps = {
 
 export default function Championship() {
   const { width } = useWindowDimensions();
-  const { navigate } = useNavigation();
   const route = useRoute();
   const { championshipId } = route.params as paramsProps;
   const context = useContext(RouteContext);
