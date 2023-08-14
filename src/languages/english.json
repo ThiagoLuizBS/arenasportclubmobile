@@ -55,5 +55,8 @@
   "Escalacoes": "Lineups",
   "TimesFavoritos": "Favorites Teams",
   "CampeonatosFavoritos": "Favorites Championships",
-  "EscolhaTipo": "Select type"
+  "EscolhaTipo": "Select type",
+  "Jogador": "Player",
+  "Gols": "Goals",
+  "Assistências": "Assists"
 }
