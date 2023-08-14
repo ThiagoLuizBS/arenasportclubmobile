@@ -79,7 +79,7 @@ export default function Team() {
                 m="auto"
               />
             </VStack>
-            <VStack w="70%" alignItems="center">
+            <VStack w="70%" justifyContent="center" alignItems="center">
               <Text
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}

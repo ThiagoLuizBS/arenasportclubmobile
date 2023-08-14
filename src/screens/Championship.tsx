@@ -94,7 +94,7 @@ export default function Championship() {
         {loading ? (
           <SkeletonChampionship />
         ) : (
-          <HStack justifyContent="space-between" alignItems="center" w="100%">
+          <HStack justifyContent="center" alignItems="center" w="100%">
             <VStack w="20%">
               <Image
                 style={{ resizeMode: "contain" }}
@@ -104,11 +104,10 @@ export default function Championship() {
                 m="auto"
               />
             </VStack>
-            <VStack w="70%">
+            <VStack w="70%" justifyContent="center" alignItems="center">
               <Text
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "orange.100" }}
-                marginY={3}
                 fontSize={width > 700 ? 48 : 24}
                 fontWeight="bold"
                 overflow="hidden"

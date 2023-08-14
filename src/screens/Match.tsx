@@ -105,7 +105,7 @@ export default function Match() {
           alignItems="center"
         >
           <Text
-            fontSize={16}
+            fontSize={width > 700 ? 24 : 16}
             overflow="hidden"
             ellipsizeMode="tail"
             fontWeight="bold"

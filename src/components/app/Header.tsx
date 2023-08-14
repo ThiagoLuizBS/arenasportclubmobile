@@ -57,7 +57,7 @@ export default function Header() {
             borderWidth="0"
             py="3"
             px="1"
-            fontSize={width > 700 ? 24 : 14}
+            fontSize={width > 700 ? 20 : 14}
             _dark={{ color: "orange.50", placeholderTextColor: "orange.50" }}
             _light={{
               color: "orange.100",

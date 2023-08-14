@@ -9,12 +9,14 @@ import {
   Icon,
   Pressable,
 } from "native-base";
+import { useWindowDimensions } from "react-native";
 
 type MatchProps = {
   match: match;
 };
 
 export default function MatchComp({ match }: MatchProps) {
+  const { width } = useWindowDimensions();
   const { navigate } = useNavigation();
   return (
     <>
@@ -56,7 +58,7 @@ export default function MatchComp({ match }: MatchProps) {
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                fontSize={18}
+                fontSize={width > 700 ? 32 : 18}
                 fontWeight="bold"
                 mt={2}
                 overflow="hidden"
@@ -74,7 +76,7 @@ export default function MatchComp({ match }: MatchProps) {
             <Text
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
-              fontSize={32}
+              fontSize={width > 700 ? 48 : 32}
               fontWeight="bold"
             >
               {match.scoreHome} - {match.scoreAway}
@@ -104,7 +106,7 @@ export default function MatchComp({ match }: MatchProps) {
               <Text
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                fontSize={18}
+                fontSize={width > 700 ? 32 : 18}
                 fontWeight="bold"
                 mt={2}
                 overflow="hidden"
@@ -127,7 +129,7 @@ export default function MatchComp({ match }: MatchProps) {
             <Text
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
-              fontSize={20}
+              fontSize={width > 700 ? 40 : 20}
               fontWeight="bold"
             >
               {match.status}
@@ -137,7 +139,7 @@ export default function MatchComp({ match }: MatchProps) {
             <Text
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
-              fontSize={16}
+              fontSize={width > 700 ? 24 : 16}
             >
               {match.schedule}
             </Text>
@@ -146,7 +148,7 @@ export default function MatchComp({ match }: MatchProps) {
             <Text
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
-              fontSize={16}
+              fontSize={width > 700 ? 24 : 16}
               overflow="hidden"
               ellipsizeMode="tail"
             >

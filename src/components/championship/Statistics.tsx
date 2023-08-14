@@ -25,53 +25,53 @@ export default function Statistics({ championship, width }: StatisticsProps) {
               >
                 <Box alignItems="center">
                   <Text
-                    fontSize={20}
+                    fontSize={width > 700 ? 40 : 20}
                     fontWeight="bold"
                     _dark={{ color: "orange.50" }}
                     _light={{ color: "orange.100" }}
                   >
                     {item.name}
                   </Text>
-                  <Box py={2} px={4} justifyContent="center" w="100%">
-                    <HStack space={2} px={4} justifyContent="center" w="100%">
-                      <Text minW="8%"></Text>
+                  <Box py={2} justifyContent="center" w="100%">
+                    <HStack px={4} justifyContent="center" w="100%">
+                      <Text w="8%"></Text>
                       <Text
-                        minW="30%"
+                        w="42%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         {i18n.t("Jogador")}
                       </Text>
                       <Text
-                        minW="30%"
+                        w="42%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         {i18n.t("EquipeTabela")}
                       </Text>
                       {item?.name === "Artilheiros" ? (
                         <Text
-                          minW="8%"
+                          w="8%"
                           _dark={{ color: "orange.50" }}
                           _light={{ color: "orange.100" }}
                           fontWeight="semibold"
-                          fontSize="md"
+                          fontSize={width > 700 ? 24 : 16}
                         >
-                          {i18n.t("Gols")}
+                          G
                         </Text>
                       ) : (
                         <Text
-                          minW="8%"
+                          w="8%"
                           _dark={{ color: "orange.50" }}
                           _light={{ color: "orange.100" }}
                           fontWeight="semibold"
-                          fontSize="md"
+                          fontSize={width > 700 ? 24 : 16}
                         >
-                          {i18n.t("Assistências")}
+                          A
                         </Text>
                       )}
                     </HStack>
@@ -90,10 +90,9 @@ export default function Statistics({ championship, width }: StatisticsProps) {
                         justifyContent="center"
                         w="100%"
                       >
-                        <HStack space={2}>
+                        <HStack>
                           <Text
-                            minW="8%"
-                            maxW="8%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"
@@ -101,8 +100,7 @@ export default function Statistics({ championship, width }: StatisticsProps) {
                             {item.num}
                           </Text>
                           <Text
-                            minW="40%"
-                            maxW="40%"
+                            w="42%"
                             overflow="hidden"
                             ellipsizeMode="tail"
                             numberOfLines={1}
@@ -113,8 +111,10 @@ export default function Statistics({ championship, width }: StatisticsProps) {
                             {item.player}
                           </Text>
                           <Text
-                            minW="30%"
-                            maxW="30%"
+                            w="42%"
+                            overflow="hidden"
+                            ellipsizeMode="tail"
+                            numberOfLines={1}
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"
@@ -122,8 +122,7 @@ export default function Statistics({ championship, width }: StatisticsProps) {
                             {item.team}
                           </Text>
                           <Text
-                            minW="10%"
-                            maxW="10%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"

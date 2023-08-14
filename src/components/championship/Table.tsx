@@ -27,7 +27,7 @@ export default function Table({ championship, width }: TableProps) {
                   {item?.group === "" ? (
                     item?.phase !== "" ? (
                       <Text
-                        fontSize={20}
+                        fontSize={width > 700 ? 40 : 20}
                         fontWeight="bold"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
@@ -36,7 +36,7 @@ export default function Table({ championship, width }: TableProps) {
                       </Text>
                     ) : (
                       <Text
-                        fontSize={20}
+                        fontSize={width > 700 ? 40 : 20}
                         fontWeight="bold"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
@@ -46,20 +46,8 @@ export default function Table({ championship, width }: TableProps) {
                     )
                   ) : (
                     <>
-                      {item.group === "Grupo A" ? (
-                        <Text
-                          fontSize={20}
-                          fontWeight="bold"
-                          _dark={{ color: "orange.50" }}
-                          _light={{ color: "orange.100" }}
-                        >
-                          {item.phase}
-                        </Text>
-                      ) : (
-                        <></>
-                      )}
                       <Text
-                        fontSize={20}
+                        fontSize={width > 700 ? 40 : 20}
                         fontWeight="bold"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
@@ -68,69 +56,69 @@ export default function Table({ championship, width }: TableProps) {
                       </Text>
                     </>
                   )}
-                  <Box py={2} px={4} justifyContent="center" w="100%">
-                    <HStack space={2} px={4} justifyContent="center" w="100%">
-                      <Text minW="8%"></Text>
+                  <Box py={2} justifyContent="center" w="100%">
+                    <HStack px={4} justifyContent="center" w="100%">
+                      <Text w="8%"></Text>
                       <Text
-                        minW="30%"
+                        w="44%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         {i18n.t("EquipeTabela")}
                       </Text>
                       <Text
-                        minW="8%"
+                        w="8%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         P
                       </Text>
                       <Text
-                        minW="8%"
+                        w="8%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         J
                       </Text>
                       <Text
-                        minW="8%"
+                        w="8%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         V
                       </Text>
                       <Text
-                        minW="8%"
+                        w="8%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         E
                       </Text>
                       <Text
-                        minW="8%"
+                        w="8%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         D
                       </Text>
                       <Text
-                        minW="8%"
+                        w="8%"
                         _dark={{ color: "orange.50" }}
                         _light={{ color: "orange.100" }}
                         fontWeight="semibold"
-                        fontSize="md"
+                        fontSize={width > 700 ? 24 : 16}
                       >
                         SG
                       </Text>
@@ -150,10 +138,9 @@ export default function Table({ championship, width }: TableProps) {
                         justifyContent="center"
                         w="100%"
                       >
-                        <HStack space={2}>
+                        <HStack>
                           <Text
-                            minW="8%"
-                            maxW="8%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"
@@ -161,8 +148,7 @@ export default function Table({ championship, width }: TableProps) {
                             {item.num}
                           </Text>
                           <Text
-                            minW="30%"
-                            maxW="30%"
+                            w="44%"
                             overflow="hidden"
                             ellipsizeMode="tail"
                             numberOfLines={1}
@@ -173,8 +159,7 @@ export default function Table({ championship, width }: TableProps) {
                             {item.team}
                           </Text>
                           <Text
-                            minW="8%"
-                            maxW="8%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"
@@ -182,8 +167,7 @@ export default function Table({ championship, width }: TableProps) {
                             {item.points}
                           </Text>
                           <Text
-                            minW="8%"
-                            maxW="8%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"
@@ -191,8 +175,7 @@ export default function Table({ championship, width }: TableProps) {
                             {item.games}
                           </Text>
                           <Text
-                            minW="8%"
-                            maxW="8%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"
@@ -200,8 +183,7 @@ export default function Table({ championship, width }: TableProps) {
                             {item.victorys}
                           </Text>
                           <Text
-                            minW="8%"
-                            maxW="8%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"
@@ -209,8 +191,7 @@ export default function Table({ championship, width }: TableProps) {
                             {item.draws}
                           </Text>
                           <Text
-                            minW="8%"
-                            maxW="8%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"
@@ -218,8 +199,7 @@ export default function Table({ championship, width }: TableProps) {
                             {item.loses}
                           </Text>
                           <Text
-                            minW="8%"
-                            maxW="8%"
+                            w="8%"
                             _dark={{ color: "orange.50" }}
                             _light={{ color: "orange.100" }}
                             fontWeight="semibold"

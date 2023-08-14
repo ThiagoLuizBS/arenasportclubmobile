@@ -13,9 +13,13 @@ type FavoritesProviderType = {
   addFavoriteTeam: (team: teamFavorite | team) => void;
   removeFavoriteTeam: (team: teamFavorite | team) => void;
   isFavoriteTeam: (team: teamFavorite | team) => boolean;
-  addFavoriteChamp: (championship: championshipFavorite) => void;
-  removeFavoriteChamp: (championship: championshipFavorite) => void;
-  isFavoriteChamp: (championship: championshipFavorite) => boolean;
+  addFavoriteChamp: (championship: championshipFavorite | championship) => void;
+  removeFavoriteChamp: (
+    championship: championshipFavorite | championship
+  ) => void;
+  isFavoriteChamp: (
+    championship: championshipFavorite | championship
+  ) => boolean;
 };
 
 const FavoritesContext = createContext<null | FavoritesProviderType>(null);
@@ -39,11 +43,13 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
         });
       } else {
         const teams = await AsyncStorage.getItem("@arena:favoritesTeams");
-        if (teams) setFavoritesTeams(JSON.parse(teams));
         const championships = await AsyncStorage.getItem(
           "@arena:favoritesChampionships"
         );
-        if (championships) setFavoritesChampionships(JSON.parse(championships));
+        if (teams && championships) {
+          setFavoritesTeams(JSON.parse(teams));
+          setFavoritesChampionships(JSON.parse(championships));
+        }
       }
     };
     getFavorites();
@@ -57,17 +63,18 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
         id &&
         favoritesTeams[0]?.name !== "." &&
         favoritesChampionships[0]?.name !== "."
-      ) {
+      )
         UserService.setFavorites(
           JSON.parse(id),
           favoritesTeams,
           favoritesChampionships
         );
-      }
-      await AsyncStorage.setItem(
-        "@arena:favoritesTeams",
-        JSON.stringify(favoritesTeams)
-      );
+
+      if (favoritesTeams[0].name !== ".")
+        await AsyncStorage.setItem(
+          "@arena:favoritesTeams",
+          JSON.stringify(favoritesTeams)
+        );
     };
     setFavoritesTeams();
   }, [favoritesTeams]);
@@ -80,17 +87,18 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
         id &&
         favoritesTeams[0]?.name !== "." &&
         favoritesChampionships[0]?.name !== "."
-      ) {
+      )
         UserService.setFavorites(
           JSON.parse(id),
           favoritesTeams,
           favoritesChampionships
         );
-      }
-      await AsyncStorage.setItem(
-        "@arena:favoritesChampionships",
-        JSON.stringify(favoritesChampionships)
-      );
+
+      if (favoritesChampionships[0].name !== ".")
+        await AsyncStorage.setItem(
+          "@arena:favoritesChampionships",
+          JSON.stringify(favoritesChampionships)
+        );
     };
     setFavoritesChampionships();
   }, [favoritesChampionships]);
@@ -114,7 +122,9 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
   const isFavoriteTeam = (team: teamFavorite | team) =>
     favoritesTeams?.some((favoriteTeam) => team.idTeam === favoriteTeam.idTeam);
 
-  const addFavoriteChamp = (championship: championshipFavorite) => {
+  const addFavoriteChamp = (
+    championship: championshipFavorite | championship
+  ) => {
     if (championship) {
       let { idChampionship, name, img, imgChampionship } = championship;
       setFavoritesChampionships((favorite) => [
@@ -124,7 +134,9 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const removeFavoriteChamp = (championship: championshipFavorite) => {
+  const removeFavoriteChamp = (
+    championship: championshipFavorite | championship
+  ) => {
     if (championship)
       setFavoritesChampionships(
         favoritesChampionships.filter(
@@ -133,7 +145,7 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
       );
   };
 
-  const isFavoriteChamp = (championship: championshipFavorite) =>
+  const isFavoriteChamp = (championship: championshipFavorite | championship) =>
     favoritesChampionships?.some(
       (camp) => camp.idChampionship === championship.idChampionship
     );
