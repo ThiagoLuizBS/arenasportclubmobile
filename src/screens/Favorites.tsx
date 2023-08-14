@@ -64,6 +64,7 @@ export default function Favorites() {
                   >
                     <VStack w="20%">
                       <Image
+                        style={{ resizeMode: "contain" }}
                         source={{ uri: team?.img }}
                         alt={team?.name}
                         size="10"
@@ -135,6 +136,7 @@ export default function Favorites() {
                     >
                       <VStack w="20%">
                         <Image
+                          style={{ resizeMode: "contain" }}
                           source={{
                             uri: championship?.imgChampionship
                               ? championship?.imgChampionship

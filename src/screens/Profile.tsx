@@ -313,6 +313,7 @@ export default function Profile() {
                     alignItems="center"
                   >
                     <Image
+                      style={{ resizeMode: "contain" }}
                       source={{ uri: team.img }}
                       alt={team.name}
                       size="10"
@@ -336,6 +337,7 @@ export default function Profile() {
                     mx={2}
                   >
                     <Image
+                      style={{ resizeMode: "contain" }}
                       source={{
                         uri: championship?.imgChampionship
                           ? championship?.imgChampionship

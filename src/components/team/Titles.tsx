@@ -31,6 +31,7 @@ export default function Titles({ team, width }: TitlesProps) {
               {title.year}
             </Text>
             <Image
+              style={{ resizeMode: "contain" }}
               source={{ uri: title?.logo }}
               alt={title?.name}
               size="8"

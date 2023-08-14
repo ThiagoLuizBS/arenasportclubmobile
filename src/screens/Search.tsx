@@ -124,6 +124,7 @@ export default function Search() {
               <HStack justifyContent="center" alignItems="center">
                 <VStack w="20%">
                   <Image
+                    style={{ resizeMode: "contain" }}
                     source={{ uri: team.img }}
                     alt={`${team.img}`}
                     size={10}
@@ -204,6 +205,7 @@ export default function Search() {
               <HStack justifyContent="center" alignItems="center">
                 <VStack w="20%">
                   <Image
+                    style={{ resizeMode: "contain" }}
                     source={{
                       uri:
                         champ.imgChampionship !== ""

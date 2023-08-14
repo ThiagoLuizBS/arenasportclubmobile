@@ -37,7 +37,7 @@ export default function SkeletonHome() {
           <Skeleton
             _dark={{ endColor: "blueGray.500" }}
             _light={{ endColor: "emerald.200" }}
-            size="5"
+            size="10"
             rounded="full"
           />
         </HStack>
@@ -58,7 +58,7 @@ export default function SkeletonHome() {
           <Skeleton
             _dark={{ endColor: "blueGray.500" }}
             _light={{ endColor: "emerald.200" }}
-            size="5"
+            size="10"
             rounded="full"
           />
         </HStack>
@@ -87,7 +87,7 @@ export default function SkeletonHome() {
           <Skeleton
             _dark={{ endColor: "blueGray.500" }}
             _light={{ endColor: "emerald.200" }}
-            size="5"
+            size="10"
             rounded="full"
           />
         </HStack>
@@ -108,7 +108,7 @@ export default function SkeletonHome() {
           <Skeleton
             _dark={{ endColor: "blueGray.500" }}
             _light={{ endColor: "emerald.200" }}
-            size="5"
+            size="10"
             rounded="full"
           />
         </HStack>
@@ -137,7 +137,7 @@ export default function SkeletonHome() {
           <Skeleton
             _dark={{ endColor: "blueGray.500" }}
             _light={{ endColor: "emerald.200" }}
-            size="5"
+            size="10"
             rounded="full"
           />
         </HStack>
@@ -158,7 +158,7 @@ export default function SkeletonHome() {
           <Skeleton
             _dark={{ endColor: "blueGray.500" }}
             _light={{ endColor: "emerald.200" }}
-            size="5"
+            size="10"
             rounded="full"
           />
         </HStack>

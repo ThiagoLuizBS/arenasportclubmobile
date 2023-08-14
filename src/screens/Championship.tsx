@@ -10,6 +10,8 @@ import SelectChampionship from "../components/championship/SelectChampionship";
 import Table from "../components/championship/Table";
 import Results from "../components/championship/Results";
 import Calendar from "../components/championship/Calendar";
+import SkeletonChampionship from "../components/championship/SkeletonChampionship";
+import Statistics from "../components/championship/Statistics";
 
 type paramsProps = {
   championshipId: string;
@@ -21,7 +23,7 @@ export default function Championship() {
   const { championshipId } = route.params as paramsProps;
   const context = useContext(RouteContext);
   const favoritesContext = useContext(FavoritesContext);
-  const [type, setType] = useState("results");
+  const [type, setType] = useState("table");
   const [championship, setChampionship] = useState<championship>({
     _id: ".",
     idChampionship: ".",
@@ -76,6 +78,7 @@ export default function Championship() {
       _light={{ bg: "success.100" }}
       flex={1}
       px={2}
+      py={2}
       w="100%"
       alignItems="center"
       justifyContent="center"
@@ -88,69 +91,74 @@ export default function Championship() {
         shadow={2}
         rounded="xl"
       >
-        <HStack justifyContent="space-between" alignItems="center" w="100%">
-          <VStack w="20%">
-            <Image
-              source={{ uri: championship?.img }}
-              alt={`${championship?.name}`}
-              size="16"
-              m="auto"
-            />
-          </VStack>
-          <VStack w="70%">
-            <Text
-              _dark={{ color: "orange.50" }}
-              _light={{ color: "orange.100" }}
-              marginY={3}
-              fontSize={width > 700 ? 48 : 24}
-              fontWeight="bold"
-              overflow="hidden"
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
-              {championship?.name}
-            </Text>
-          </VStack>
-          <VStack w="10%" justifyContent="center">
-            <Icon
-              size="8"
-              _dark={{ color: "orange.300" }}
-              _light={{ color: "orange.500" }}
-              as={
-                <Ionicons
-                  name={
-                    favoritesContext?.isFavoriteChamp(championship)
-                      ? "star"
-                      : "star-outline"
-                  }
-                  onPress={() => {
-                    favoritesContext?.isFavoriteChamp(championship)
-                      ? favoritesContext?.removeFavoriteChamp(championship)
-                      : favoritesContext?.addFavoriteChamp(championship);
-                  }}
-                />
-              }
-            />
-          </VStack>
-        </HStack>
+        {loading ? (
+          <SkeletonChampionship />
+        ) : (
+          <HStack justifyContent="space-between" alignItems="center" w="100%">
+            <VStack w="20%">
+              <Image
+                style={{ resizeMode: "contain" }}
+                source={{ uri: championship?.img }}
+                alt={`${championship?.name}`}
+                size="16"
+                m="auto"
+              />
+            </VStack>
+            <VStack w="70%">
+              <Text
+                _dark={{ color: "orange.50" }}
+                _light={{ color: "orange.100" }}
+                marginY={3}
+                fontSize={width > 700 ? 48 : 24}
+                fontWeight="bold"
+                overflow="hidden"
+                numberOfLines={2}
+                ellipsizeMode="tail"
+              >
+                {championship?.name}
+              </Text>
+            </VStack>
+            <VStack w="10%" justifyContent="center">
+              <Icon
+                size="8"
+                _dark={{ color: "orange.300" }}
+                _light={{ color: "orange.500" }}
+                as={
+                  <Ionicons
+                    name={
+                      favoritesContext?.isFavoriteChamp(championship)
+                        ? "star"
+                        : "star-outline"
+                    }
+                    onPress={() => {
+                      favoritesContext?.isFavoriteChamp(championship)
+                        ? favoritesContext?.removeFavoriteChamp(championship)
+                        : favoritesContext?.addFavoriteChamp(championship);
+                    }}
+                  />
+                }
+              />
+            </VStack>
+          </HStack>
+        )}
       </Box>
       <SelectChampionship type={type} setType={setType} />
-
-      {type === "results" ? (
-        <ScrollView>
-          <Results championshipId={championshipId} />
-        </ScrollView>
-      ) : type === "calendar" ? (
-        <ScrollView>
-          <Calendar championshipId={championshipId} />
-        </ScrollView>
-      ) : type === "table" ? (
-        <Box flex={1}>
-          <Table championship={championship} width={width} />
-        </Box>
-      ) : (
-        <Box flex={1}></Box>
-      )}
+      <Box flex={1}>
+        {championship.name !== "." &&
+          (type === "table" ? (
+            <Table championship={championship} width={width} />
+          ) : type === "statistics" ? (
+            <Statistics championship={championship} width={width} />
+          ) : type === "results" ? (
+            <ScrollView>
+              <Results championshipId={championshipId} />
+            </ScrollView>
+          ) : (
+            <ScrollView>
+              <Calendar championshipId={championshipId} />
+            </ScrollView>
+          ))}
+      </Box>
     </Box>
   );
 }

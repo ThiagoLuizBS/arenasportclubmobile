@@ -79,20 +79,41 @@ export default function Home() {
   );
 
   useEffect(() => {
-    if (favoritesContext?.favoritesChampionships)
+    if (favoritesContext?.favoritesChampionships && authContext?.authenticated)
+      MatchService.getMatchsByDate(
+        dateFilter,
+        favoritesContext?.favoritesChampionships
+      ).then((response) => {
+        setCurrentItems(itemsPerPage);
+        setMatchsData(response.data);
+        setLoading(false);
+      });
+    else {
       MatchService.getMatchsByDate(dateFilter, []).then((response) => {
         setCurrentItems(itemsPerPage);
         setMatchsData(response.data);
         setLoading(false);
       });
+    }
   }, [dateFilter, authContext?.language]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (favoritesContext?.favoritesChampionships)
+      if (
+        favoritesContext?.favoritesChampionships &&
+        authContext?.authenticated
+      )
+        MatchService.getMatchsByDate(
+          dateFilter,
+          favoritesContext?.favoritesChampionships
+        ).then((response) => {
+          setMatchsData(response.data);
+        });
+      else {
         MatchService.getMatchsByDate(dateFilter, []).then((response) => {
           setMatchsData(response.data);
         });
+      }
     }, 30000);
     return () => clearTimeout(timer);
   });
@@ -158,6 +179,7 @@ export default function Home() {
       _dark={{ bg: "blueGray.900" }}
       _light={{ bg: "success.100" }}
       flex={1}
+      px={2}
       w="100%"
     >
       <SelectHome

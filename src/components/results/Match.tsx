@@ -63,6 +63,7 @@ export default function Match({ match }: MatchProps) {
           <HStack h="50%">
             <VStack h="100%" w="20%">
               <Image
+                style={{ resizeMode: "contain" }}
                 source={{ uri: match.teams?.homeImg }}
                 alt={`${match.teams?.homeName}`}
                 size="30"
@@ -82,6 +83,7 @@ export default function Match({ match }: MatchProps) {
           <HStack h="50%">
             <VStack h="100%" w="20%">
               <Image
+                style={{ resizeMode: "contain" }}
                 source={{ uri: match.teams?.awayImg }}
                 alt={`${match.teams?.awayName}`}
                 size="30"

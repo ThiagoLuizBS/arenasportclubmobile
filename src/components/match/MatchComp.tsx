@@ -1,16 +1,26 @@
 import { Ionicons } from "@expo/vector-icons";
-import { HStack, VStack, Text, Image, Divider, Icon } from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import {
+  HStack,
+  VStack,
+  Text,
+  Image,
+  Divider,
+  Icon,
+  Pressable,
+} from "native-base";
 
 type MatchProps = {
   match: match;
 };
 
 export default function MatchComp({ match }: MatchProps) {
+  const { navigate } = useNavigation();
   return (
     <>
       <HStack
         w="100%"
-        h={56}
+        h={64}
         _dark={{ bg: "blueGray.900" }}
         _light={{ bg: "success.100" }}
         px={2}
@@ -25,28 +35,38 @@ export default function MatchComp({ match }: MatchProps) {
           justifyContent="center"
           alignItems="center"
         >
-          <HStack w="100%" justifyContent="center" alignItems="center">
-            <Image
-              source={{ uri: match.teams?.homeImg }}
-              alt={`${match.teams?.homeName}`}
-              size="24"
-              m="auto"
-            />
-          </HStack>
-          <HStack w="100%" justifyContent="center" alignItems="center">
-            <Text
-              _dark={{ color: "white" }}
-              _light={{ color: "black" }}
-              fontSize={18}
-              fontWeight="bold"
-              mt={2}
-              overflow="hidden"
-              ellipsizeMode="tail"
-              numberOfLines={2}
-            >
-              {match.teams?.homeName}
-            </Text>
-          </HStack>
+          <Pressable
+            w="100%"
+            onPress={() =>
+              navigate("Team", {
+                teamId: match.teams.homeId,
+              })
+            }
+          >
+            <HStack w="100%" justifyContent="center" alignItems="center">
+              <Image
+                style={{ resizeMode: "contain" }}
+                source={{ uri: match.teams?.homeImg }}
+                alt={`${match.teams?.homeName}`}
+                size="24"
+                m="auto"
+              />
+            </HStack>
+            <HStack w="100%" justifyContent="center" alignItems="center">
+              <Text
+                _dark={{ color: "white" }}
+                _light={{ color: "black" }}
+                fontSize={18}
+                fontWeight="bold"
+                mt={2}
+                overflow="hidden"
+                ellipsizeMode="tail"
+                numberOfLines={2}
+              >
+                {match.teams?.homeName}
+              </Text>
+            </HStack>
+          </Pressable>
         </VStack>
 
         <VStack w="20%" justifyContent="center" alignItems="center">
@@ -63,28 +83,38 @@ export default function MatchComp({ match }: MatchProps) {
         </VStack>
 
         <VStack w="40%" flexDirection="row" flexWrap="wrap">
-          <HStack w="100%">
-            <Image
-              source={{ uri: match.teams?.awayImg }}
-              alt={`${match.teams?.awayName}`}
-              size="24"
-              m="auto"
-            />
-          </HStack>
-          <HStack w="100%" justifyContent="center">
-            <Text
-              _dark={{ color: "white" }}
-              _light={{ color: "black" }}
-              fontSize={18}
-              fontWeight="bold"
-              mt={2}
-              overflow="hidden"
-              ellipsizeMode="tail"
-              numberOfLines={2}
-            >
-              {match.teams?.awayName}
-            </Text>
-          </HStack>
+          <Pressable
+            w="100%"
+            onPress={() =>
+              navigate("Team", {
+                teamId: match.teams.awayId,
+              })
+            }
+          >
+            <HStack w="100%" justifyContent="center" alignItems="center">
+              <Image
+                style={{ resizeMode: "contain" }}
+                source={{ uri: match.teams?.awayImg }}
+                alt={`${match.teams?.awayName}`}
+                size="24"
+                m="auto"
+              />
+            </HStack>
+            <HStack w="100%" justifyContent="center" alignItems="center">
+              <Text
+                _dark={{ color: "white" }}
+                _light={{ color: "black" }}
+                fontSize={18}
+                fontWeight="bold"
+                mt={2}
+                overflow="hidden"
+                ellipsizeMode="tail"
+                numberOfLines={2}
+              >
+                {match.teams?.awayName}
+              </Text>
+            </HStack>
+          </Pressable>
         </VStack>
         <HStack
           w="100%"

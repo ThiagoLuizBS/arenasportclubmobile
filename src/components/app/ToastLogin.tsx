@@ -33,7 +33,7 @@ export default function ToastLogin({
               flexShrink={1}
               color="lightText"
             >
-              {type} realizado
+              {type} {i18n.t("Realizado")}
             </Text>
           </HStack>
         </HStack>

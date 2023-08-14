@@ -1,4 +1,4 @@
-import { FontAwesome, Fontisto, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import {
   HStack,
   useColorMode,
@@ -176,8 +176,8 @@ export default function SelectTeam({ type, setType }: SelectTeamProps) {
           justifyContent="center"
           alignItems="center"
         >
-          <Fontisto
-            name="date"
+          <Ionicons
+            name="calendar"
             size={32}
             color={
               colorMode === "light"

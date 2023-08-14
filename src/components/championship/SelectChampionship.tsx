@@ -1,5 +1,4 @@
 import {
-  Fontisto,
   Foundation,
   Ionicons,
   MaterialCommunityIcons,
@@ -42,96 +41,6 @@ export default function SelectChampionship({
         w="25%"
         justifyContent="center"
         alignItems="center"
-        onPress={() => setType("results")}
-      >
-        <VStack
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Ionicons
-            name="football-sharp"
-            size={32}
-            color={
-              colorMode === "light"
-                ? type === "results"
-                  ? "#047857"
-                  : "black"
-                : type === "results"
-                ? "#fff7ed"
-                : "#334155"
-            }
-          />
-          <Text
-            _dark={{ color: "orange.50" }}
-            _light={{ color: "black" }}
-            fontSize={width > 700 ? 24 : 16}
-            fontWeight="bold"
-          >
-            {i18n.t("Resultados")}
-          </Text>
-        </VStack>
-      </Pressable>
-      <Divider
-        h="60%"
-        m="auto"
-        orientation="vertical"
-        _dark={{
-          bg: "blueGray.700",
-        }}
-        _light={{
-          bg: "emerald.700",
-        }}
-      />
-      <Pressable
-        w="25%"
-        justifyContent="center"
-        alignItems="center"
-        onPress={() => setType("calendar")}
-      >
-        <VStack
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Fontisto
-            name="date"
-            size={32}
-            color={
-              colorMode === "light"
-                ? type === "calendar"
-                  ? "#047857"
-                  : "black"
-                : type === "calendar"
-                ? "#fff7ed"
-                : "#334155"
-            }
-          />
-          <Text
-            _dark={{ color: "orange.50" }}
-            _light={{ color: "black" }}
-            fontSize={width > 700 ? 24 : 16}
-            fontWeight="bold"
-          >
-            {i18n.t("Calendario")}
-          </Text>
-        </VStack>
-      </Pressable>
-      <Divider
-        h="60%"
-        m="auto"
-        orientation="vertical"
-        _dark={{
-          bg: "blueGray.700",
-        }}
-        _light={{
-          bg: "emerald.700",
-        }}
-      />
-      <Pressable
-        w="25%"
-        justifyContent="center"
-        alignItems="center"
         onPress={() => setType("table")}
       >
         <VStack
@@ -162,6 +71,7 @@ export default function SelectChampionship({
           </Text>
         </VStack>
       </Pressable>
+
       <Divider
         h="60%"
         m="auto"
@@ -173,6 +83,7 @@ export default function SelectChampionship({
           bg: "emerald.700",
         }}
       />
+
       <Pressable
         w="25%"
         justifyContent="center"
@@ -204,6 +115,100 @@ export default function SelectChampionship({
             fontWeight="bold"
           >
             {i18n.t("Estatisticas")}
+          </Text>
+        </VStack>
+      </Pressable>
+
+      <Divider
+        h="60%"
+        m="auto"
+        orientation="vertical"
+        _dark={{
+          bg: "blueGray.700",
+        }}
+        _light={{
+          bg: "emerald.700",
+        }}
+      />
+
+      <Pressable
+        w="25%"
+        justifyContent="center"
+        alignItems="center"
+        onPress={() => setType("results")}
+      >
+        <VStack
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Ionicons
+            name="football-sharp"
+            size={32}
+            color={
+              colorMode === "light"
+                ? type === "results"
+                  ? "#047857"
+                  : "black"
+                : type === "results"
+                ? "#fff7ed"
+                : "#334155"
+            }
+          />
+          <Text
+            _dark={{ color: "orange.50" }}
+            _light={{ color: "black" }}
+            fontSize={width > 700 ? 24 : 16}
+            fontWeight="bold"
+          >
+            {i18n.t("Resultados")}
+          </Text>
+        </VStack>
+      </Pressable>
+
+      <Divider
+        h="60%"
+        m="auto"
+        orientation="vertical"
+        _dark={{
+          bg: "blueGray.700",
+        }}
+        _light={{
+          bg: "emerald.700",
+        }}
+      />
+
+      <Pressable
+        w="25%"
+        justifyContent="center"
+        alignItems="center"
+        onPress={() => setType("calendar")}
+      >
+        <VStack
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Ionicons
+            name="calendar"
+            size={32}
+            color={
+              colorMode === "light"
+                ? type === "calendar"
+                  ? "#047857"
+                  : "black"
+                : type === "calendar"
+                ? "#fff7ed"
+                : "#334155"
+            }
+          />
+          <Text
+            _dark={{ color: "orange.50" }}
+            _light={{ color: "black" }}
+            fontSize={width > 700 ? 24 : 16}
+            fontWeight="bold"
+          >
+            {i18n.t("Calendario")}
           </Text>
         </VStack>
       </Pressable>

@@ -7,7 +7,7 @@ import {
   Pressable,
   Divider,
 } from "native-base";
-import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useWindowDimensions } from "react-native";
 import i18n from "../../languages/I18n";
@@ -254,8 +254,8 @@ export default function SelectHome({
         onPress={() => showMode()}
       >
         <VStack>
-          <Fontisto
-            name="date"
+          <Ionicons
+            name="calendar"
             size={32}
             color={colorMode === "light" ? "black" : "#fff7ed"}
           />

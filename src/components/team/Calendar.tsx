@@ -36,6 +36,7 @@ export default function Calendar({ teamId }: CalendarProps) {
     if (date.matchs.length > 0) return true;
     else return false;
   };
+
   return (
     <>
       {loading ? (

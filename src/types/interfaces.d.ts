@@ -99,6 +99,7 @@ export declare global {
 
   export interface match {
     championship: string;
+    idChampionship: string;
     idMatch: string;
     status: string;
     time: string;

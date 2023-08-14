@@ -1,22 +1,23 @@
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import {
   Box,
   Text,
-  Button,
-  Center,
-  Heading,
   ScrollView,
-  VStack,
   HStack,
   useColorMode,
+  Pressable,
 } from "native-base";
 import { useRoute } from "@react-navigation/native";
-import { useCallback, useContext, useEffect, useState } from "react";
 import { RouteContext } from "../contexts/RouteProvider";
 import MatchService from "../services/match";
 import MatchComp from "../components/match/MatchComp";
 import SelectMatch from "../components/match/SelectMatch";
 import { useWindowDimensions } from "react-native";
+import SkeletonMatch from "../components/match/SkeletonMatch";
+import Summary from "../components/match/Summary";
+import Statistics from "../components/match/Statistics";
+import Lineups from "../components/match/Lineups";
 
 type paramsProps = {
   matchId: string;
@@ -30,6 +31,7 @@ export default function Match() {
   const context = useContext(RouteContext);
   const [match, setMatch] = useState<match>({
     idMatch: "",
+    idChampionship: "",
     championship: "",
     time: "",
     schedule: "",
@@ -84,35 +86,56 @@ export default function Match() {
       alignItems="center"
       justifyContent="center"
     >
-      <HStack
-        _dark={{ bg: "blueGray.700" }}
-        _light={{ bg: "emerald.700" }}
-        shadow={1}
-        rounded="lg"
+      <Pressable
         w="100%"
-        p="4"
-        justifyContent="center"
-        alignItems="center"
+        onPress={() =>
+          navigate("Championship", {
+            championshipId: match.idChampionship,
+          })
+        }
       >
-        <Text
-          fontSize={16}
-          overflow="hidden"
-          ellipsizeMode="tail"
-          fontWeight="bold"
-          _dark={{ color: "orange.50" }}
-          _light={{ color: "orange.100" }}
-          numberOfLines={1}
+        <HStack
+          _dark={{ bg: "blueGray.700" }}
+          _light={{ bg: "emerald.700" }}
+          shadow={1}
+          rounded="lg"
+          w="100%"
+          p="4"
+          justifyContent="center"
+          alignItems="center"
         >
-          {match?.championship}
-        </Text>
-      </HStack>
-      <MatchComp match={match} />
+          <Text
+            fontSize={16}
+            overflow="hidden"
+            ellipsizeMode="tail"
+            fontWeight="bold"
+            _dark={{ color: "orange.50" }}
+            _light={{ color: "orange.100" }}
+            numberOfLines={1}
+          >
+            {match?.championship}
+          </Text>
+        </HStack>
+      </Pressable>
+      {loading ? <SkeletonMatch /> : <MatchComp match={match} />}
+
       <SelectMatch
         colorMode={colorMode}
         setButtonChange={setButtonChange}
         buttonChange={buttonChange}
       />
-      <HStack flex={1}></HStack>
+      <Box flex={1}>
+        <ScrollView>
+          {match.teams.homeName !== "." &&
+            (buttonChange === "summary" ? (
+              <Summary match={match} width={width} />
+            ) : buttonChange === "statistics" ? (
+              <Statistics match={match} width={width} />
+            ) : (
+              <Lineups match={match} width={width} />
+            ))}
+        </ScrollView>
+      </Box>
     </Box>
   );
 }

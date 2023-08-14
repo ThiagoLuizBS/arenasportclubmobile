@@ -36,6 +36,7 @@ export default function Results({ teamId }: ResultsProps) {
     if (date.matchs.length > 0) return true;
     else return false;
   };
+
   return (
     <>
       {loading ? (
