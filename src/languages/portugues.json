@@ -58,5 +58,12 @@
   "EscolhaTipo": "Escolha o tipo",
   "Jogador": "Jogador",
   "Gols": "Gols",
-  "Assistências": "Assistências"
+  "Assistências": "Assistências",
+  "Permissao": "Permissão recusada para acessar a sua localização",
+  "Localizacao": "Localizar equipes",
+  "Prever": "Prever partida",
+  "Coordenadas1": "Com as coordenadas da sua localização",
+  "Coordenadas2": "podemos buscar equipes próximas a você!",
+  "BusqueEquipes": "Busque equipes próximas",
+  "AcessoLiberado": "Acesso a localização liberado"
 }

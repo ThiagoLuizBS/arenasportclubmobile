@@ -178,7 +178,7 @@ export default function Settings() {
           placeholder="Escolha a linguagem"
           _dark={{ bg: "blueGray.700", color: "orange.50" }}
           _light={{ bg: "emerald.700", color: "orange.100" }}
-          width="180"
+          w={width > 700 ? 56 : 40}
           fontSize={width > 700 ? 32 : 20}
           fontWeight="bold"
           rounded="xl"

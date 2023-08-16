@@ -58,5 +58,12 @@
   "EscolhaTipo": "Select type",
   "Jogador": "Player",
   "Gols": "Goals",
-  "Assistências": "Assists"
+  "Assistências": "Assists",
+  "Permissao": "Permission to access location was denied",
+  "Localizacao": "Localize teams",
+  "Prever": "Predict match",
+  "Coordenadas1": "With the coordinates of your location",
+  "Coordenadas2": "we can pick up teams close to you!",
+  "BusqueEquipes": "Search nearby teams",
+  "AcessoLiberado": "Location access allowed"
 }
