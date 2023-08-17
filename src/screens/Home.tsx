@@ -95,7 +95,7 @@ export default function Home() {
         setLoading(false);
       });
     }
-  }, [dateFilter, authContext?.language, authContext?.authenticated]);
+  }, [dateFilter, authContext?.language]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
