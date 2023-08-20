@@ -36,6 +36,7 @@ export default function Profile() {
   const [EmailUser, setNameEmail] = useState("");
   const context = useContext(RouteContext);
   const authContext = useContext(AuthContext);
+  const favoritesContext = useContext(FavoritesContext);
   const route = useRoute();
   const [teamsList, setTeamsList] = useState<team[]>();
   const [championshipsList, setChampionshipsList] = useState<championship[]>();
@@ -58,11 +59,16 @@ export default function Profile() {
   }, [authContext?.authenticated]);
 
   useEffect(() => {
-    userService.getFavorites("64348ce9a06f54f0bdcd1dc6").then((response) => {
-      setChampionshipsList(response.data.championships);
-      setTeamsList(response.data.teams);
-      setLoading(false);
-    });
+    const getFavorites: any = async () => {
+      const id = await AsyncStorage.getItem("@arena:idUser");
+      if (authContext?.authenticated && id) {
+        userService.getFavorites(JSON.parse(id)).then((response) => {
+          setTeamsList(response.data.teams);
+          setChampionshipsList(response.data.championships);
+        });
+      }
+    };
+    getFavorites();
   }, []);
 
   useEffect(() => {
@@ -234,7 +240,7 @@ export default function Profile() {
           _light={{ bg: "success.100" }}
         >
           <Select
-            w="80%"
+            w="100%"
             alignItems="center"
             justifyContent="center"
             selectedValue={type}
@@ -242,7 +248,7 @@ export default function Profile() {
             accessibilityLabel={i18n.t("EscolhaTipo")}
             placeholder={i18n.t("EscolhaTipo")}
             fontSize={14}
-            minWidth={140}
+            minWidth={150}
             borderRadius={16}
             borderWidth={0}
             my={1}
@@ -289,11 +295,11 @@ export default function Profile() {
 
           <Box
             _dark={{ bg: "blueGray.600" }}
-            _light={{ bg: "emerald.600" }}
-            my={4}
+            _light={{ bg: "#4488A0" }}
+            my={5}
             width="100%"
             bg="#008264"
-            p="1"
+            p="5"
             shadow={2}
             _text={{
               fontSize: "15",
@@ -311,6 +317,7 @@ export default function Profile() {
                     justifyContent="space-between"
                     textAlign="center"
                     alignItems="center"
+                    space="5"
                   >
                     <Image
                       source={{ uri: team.img }}
@@ -334,6 +341,7 @@ export default function Profile() {
                     alignItems="center"
                     my={2}
                     mx={2}
+                    space="5"
                   >
                     <Image
                       source={{
