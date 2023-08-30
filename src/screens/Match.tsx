@@ -18,6 +18,7 @@ import SkeletonMatch from "../components/match/SkeletonMatch";
 import Summary from "../components/match/Summary";
 import Statistics from "../components/match/Statistics";
 import Lineups from "../components/match/Lineups";
+import SelectTeam from "../components/team/SelectTeam";
 
 type paramsProps = {
   matchId: string;
@@ -27,8 +28,9 @@ export default function Match() {
   const route = useRoute();
   const { width } = useWindowDimensions();
   const { matchId } = route.params as paramsProps;
-  const { navigate, goBack } = useNavigation();
   const context = useContext(RouteContext);
+  const { navigate } = useNavigation();
+  const [type, setType] = useState("summary");
   const [match, setMatch] = useState<match>({
     idMatch: "",
     idChampionship: "",
@@ -119,17 +121,13 @@ export default function Match() {
       </Pressable>
       {loading ? <SkeletonMatch /> : <MatchComp match={match} />}
 
-      <SelectMatch
-        colorMode={colorMode}
-        setButtonChange={setButtonChange}
-        buttonChange={buttonChange}
-      />
       <Box flex={1}>
         <ScrollView>
+          <SelectMatch type={type} setType={setType} />
           {match.teams.homeName !== "." &&
-            (buttonChange === "summary" ? (
+            (type === "summary" ? (
               <Summary match={match} width={width} />
-            ) : buttonChange === "statistics" ? (
+            ) : type === "statistics" ? (
               <Statistics match={match} width={width} />
             ) : (
               <Lineups match={match} width={width} />

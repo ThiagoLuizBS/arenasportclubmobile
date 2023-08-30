@@ -1,22 +1,28 @@
-import { HStack, ColorMode, VStack, Pressable, Text } from "native-base";
+import {
+  HStack,
+  ColorMode,
+  VStack,
+  Pressable,
+  Text,
+  useColorMode,
+} from "native-base";
 import {
   AntDesign,
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import i18n from "../../languages/I18n";
+import { useWindowDimensions } from "react-native";
 
 type SelectHomeProps = {
-  buttonChange: string;
-  setButtonChange: React.Dispatch<React.SetStateAction<string>>;
-  colorMode: ColorMode;
+  type: string;
+  setType: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function SelectMatch({
-  buttonChange,
-  setButtonChange,
-  colorMode,
-}: SelectHomeProps) {
+export default function SelectMatch({ type, setType }: SelectHomeProps) {
+  const { colorMode } = useColorMode();
+  const { width } = useWindowDimensions();
+
   return (
     <HStack
       w="100%"
@@ -30,7 +36,7 @@ export default function SelectMatch({
         w="33%"
         justifyContent="center"
         alignItems="center"
-        onPress={() => setButtonChange("summary")}
+        onPress={() => setType("summary")}
       >
         <VStack flexDirection="row" justifyContent="center" alignItems="center">
           <Ionicons
@@ -38,10 +44,10 @@ export default function SelectMatch({
             size={32}
             color={
               colorMode === "light"
-                ? buttonChange === "summary"
+                ? type === "summary"
                   ? "#047857"
                   : "black"
-                : buttonChange === "summary"
+                : type === "summary"
                 ? "white"
                 : "#334155"
             }
@@ -53,7 +59,7 @@ export default function SelectMatch({
         w="33%"
         justifyContent="center"
         alignItems="center"
-        onPress={() => setButtonChange("statistics")}
+        onPress={() => setType("statistics")}
       >
         <VStack flexDirection="row" justifyContent="center" alignItems="center">
           <AntDesign
@@ -61,10 +67,10 @@ export default function SelectMatch({
             size={28}
             color={
               colorMode === "light"
-                ? buttonChange === "statistics"
+                ? type === "statistics"
                   ? "#047857"
                   : "black"
-                : buttonChange === "statistics"
+                : type === "statistics"
                 ? "white"
                 : "#334155"
             }
@@ -76,7 +82,7 @@ export default function SelectMatch({
         w="33%"
         justifyContent="center"
         alignItems="center"
-        onPress={() => setButtonChange("lineup")}
+        onPress={() => setType("lineup")}
       >
         <VStack flexDirection="row" justifyContent="center" alignItems="center">
           <MaterialCommunityIcons
@@ -84,10 +90,10 @@ export default function SelectMatch({
             size={32}
             color={
               colorMode === "light"
-                ? buttonChange === "lineup"
+                ? type === "lineup"
                   ? "#047857"
                   : "black"
-                : buttonChange === "lineup"
+                : type === "lineup"
                 ? "white"
                 : "#334155"
             }
