@@ -70,6 +70,7 @@ export declare global {
   }
 
   export interface match {
+    lineups: any;
     championship: string;
     idChampionship: string;
     idMatch: string;
@@ -94,6 +95,45 @@ export declare global {
       type: string;
       description: string;
       side: string;
+    }[];
+
+    lineups: {
+      homeStarting: {
+        num: string;
+        name: string;
+        actions: {
+          substitution: string;
+          card: string;
+          goals: { item: string }[];
+        };
+      }[];
+      awayStarting: {
+        num: string;
+        name: string;
+        actions: {
+          substitution: string;
+          card: string;
+          goals: { item: string }[];
+        };
+      }[];
+      homeBench: {
+        num: string;
+        name: string;
+        actions: {
+          substitution: string;
+          card: string;
+          goals: { item: string }[];
+        };
+      }[];
+      awayBench: {
+        num: string;
+        name: string;
+        actions: {
+          substitution: string;
+          card: string;
+          goals: { item: string }[];
+        };
+      }[];
     }[];
   }
 
