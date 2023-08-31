@@ -281,7 +281,7 @@ export default function Summary({ match, width }: SummaryProps) {
           </VStack>
         </>
       ) : (
-        <Center px={2} my={4}>
+        <HStack justifyContent="center" px={2} my={4} w="100%">
           <Text
             _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
@@ -290,7 +290,7 @@ export default function Summary({ match, width }: SummaryProps) {
           >
             SUMÁRIO NÃO DISPONÍVEL
           </Text>
-        </Center>
+        </HStack>
       )}
     </Box>
   );

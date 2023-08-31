@@ -19,9 +19,9 @@ function ShowStatistics(statistic: {
     return (
       <Box width={"100%"} my={2}>
         <HStack justifyContent={"space-between"} mb={2}>
-          <Text> {statistic.home} %</Text>
-          <Text> Posse de bola</Text>
-          <Text> {statistic.away} %</Text>
+          <Text>{statistic.home} %</Text>
+          <Text>Posse de bola</Text>
+          <Text>{statistic.away} %</Text>
         </HStack>
         <Progress
           colorScheme="emerald"
@@ -34,9 +34,9 @@ function ShowStatistics(statistic: {
     return (
       <Box width={"100%"} my={2}>
         <HStack justifyContent={"space-between"} mb={2}>
-          <Text> {statistic.home} %</Text>
-          <Text> Passes corretos</Text>
-          <Text> {statistic.away} %</Text>
+          <Text>{statistic.home} %</Text>
+          <Text>Passes corretos</Text>
+          <Text>{statistic.away} %</Text>
         </HStack>
         <Progress
           colorScheme="emerald"
@@ -79,7 +79,7 @@ export default function Statistics({ match, width }: StatisticsProps) {
           </VStack>
         </>
       ) : (
-        <Center px={2} my={4}>
+        <HStack justifyContent="center" px={2} my={4} w="100%">
           <Text
             _dark={{ color: "orange.50" }}
             _light={{ color: "black" }}
@@ -88,7 +88,7 @@ export default function Statistics({ match, width }: StatisticsProps) {
           >
             ESTATÍSTICAS NÃO DISPONÍVEL
           </Text>
-        </Center>
+        </HStack>
       )}
     </Box>
   );

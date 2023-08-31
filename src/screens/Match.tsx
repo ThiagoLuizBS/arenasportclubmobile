@@ -52,6 +52,7 @@ export default function Match() {
       teamAwayHref: "",
     },
     events: [{ time: "", type: "", description: "", side: "" }],
+    statistics: [{ type: "", home: "", away: "" }],
   });
   const [loading, setLoading] = useState(true);
   const [buttonChange, setButtonChange] = useState("summary");
