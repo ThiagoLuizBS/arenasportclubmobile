@@ -95,6 +95,11 @@ export declare global {
       description: string;
       side: string;
     }[];
+    statistics: {
+      type: string;
+      home: string;
+      away: string;
+    }[];
   }
 
   export interface news {
