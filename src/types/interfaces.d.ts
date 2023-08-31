@@ -70,6 +70,7 @@ export declare global {
   }
 
   export interface match {
+    summary: string;
     championship: string;
     idChampionship: string;
     idMatch: string;
