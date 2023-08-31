@@ -75,6 +75,9 @@ export default function Match({ match }: MatchProps) {
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "black" }}
                 fontSize={width > 700 ? 32 : 18}
+                overflow="hidden"
+                ellipsizeMode="tail"
+                numberOfLines={1}
               >
                 {match.teams?.homeName}
               </Text>
@@ -95,6 +98,9 @@ export default function Match({ match }: MatchProps) {
                 _dark={{ color: "orange.50" }}
                 _light={{ color: "black" }}
                 fontSize={width > 700 ? 32 : 18}
+                overflow="hidden"
+                ellipsizeMode="tail"
+                numberOfLines={1}
               >
                 {match.teams?.awayName}
               </Text>

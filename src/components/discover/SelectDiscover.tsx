@@ -78,8 +78,6 @@ export default function SelectDiscover({
       />
       <Pressable
         w="50%"
-        disabled
-        _disabled={{ opacity: "0.5" }}
         justifyContent="center"
         alignItems="center"
         onPress={() => setType("predict")}

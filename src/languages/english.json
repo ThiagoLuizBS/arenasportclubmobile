@@ -65,5 +65,10 @@
   "Coordenadas1": "With the coordinates of your location",
   "Coordenadas2": "we can pick up teams close to you!",
   "BusqueEquipes": "Search nearby teams",
-  "AcessoLiberado": "Location access allowed"
+  "AcessoLiberado": "Location access allowed",
+  "Prever1": "Select a match below",
+  "Prever2": "and we'll predict the odds",
+  "PreverPartida": "Select a match",
+  "TenteNovamente": "Try again",
+  "Cancelar": "Cancel"
 }

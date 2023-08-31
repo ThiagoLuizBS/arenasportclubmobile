@@ -67,7 +67,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     await AsyncStorage.setItem("@arena:token", JSON.stringify(token));
     await AsyncStorage.setItem("@arena:idUser", JSON.stringify(id));
     await AsyncStorage.setItem("@arena:nameUser", JSON.stringify(nameUser));
-    await AsyncStorage.setItem("@arena:emailUser", JSON.stringify(id));
+    await AsyncStorage.setItem("@arena:emailUser", JSON.stringify(email));
     setAuthenticated(true);
   }
 

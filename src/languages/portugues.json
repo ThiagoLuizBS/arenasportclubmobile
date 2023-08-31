@@ -65,5 +65,10 @@
   "Coordenadas1": "Com as coordenadas da sua localização",
   "Coordenadas2": "podemos buscar equipes próximas a você!",
   "BusqueEquipes": "Busque equipes próximas",
-  "AcessoLiberado": "Acesso a localização liberado"
+  "AcessoLiberado": "Acesso a localização liberado",
+  "Prever1": "Selecione uma partida abaixo",
+  "Prever2": "para nós prevermos as probabilidades",
+  "PreverPartida": "Selecione uma partida",
+  "TenteNovamente": "Tente novamente",
+  "Cancelar": "Cancelar"
 }

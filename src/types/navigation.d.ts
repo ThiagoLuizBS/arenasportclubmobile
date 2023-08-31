@@ -7,6 +7,7 @@ export declare global {
       Team: { teamId: string };
       Favorites: undefined;
       News: undefined;
+      Profile: undefined;
       Discover: undefined;
       Settings: undefined;
       Search: undefined;
