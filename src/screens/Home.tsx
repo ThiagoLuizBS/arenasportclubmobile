@@ -190,13 +190,6 @@ export default function Home() {
         dateFilter={dateFilter}
         changeDate={changeDate}
         getFilterSelect={getFilterSelect}
-        type={""}
-        setType={function (value: React.SetStateAction<string>): void {
-          throw new Error("Function not implemented.");
-        }}
-        setButtonChange={function (value: React.SetStateAction<string>): void {
-          throw new Error("Function not implemented.");
-        }}
       />
       {loading ? (
         <SkeletonHome />

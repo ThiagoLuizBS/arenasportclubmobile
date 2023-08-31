@@ -51,7 +51,7 @@ export default function Match() {
       awayImg: ".",
       teamAwayHref: "",
     },
-    events: [{ time: "", type: "" }],
+    events: [{ time: "", type: "", description: "", side: "" }],
   });
   const [loading, setLoading] = useState(true);
   const [buttonChange, setButtonChange] = useState("summary");
@@ -102,7 +102,7 @@ export default function Match() {
           shadow={1}
           rounded="lg"
           w="100%"
-          p="4"
+          p="2"
           justifyContent="center"
           alignItems="center"
         >

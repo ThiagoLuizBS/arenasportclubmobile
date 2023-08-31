@@ -13,11 +13,8 @@ import { useWindowDimensions } from "react-native";
 import i18n from "../../languages/I18n";
 
 type SelectHomeProps = {
-  type: string;
-  setType: React.Dispatch<React.SetStateAction<string>>;
   buttonChange: string;
   colorMode: ColorMode;
-  setButtonChange: React.Dispatch<React.SetStateAction<string>>;
   changeSelected: (buttonName: string) => void;
   getTodayDate: (x: number) => string;
   dateFilter: string;
@@ -30,7 +27,6 @@ export default function SelectHome({
   colorMode,
   changeSelected,
   getTodayDate,
-  setButtonChange,
   dateFilter,
   changeDate,
 }: SelectHomeProps) {

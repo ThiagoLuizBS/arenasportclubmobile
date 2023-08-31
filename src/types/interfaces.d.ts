@@ -70,7 +70,6 @@ export declare global {
   }
 
   export interface match {
-    summary: string;
     championship: string;
     idChampionship: string;
     idMatch: string;
@@ -93,6 +92,8 @@ export declare global {
     events: {
       time: string;
       type: string;
+      description: string;
+      side: string;
     }[];
   }
 
