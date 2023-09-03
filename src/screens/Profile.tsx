@@ -239,52 +239,51 @@ export default function Profile() {
           _dark={{ bg: "blueGray.900" }}
           _light={{ bg: "success.100" }}
         >
-          {authContext?.authenticated && (
-            <Select
-              w="100%"
-              alignItems="center"
-              justifyContent="center"
-              selectedValue={type}
-              defaultValue="team"
-              accessibilityLabel={i18n.t("EscolhaTipo")}
-              placeholder={i18n.t("EscolhaTipo")}
-              fontSize={14}
-              minWidth={220}
-              borderRadius={16}
-              borderWidth={0}
-              my={1}
-              _dark={{ bg: "blueGray.600", color: "orange.50" }}
-              _light={{ bg: "emerald.600", color: "orange.100" }}
-              dropdownIcon={
-                <Icon
-                  name="down"
-                  size="4"
-                  mr={2}
-                  _dark={{ color: "orange.50" }}
-                  _light={{ color: "orange.100" }}
-                  as={<AntDesign name="down" />}
-                />
-              }
-              _selectedItem={
-                colorMode === "light"
-                  ? {
-                      bg: "emerald.100",
-                      color: "orange.100",
-                    }
-                  : {
-                      bg: "blueGray.600",
-                      color: "orange.50",
-                    }
-              }
-              onValueChange={(itemValue) => setType(itemValue)}
-            >
-              <Select.Item label={i18n.t("TimesFavoritos")} value="team" />
-              <Select.Item
-                label={i18n.t("CampeonatosFavoritos")}
-                value="championship"
+          <Select
+            w="80%"
+            alignItems="center"
+            justifyContent="center"
+            selectedValue={type}
+            defaultValue="team"
+            accessibilityLabel={i18n.t("EscolhaTipo")}
+            placeholder={i18n.t("EscolhaTipo")}
+            fontSize={14}
+            minWidth={140}
+            borderRadius={16}
+            borderWidth={0}
+            my={1}
+            _dark={{ bg: "blueGray.600", color: "orange.50" }}
+            _light={{ bg: "emerald.600", color: "orange.100" }}
+            dropdownIcon={
+              <Icon
+                name="down"
+                size="4"
+                mr={2}
+                _dark={{ color: "orange.50" }}
+                _light={{ color: "orange.100" }}
+                as={<AntDesign name="down" />}
               />
-            </Select>
-          )}
+            }
+            _selectedItem={
+              colorMode === "light"
+                ? {
+                    bg: "emerald.100",
+                    color: "orange.100",
+                  }
+                : {
+                    bg: "blueGray.600",
+                    color: "orange.50",
+                  }
+            }
+            onValueChange={(itemValue) => setType(itemValue)}
+          >
+            <Select.Item label={i18n.t("TimesFavoritos")} value="team" />
+            <Select.Item
+              label={i18n.t("CampeonatosFavoritos")}
+              value="championship"
+            />
+          </Select>
+
           <HStack
             _dark={{ bg: "blueGray.900" }}
             _light={{ bg: "success.100" }}
@@ -293,81 +292,75 @@ export default function Profile() {
             marginRight="5"
             space={7}
           ></HStack>
-          {authContext?.authenticated && (
-            <Box
-              justifyContent="center"
-              alignContent="space-between"
-              _dark={{ bg: "blueGray.600" }}
-              _light={{ bg: "emerald.600" }}
-              my={5}
-              width="100%"
-              bg="#008264"
-              p="5"
-              marginLeft={5}
-              shadow={2}
-              _text={{
-                fontSize: "15",
-                fontWeight: "bold",
-                color: "white",
-              }}
-            >
-              {/* Times ou Campeonatos */}
-              {type === "team"
-                ? teamsList?.map((team, i) => (
-                    <HStack
-                      key={i}
-                      my={2}
-                      mx={2}
-                      justifyContent="space-between"
-                      textAlign="center"
-                      alignItems="center"
-                      space={5}
+
+          <Box
+            _dark={{ bg: "blueGray.600" }}
+            _light={{ bg: "emerald.600" }}
+            my={4}
+            width="100%"
+            bg="#008264"
+            p="1"
+            shadow={2}
+            _text={{
+              fontSize: "15",
+              fontWeight: "bold",
+              color: "white",
+            }}
+          >
+            {/* Times ou Campeonatos */}
+            {type === "team"
+              ? teamsList?.map((team, i) => (
+                  <HStack
+                    key={i}
+                    my={2}
+                    mx={2}
+                    justifyContent="space-between"
+                    textAlign="center"
+                    alignItems="center"
+                  >
+                    <Image
+                      source={{ uri: team.img }}
+                      alt={team.name}
+                      size="10"
+                    />
+                    <Text
+                      _dark={{ color: "orange.50" }}
+                      _light={{ color: "orange.100" }}
+                      fontSize={14}
+                      fontWeight="bold"
                     >
-                      <Image
-                        source={{ uri: team.img }}
-                        alt={team.name}
-                        size="10"
-                      />
-                      <Text
-                        _dark={{ color: "orange.50" }}
-                        _light={{ color: "orange.100" }}
-                        fontSize={14}
-                        fontWeight="bold"
-                      >
-                        {team.name}
-                      </Text>
-                    </HStack>
-                  ))
-                : championshipsList?.map((championship, i) => (
-                    <HStack
-                      key={i}
-                      justifyContent="space-between"
-                      alignItems="center"
-                      my={2}
-                      mx={2}
-                      space={5}
+                      {team.name}
+                    </Text>
+                  </HStack>
+                ))
+              : championshipsList?.map((championship, i) => (
+                  <HStack
+                    key={i}
+                    justifyContent="space-between"
+                    alignItems="center"
+                    my={2}
+                    mx={2}
+                  >
+                    <Image
+                      source={{
+                        uri: championship?.imgChampionship
+                          ? championship?.imgChampionship
+                          : championship?.img,
+                      }}
+                      alt={championship.name}
+                      size="10"
+                    />
+                    <Text
+                      _dark={{ color: "orange.50" }}
+                      _light={{ color: "orange.100" }}
+                      fontSize={16}
+                      fontWeight="bold"
                     >
-                      <Image
-                        source={{
-                          uri: championship?.imgChampionship
-                            ? championship?.imgChampionship
-                            : championship?.img,
-                        }}
-                        alt={championship.name}
-                        size="10"
-                      />
-                      <Text
-                        _dark={{ color: "orange.50" }}
-                        _light={{ color: "orange.100" }}
-                        fontSize={16}
-                        fontWeight="bold"
-                      >
-                        {championship.name}
-                      </Text>
-                    </HStack>
-                  ))}
-            </Box>
-          )}
+                      {championship.name}
+                    </Text>
+                  </HStack>
+                ))}
+          </Box>
         </Box>
       </Box>
     </ScrollView>
