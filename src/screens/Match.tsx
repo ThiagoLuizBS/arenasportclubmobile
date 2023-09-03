@@ -53,6 +53,52 @@ export default function Match() {
     },
     events: [{ time: "", type: "", description: "", side: "" }],
     statistics: [{ type: "", home: "", away: "" }],
+    lineups: {
+      homeStarting: [
+        {
+          num: "",
+          name: "",
+          actions: {
+            substitution: "",
+            card: "",
+            goals: [{ item: "" }],
+          },
+        },
+      ],
+      awayStarting: [
+        {
+          num: "",
+          name: "",
+          actions: {
+            substitution: "",
+            card: "",
+            goals: [{ item: "" }],
+          },
+        },
+      ],
+      homeBench: [
+        {
+          num: "",
+          name: "",
+          actions: {
+            substitution: "",
+            card: "",
+            goals: [{ item: "" }],
+          },
+        },
+      ],
+      awayBench: [
+        {
+          num: "",
+          name: "",
+          actions: {
+            substitution: "",
+            card: "",
+            goals: [{ item: "" }],
+          },
+        },
+      ],
+    },
   });
   const [loading, setLoading] = useState(true);
   const [buttonChange, setButtonChange] = useState("summary");
@@ -123,8 +169,8 @@ export default function Match() {
       {loading ? <SkeletonMatch /> : <MatchComp match={match} />}
 
       <Box flex={1}>
+        <SelectMatch type={type} setType={setType} />
         <ScrollView>
-          <SelectMatch type={type} setType={setType} />
           {match.teams.homeName !== "." &&
             (type === "summary" ? (
               <Summary match={match} width={width} />

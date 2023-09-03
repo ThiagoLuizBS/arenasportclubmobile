@@ -70,5 +70,7 @@
   "Prever2": "and we'll predict the odds",
   "PreverPartida": "Select a match",
   "TenteNovamente": "Try again",
-  "Cancelar": "Cancel"
+  "Cancelar": "Cancel",
+  "NenhumaPartida": "NO MATCHES FOUND",
+  "ParaDia": "FOR A DAY"
 }

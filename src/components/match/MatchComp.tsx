@@ -22,7 +22,6 @@ export default function MatchComp({ match }: MatchProps) {
     <>
       <HStack
         w="100%"
-        h={64}
         _dark={{ bg: "blueGray.900" }}
         _light={{ bg: "success.100" }}
         px={2}

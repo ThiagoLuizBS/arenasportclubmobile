@@ -70,5 +70,7 @@
   "Prever2": "para nós prevermos as probabilidades",
   "PreverPartida": "Selecione uma partida",
   "TenteNovamente": "Tente novamente",
-  "Cancelar": "Cancelar"
+  "Cancelar": "Cancelar",
+  "NenhumaPartida": "NENHUMA PARTIDA ENCONTRADA",
+  "ParaDia": "PARA O DIA"
 }

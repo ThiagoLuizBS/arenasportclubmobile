@@ -27,7 +27,7 @@ export default function SelectMatch({ type, setType }: SelectHomeProps) {
     <HStack
       w="100%"
       h={16}
-      py={3}
+      py={2}
       borderBottomWidth={2}
       _dark={{ borderBottomColor: "blueGray.700" }}
       _light={{ borderBottomColor: "emerald.700" }}
