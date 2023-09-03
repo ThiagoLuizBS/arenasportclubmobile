@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { VStack, Input, Icon, Flex, Image } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import logo from "../../assets/logo1.png";
@@ -36,7 +36,13 @@ export default function Header() {
       flexDirection="row"
     >
       <VStack w="15%" alignItems="center" justifyContent="center">
-        <Image source={logo} alt="ArenaSportClub" size="xs" m="auto" />
+        <Icon
+          onPress={() => navigate("Profile")}
+          as={<Entypo name="user" />}
+          _dark={{ color: "orange.50" }}
+          _light={{ color: "emerald.700" }}
+          size="10"
+        />
       </VStack>
       <VStack
         space={5}

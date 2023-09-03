@@ -27,6 +27,7 @@ export function AppRoutes() {
       <Screen name="Match" component={Match} />
       <Screen name="Favorites" component={Favorites} />
       <Screen name="News" component={News} />
+      <Screen name="Profile" component={Profile} />
       <Screen name="Discover" component={Discover} />
       <Screen name="Settings" component={Settings} />
       <Screen name="Search" component={Search} />

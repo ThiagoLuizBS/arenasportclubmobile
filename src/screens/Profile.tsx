@@ -36,6 +36,7 @@ export default function Profile() {
   const [EmailUser, setNameEmail] = useState("");
   const context = useContext(RouteContext);
   const authContext = useContext(AuthContext);
+  const favoritesContext = useContext(FavoritesContext);
   const route = useRoute();
   const [teamsList, setTeamsList] = useState<team[]>();
   const [championshipsList, setChampionshipsList] = useState<championship[]>();
@@ -58,11 +59,16 @@ export default function Profile() {
   }, [authContext?.authenticated]);
 
   useEffect(() => {
-    userService.getFavorites("64348ce9a06f54f0bdcd1dc6").then((response) => {
-      setChampionshipsList(response.data.championships);
-      setTeamsList(response.data.teams);
-      setLoading(false);
-    });
+    const getFavorites: any = async () => {
+      const id = await AsyncStorage.getItem("@arena:idUser");
+      if (authContext?.authenticated && id) {
+        userService.getFavorites(JSON.parse(id)).then((response) => {
+          setTeamsList(response.data.teams);
+          setChampionshipsList(response.data.championships);
+        });
+      }
+    };
+    getFavorites();
   }, []);
 
   useEffect(() => {
@@ -158,11 +164,11 @@ export default function Profile() {
 
               <Heading
                 flexDirection={"row"}
-                size="lg"
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
                 margin={5}
                 my={5}
+                size="sm"
               >
                 {i18n.t("Usuario")}: {nameUser}
               </Heading>
@@ -172,7 +178,7 @@ export default function Profile() {
               space={7}
               alignItems="center"
               flexDirection={"row"}
-              size="lg"
+              size="sm"
               _dark={{ color: "white" }}
               _light={{ color: "black" }}
               margin={5}
@@ -187,11 +193,11 @@ export default function Profile() {
 
               <Heading
                 flexDirection={"row"}
-                size="lg"
                 _dark={{ color: "white" }}
                 _light={{ color: "black" }}
-                margin={5}
-                my={5}
+                margin={2}
+                my={2}
+                size="sm"
               >
                 E-mail: {EmailUser}
               </Heading>
@@ -233,130 +239,135 @@ export default function Profile() {
           _dark={{ bg: "blueGray.900" }}
           _light={{ bg: "success.100" }}
         >
-          <Select
-            w="80%"
-            alignItems="center"
-            justifyContent="center"
-            selectedValue={type}
-            defaultValue="team"
-            accessibilityLabel={i18n.t("EscolhaTipo")}
-            placeholder={i18n.t("EscolhaTipo")}
-            fontSize={14}
-            minWidth={140}
-            borderRadius={16}
-            borderWidth={0}
-            my={1}
-            _dark={{ bg: "blueGray.600", color: "orange.50" }}
-            _light={{ bg: "emerald.600", color: "orange.100" }}
-            dropdownIcon={
-              <Icon
-                name="down"
-                size="4"
-                mr={2}
-                _dark={{ color: "orange.50" }}
-                _light={{ color: "orange.100" }}
-                as={<AntDesign name="down" />}
+          {authContext?.authenticated && (
+            <Select
+              w="100%"
+              alignItems="center"
+              justifyContent="center"
+              selectedValue={type}
+              defaultValue="team"
+              accessibilityLabel={i18n.t("EscolhaTipo")}
+              placeholder={i18n.t("EscolhaTipo")}
+              fontSize={14}
+              minWidth={220}
+              borderRadius={16}
+              borderWidth={0}
+              my={1}
+              _dark={{ bg: "blueGray.600", color: "orange.50" }}
+              _light={{ bg: "emerald.600", color: "orange.100" }}
+              dropdownIcon={
+                <Icon
+                  name="down"
+                  size="4"
+                  mr={2}
+                  _dark={{ color: "orange.50" }}
+                  _light={{ color: "orange.100" }}
+                  as={<AntDesign name="down" />}
+                />
+              }
+              _selectedItem={
+                colorMode === "light"
+                  ? {
+                      bg: "emerald.100",
+                      color: "orange.100",
+                    }
+                  : {
+                      bg: "blueGray.600",
+                      color: "orange.50",
+                    }
+              }
+              onValueChange={(itemValue) => setType(itemValue)}
+            >
+              <Select.Item label={i18n.t("TimesFavoritos")} value="team" />
+              <Select.Item
+                label={i18n.t("CampeonatosFavoritos")}
+                value="championship"
               />
-            }
-            _selectedItem={
-              colorMode === "light"
-                ? {
-                    bg: "emerald.100",
-                    color: "orange.100",
-                  }
-                : {
-                    bg: "blueGray.600",
-                    color: "orange.50",
-                  }
-            }
-            onValueChange={(itemValue) => setType(itemValue)}
-          >
-            <Select.Item label={i18n.t("TimesFavoritos")} value="team" />
-            <Select.Item
-              label={i18n.t("CampeonatosFavoritos")}
-              value="championship"
-            />
-          </Select>
-
+            </Select>
+          )}
           <HStack
             _dark={{ bg: "blueGray.900" }}
             _light={{ bg: "success.100" }}
             alignItems="center"
             justifyContent="center"
             marginRight="5"
-            space={5}
+            space={7}
           ></HStack>
-
-          <Box
-            _dark={{ bg: "blueGray.600" }}
-            _light={{ bg: "emerald.600" }}
-            my={4}
-            width="100%"
-            bg="#008264"
-            p="1"
-            shadow={2}
-            _text={{
-              fontSize: "15",
-              fontWeight: "bold",
-              color: "white",
-            }}
-          >
-            {/* Times ou Campeonatos */}
-            {type === "team"
-              ? teamsList?.map((team, i) => (
-                  <HStack
-                    key={i}
-                    my={2}
-                    mx={2}
-                    justifyContent="space-between"
-                    textAlign="center"
-                    alignItems="center"
-                  >
-                    <Image
-                      style={{ resizeMode: "contain" }}
-                      source={{ uri: team.img }}
-                      alt={team.name}
-                      size="10"
-                    />
-                    <Text
-                      _dark={{ color: "orange.50" }}
-                      _light={{ color: "orange.100" }}
-                      fontSize={14}
-                      fontWeight="bold"
+          {authContext?.authenticated && (
+            <Box
+              justifyContent="center"
+              alignContent="space-between"
+              _dark={{ bg: "blueGray.600" }}
+              _light={{ bg: "emerald.600" }}
+              my={5}
+              width="100%"
+              bg="#008264"
+              p="5"
+              marginLeft={5}
+              shadow={2}
+              _text={{
+                fontSize: "15",
+                fontWeight: "bold",
+                color: "white",
+              }}
+            >
+              {/* Times ou Campeonatos */}
+              {type === "team"
+                ? teamsList?.map((team, i) => (
+                    <HStack
+                      key={i}
+                      my={2}
+                      mx={2}
+                      justifyContent="space-between"
+                      textAlign="center"
+                      alignItems="center"
+                      space={5}
                     >
-                      {team.name}
-                    </Text>
-                  </HStack>
-                ))
-              : championshipsList?.map((championship, i) => (
-                  <HStack
-                    key={i}
-                    justifyContent="space-between"
-                    alignItems="center"
-                    my={2}
-                    mx={2}
-                  >
-                    <Image
-                      style={{ resizeMode: "contain" }}
-                      source={{
-                        uri: championship?.imgChampionship
-                          ? championship?.imgChampionship
-                          : championship?.img,
-                      }}
-                      alt={championship.name}
-                      size="10"
-                    />
-                    <Text
-                      _dark={{ color: "orange.50" }}
-                      _light={{ color: "orange.100" }}
-                      fontSize={16}
-                      fontWeight="bold"
+                      <Image
+                        source={{ uri: team.img }}
+                        alt={team.name}
+                        size="10"
+                      />
+                      <Text
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontSize={14}
+                        fontWeight="bold"
+                      >
+                        {team.name}
+                      </Text>
+                    </HStack>
+                  ))
+                : championshipsList?.map((championship, i) => (
+                    <HStack
+                      key={i}
+                      justifyContent="space-between"
+                      alignItems="center"
+                      my={2}
+                      mx={2}
+                      space={5}
                     >
-                      {championship.name}
-                    </Text>
-                  </HStack>
-                ))}
-          </Box>
+                      <Image
+                        source={{
+                          uri: championship?.imgChampionship
+                            ? championship?.imgChampionship
+                            : championship?.img,
+                        }}
+                        alt={championship.name}
+                        size="10"
+                      />
+                      <Text
+                        _dark={{ color: "orange.50" }}
+                        _light={{ color: "orange.100" }}
+                        fontSize={16}
+                        fontWeight="bold"
+                      >
+                        {championship.name}
+                      </Text>
+                    </HStack>
+                  ))}
+            </Box>
+          )}
         </Box>
       </Box>
     </ScrollView>
